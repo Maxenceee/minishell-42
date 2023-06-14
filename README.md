@@ -1,1 +1,1 @@
-# minishell-42
+# Minishell 42
