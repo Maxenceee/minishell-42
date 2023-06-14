@@ -1,0 +1,8 @@
+.vscode
+*/*.vscode
+
+.o
+*/*.o
+.objs
+*/*.objs
+minishell
