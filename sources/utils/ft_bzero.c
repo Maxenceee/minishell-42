@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:50:12 by mgama            ###   ########.fr       */
+/*   Created: 2022/11/07 16:48:29 by mgama             #+#    #+#             */
+/*   Updated: 2023/06/14 18:13:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/philosophers.h"
 
-int	main(int argc, char *argv[], char *envp[])
+void	ft_bzero(void *s, size_t n)
 {
-	t_commands	commands;
-	
-	ft_bzero(&commands, sizeof(t_commands));
-	commands.envp = envp;
-	// parsing function
-	fork_processes(&commands);
-	return (0);
+	ft_memset(s, '\0', n);
 }

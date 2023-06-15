@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:50:12 by mgama            ###   ########.fr       */
+/*   Created: 2022/11/07 17:07:57 by mgama             #+#    #+#             */
+/*   Updated: 2023/06/14 18:13:40 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/philosophers.h"
 
-int	main(int argc, char *argv[], char *envp[])
+void	*ft_memset(void *b, int c, size_t len)
 {
-	t_commands	commands;
-	
-	ft_bzero(&commands, sizeof(t_commands));
-	commands.envp = envp;
-	// parsing function
-	fork_processes(&commands);
-	return (0);
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		((char *)b)[i] = (unsigned char)c;
+		i++;
+	}
+	return (b);
 }
