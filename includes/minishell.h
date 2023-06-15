@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:35:47 by mgama            ###   ########.fr       */
+/*   Updated: 2023/06/15 14:57:57 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_commands {
 	int		*pipes;
 	int		pipe_nb;
 	char	**envp;
+	char	*pwd;
 }				t_commands;
 
 /* exec */
