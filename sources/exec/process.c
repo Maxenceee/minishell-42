@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:53:59 by mgama            ###   ########.fr       */
+/*   Updated: 2023/06/19 12:05:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	process_child(t_commands *commands, int idx)
 		if (res == 5)
 			exit_error_with_msg(commands, PERM_DENIED);
 		else if (res == 2)
-			ft_putstr_fd(commands->command_list[idx][0], NO_COMMAND, 2);
+			ft_putstr_fd(commands->command_list[idx][0], COMMAND_NOT_FOUND, 2);
 		exit(1);
 	}
 }
