@@ -6,13 +6,13 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:21:50 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:52:00 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:37:21 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-void	create_pipes(t_commands *commands)
+void	create_pipes(t_data *commands)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ void	create_pipes(t_commands *commands)
 	}
 }
 
-void	close_pipes(t_commands *commands)
+void	close_pipes(t_data *commands)
 {
 	int	i;
 

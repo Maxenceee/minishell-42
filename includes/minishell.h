@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:57:57 by mgama            ###   ########.fr       */
+/*   Updated: 2023/06/30 17:25:13 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define COMMAND_NOT_FOUND "Command not found"
 # define PERM_DENIED "permission denied"
 
-typedef struct s_commands {
+typedef struct s_data {
 	char	***command_list;
 	char	*input;
 	char	*output;
@@ -38,20 +38,20 @@ typedef struct s_commands {
 	int		pipe_nb;
 	char	**envp;
 	char	*pwd;
-}				t_commands;
+}				t_data;
 
 /* exec */
-void	fork_processes(t_commands *commands);
-void	process_child(t_commands *commands, int idx);
-int		open_fdinout(int idx, t_commands *c);
+void	fork_processes(t_data *commands);
+void	process_child(t_data *commands, int idx);
+int		open_fdinout(int idx, t_data *c);
 int		execcmd(char **command, char *envp[]);
 
 /* parse_env */
 char	*parse_env(char *envp[], char *cmd);
 
 /* pipes */
-void	create_pipes(t_commands *commands);
-void	close_pipes(t_commands *commands);
+void	create_pipes(t_data *commands);
+void	close_pipes(t_data *commands);
 int		dup2_fdinout(int fdin, int fdout);
 
 /* utils */
@@ -65,7 +65,7 @@ char	*ft_strjoin_arr(int size, char **strs, char *sep);
 size_t	ft_strlen(const char *str);
 
 /* exit */
-void	exit_with_code(t_commands *commands, int code);
-void	exit_error_with_msg(t_commands *commands, char *msg);
+void	exit_with_code(t_data *commands, int code);
+void	exit_error_with_msg(t_data *commands, char *msg);
 
 #endif /* MINISHELL_H */

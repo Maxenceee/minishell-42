@@ -6,11 +6,11 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 14:02:03 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:51:54 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:36:48 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

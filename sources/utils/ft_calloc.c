@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 17:07:57 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/14 18:13:40 by mgama            ###   ########.fr       */
+/*   Created: 2022/11/07 19:40:47 by mgama             #+#    #+#             */
+/*   Updated: 2023/07/07 18:39:33 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "minishell.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	*ft_calloc(size_t count, size_t size)
 {
-	size_t	i;
+	void	*ptr;
 
-	i = 0;
-	while (i < len)
+	if (count == 0 || size == 0)
 	{
-		((char *)b)[i] = (unsigned char)c;
-		i++;
+		count = 1;
+		size = 1;
 	}
-	return (b);
+	if (SIZE_MAX / count < size)
+		return (NULL);
+	ptr = malloc(count * size);
+	if (ptr)
+		ft_bzero(ptr, count * size);
+	return (ptr);
 }

@@ -6,7 +6,15 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:57:35 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:41:22 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+int	echo(t_data *data)
+{
+	(void)data;
+	printf("");
+	return (0);
+}

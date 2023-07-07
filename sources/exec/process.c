@@ -6,11 +6,11 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/19 12:05:56 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:37:18 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	execcmd(char **command, char *envp[])
 {
@@ -29,7 +29,7 @@ int	execcmd(char **command, char *envp[])
 	return (0);
 }
 
-int	open_fdinout(int idx, t_commands *c)
+int	open_fdinout(int idx, t_data *c)
 {
 	int	fdin;
 	int	fdout;
@@ -57,7 +57,7 @@ int	open_fdinout(int idx, t_commands *c)
 	return (0);
 }
 
-void	process_child(t_commands *commands, int idx)
+void	process_child(t_data *commands, int idx)
 {
 	pid_t	pid;
 	int		res;
@@ -79,7 +79,7 @@ void	process_child(t_commands *commands, int idx)
 	}
 }
 
-void	fork_processes(t_commands *commands)
+void	fork_processes(t_data *commands)
 {
 	int		i;
 

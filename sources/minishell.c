@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:56:09 by mgama            ###   ########.fr       */
+/*   Updated: 2023/06/30 17:25:13 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_commands	commands;
+	t_data	commands;
 	
 	(void)(argc); // temp ignoring
 	(void)(argv); // temp ignoring
-	ft_bzero(&commands, sizeof(t_commands));
+	ft_bzero(&commands, sizeof(t_data));
 	commands.envp = envp;
 	// parsing function
 	fork_processes(&commands);

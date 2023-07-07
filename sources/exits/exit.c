@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exits.c                                            :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:21:18 by mgama             #+#    #+#             */
-/*   Updated: 2023/06/15 14:54:02 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:37:14 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-void	exit_with_code(t_commands *commands, int code)
+void	exit_with_code(t_data *commands, int code)
 {
 	int	i;
 	int	j;
@@ -32,7 +32,7 @@ void	exit_with_code(t_commands *commands, int code)
 	exit(code);
 }
 
-void	exit_error_with_msg(t_commands *commands, char *msg)
+void	exit_error_with_msg(t_data *commands, char *msg)
 {
 	perror(msg);
 	exit_with_code(commands, 1);

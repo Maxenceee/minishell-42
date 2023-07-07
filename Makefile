@@ -9,7 +9,7 @@ HEADERS_DIR		=	includes/
 HEADERS			=	$(addprefix $(HEADERS_DIR), $(HEADER_SRCS))
 CC				=	cc
 RM				=	rm -f
-CFLAGS			=	-Wall -Wextra -Werror 
+CFLAGS			=	-Wall -Wextra -Werror -I$(HEADERS_DIR)
 # LIBS			=	-lpthread
 NAME			=	minishell
 
@@ -22,7 +22,7 @@ UP				=	"\033[A"
 CUT				=	"\033[K"
 
 $(OBJ_DIR)/%.o: $(MANDATORY_DIR)/%.c $(HEADERS) Makefile
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(@D)
 	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf ${UP}${CUT}
@@ -35,7 +35,7 @@ $(NAME): $(OBJS)
 
 clean:
 	@echo "$(RED)Cleaning build folder$(DEFAULT)"
-	@$(RM) $(OBJS) $(OBJS_BONUS)
+	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
 	@echo "$(RED)Cleaning $(NAME)$(DEFAULT)"
