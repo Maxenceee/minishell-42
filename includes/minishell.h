@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/07 19:15:11 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/08 10:46:57 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_data {
 	int		fdout;
 	int		pid;
 	char	**envp;
+	int		exit;
 }				t_data;
 
 typedef struct	s_signal
