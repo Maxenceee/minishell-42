@@ -6,11 +6,11 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:28:38 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/07 18:36:51 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/09 23:11:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 static char	**free_tab(char **tab)
 {

@@ -6,11 +6,11 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 21:23:53 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/07 18:37:01 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/09 23:11:21 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 size_t	ft_strlen(const char *str)
 {

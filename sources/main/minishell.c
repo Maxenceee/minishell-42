@@ -6,11 +6,21 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/08 10:47:32 by mgama            ###   ########.fr       */
+/*   Updated: 2023/07/09 20:20:50 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	print_name(void)
+{
+	printf("___  ___ _         _       _            _  _ \n");
+	printf("|  \\/  |(_)       (_)     | |          | || |\n");
+	printf("| .  . | _  _ __   _  ___ | |__    ___ | || |\n");
+	printf("| |\\/| || || '_ \\ | |/ __|| '_ \\  / _ \\| || |\n");
+	printf("| |  | || || | | || |\\__ \\| | | ||  __/| || |\n");
+	printf("\\_|  |_/|_||_| |_||_||___/|_| |_| \\___||_||_|\n\n");
+}
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -21,9 +31,9 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_bzero(&minishell, sizeof(t_data));
 	minishell.envp = envp;
 	minishell.in = dup(STDIN);
-	minishell.out = dup(stdout);
+	minishell.out = dup(STDOUT);
 	reset_fds(&minishell);
-	printf("%d\n", minishell.exit);
+	print_name();
 	// parsing function
 	// fork_processes(&minishell);
 	return (0);
