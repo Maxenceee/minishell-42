@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:42:36 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 17:16:53 by mgama            ###   ########.fr       */
+/*   Created: 2023/10/30 16:28:56 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/30 17:09:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#ifndef ENV_H
+# define ENV_H
 
-char	*ft_strdup(const char *src)
+typedef struct s_env_element	t_env_element;
+
+struct s_env_element
 {
-	char	*str;
-	int		i;
+	t_env_element	*next;
+	char			*key;
+	char			*value;
+};
 
-	if (!src)
-		return (NULL);
-	str = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (src[i] != '\0')
-	{
-		str[i] = src[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
+int		ft_parse_env(t_data *minishell, char **envp);
+
+int		ft_push_env_element(t_data *minishell, char *line);
+
+/* print env */
+
+void	print_env(t_data *minishell);
+
+#endif

@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:42:36 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 17:16:53 by mgama            ###   ########.fr       */
+/*   Created: 2023/10/30 17:07:58 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/30 17:21:19 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *src)
+void	print_env(t_data *minishell)
 {
-	char	*str;
-	int		i;
+	t_env_element	*el;
 
-	if (!src)
-		return (NULL);
-	str = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (src[i] != '\0')
+	el = minishell->env;
+	while (el)
 	{
-		str[i] = src[i];
-		i++;
+		printf("%s=%s\n", el->key, el->value);
+		el = el->next;
 	}
-	str[i] = '\0';
-	return (str);
 }
