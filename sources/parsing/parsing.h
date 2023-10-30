@@ -6,7 +6,7 @@
 /*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/10/30 16:00:05 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:56:04 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ struct s_parsing_commands
 {
 	t_parsing_cmd	*next;
 	char			**cmd;
-	t_parsing_token	token;
+	char			*line;
 };
 
 int		ft_mainloop(t_data *minishell);

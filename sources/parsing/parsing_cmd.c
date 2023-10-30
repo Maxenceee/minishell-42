@@ -6,7 +6,7 @@
 /*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/10/30 15:48:08 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:57:38 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@ void	print_linked_list(t_parsing_cmd *cmd)
 	}
 }
 
+int	ft_compose(char *line, t_parsing_cmd *new_cmd)
+{
+	int	i;
+
+	i = -1;
+	new_cmd->cmd = ft_split(line, " \t");
+	if(!new_cmd->cmd)
+		return (MS_ERROR);
+	new_cmd->line = ft_strdup(line);
+	if(!new_cmd->line)
+		return (free_tab(new_cmd->cmd), MS_ERROR);
+}
+
 int ft_push_new_command(t_data *minishell, char *line)
 {
 	t_parsing_cmd	*new_cmd;
@@ -29,8 +42,7 @@ int ft_push_new_command(t_data *minishell, char *line)
 	new_cmd = ft_calloc(1, sizeof(t_parsing_cmd));
 	if (!new_cmd)
 		return (MS_ERROR);
-	new_cmd->cmd = ft_split(line, " \t");
-	if (!new_cmd->cmd)
+	if (ft_compose(line, new_cmd))
 		return (free(new_cmd), MS_ERROR);
 	tmp = minishell->parsing_cmd;
 	while (tmp)
