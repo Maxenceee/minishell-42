@@ -6,7 +6,7 @@
 /*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/10/30 16:57:38 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/10/30 17:17:49 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,15 @@ void	print_linked_list(t_parsing_cmd *cmd)
 int	ft_compose(char *line, t_parsing_cmd *new_cmd)
 {
 	int	i;
+	char *tmp;
 
 	i = -1;
-	new_cmd->cmd = ft_split(line, " \t");
+	while (line[++i] != '>' && line[++i] != '<' && line[++i])
+		;
+	tmp = malloc(sizeof(char) * i + 1);
+	tmp = ft_strlcpy(tmp, line, i);
+	tmp[i] = '\0';
+	new_cmd->cmd = ft_split(tmp, " \t");
 	if(!new_cmd->cmd)
 		return (MS_ERROR);
 	new_cmd->line = ft_strdup(line);
