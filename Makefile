@@ -26,13 +26,13 @@ CUT				=	"\033[K"
 $(OBJ_DIR)/%.o: $(MANDATORY_DIR)/%.c $(HEADERS) $(HEADERS_SOURCES) Makefile
 	@mkdir -p $(@D)
 	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
-	@$(CC) $(CFLAGS) -c $< -o $@ -D DEBUG_MODE
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf ${UP}${CUT}
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) -lm -g
+	@$(CC) $(OBJS) -o $(NAME) -lm -g -lreadline
 	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 clean:

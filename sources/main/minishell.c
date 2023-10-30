@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 12:22:31 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 15:20:59 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)(argv); // temp ignoring
 	ft_bzero(&minishell, sizeof(t_data));
 	minishell.envp = envp;
-	minishell.in = dup(STDIN);
-	minishell.out = dup(STDOUT);
+	minishell.in = dup(MS_STDIN);
+	minishell.out = dup(MS_STDOUT);
 	reset_fds(&minishell);
 	print_name();
 	// parsing function
-	fork_processes(&minishell);
+	// fork_processes(&minishell);
+	ft_mainloop(&minishell);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/08 10:48:23 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 16:03:33 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 // 	}
 // 	return (0);
 // }
+
+char **cmd = {"echo", "-n", "hello", NULL};
+token = REDIR_OUT;
+dest = "nferkj"
+execve(cmd[0], cmd, envp);
 
 // int	open_fdinout(int idx, t_data *c)
 // {

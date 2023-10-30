@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:40:49 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 12:17:34 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 15:48:50 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,19 @@ char	*parse_env(char *envp[], char *cmd)
 	}
 	free(bins);
 	return (NULL);
+}
+
+int	ft_mainloop(t_data *minishell)
+{
+	char	*line;
+
+	while (!minishell->exit)
+	{
+		line = readline(MS_PROMPT_NAME);
+		if (ft_push_new_command(minishell, line))
+			return (ft_error("Error: could not allocate memory.\n"));
+		print_linked_list(minishell->parsing_cmd);
+		ft_destroy_parsing_cmd(minishell);
+	}
+	return (MS_SUCCESS);
 }

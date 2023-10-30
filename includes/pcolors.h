@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pcolors.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:09:35 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/17 18:37:58 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 15:13:37 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,5 @@
 # define U_CYAN		"\033[4;36m"
 # define U_GREY		"\033[4;90m"
 # define U_PURPLE	"\x1b[4;38;5;92m"
-
-/*
- *	-- Misc
- */
-
-# define NL		"\n"
-# define TAB	"\t"
-# define DTAB	"\t\t"
-# define TTAB	"\t\t\t"
-# define QTAB	"\t\t\t\t"
 
 #endif /* PCOLORS_H */
