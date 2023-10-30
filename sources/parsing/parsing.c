@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:40:49 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/07 18:40:57 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 12:17:34 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*parse_env(char *envp[], char *cmd)
 	path = get_path(envp);
 	if (!path)
 		return (NULL);
-	bins = ft_split(path, ':');
+	bins = ft_split(path, ":");
 	if (!bins)
 		return (NULL);
 	i = -1;

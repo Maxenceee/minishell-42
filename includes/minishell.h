@@ -6,24 +6,22 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/08 10:46:57 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 12:21:54 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <fcntl.h>
 # include <dirent.h>
 # include <sys/wait.h>
 # include <limits.h>
 # include <errno.h>
 # include <signal.h>
 
+# include "pcolors.h"
+
+# include "../sources/builtins/builtins.h"
 # include "../sources/utils/utils.h"
 
 # define STDIN 0
@@ -66,60 +64,54 @@ typedef struct	s_signal
  * main
  * 
  */
-/* signal */
 
+/* signal */
 
 /**
  * exec
  * 
  */
+
 /* pipes */
+
 void	create_pipes(t_data *commands);
 void	close_pipes(t_data *commands);
 int		dup2_fdinout(int fdin, int fdout);
 
 /* process */
+
 void	fork_processes(t_data *commands);
 void	process_child(t_data *commands, int idx);
 int		open_fdinout(int idx, t_data *c);
 int		execcmd(char **command, char *envp[]);
 
-
 /**
  * parsing
  * 
  */
+
 /* parsing */
+
 char	*parse_env(char *envp[], char *cmd);
-
-
-/**
- * builtin
- * 
- */
-/* cd */
-/* echo */
-/* env */
-/* exit */
-/* export */
-/* pwd */
-/* unset */
 
 
 /**
  * tools
  * 
  */
+
 /* fds */
+
 void	close_fds(t_data *minishell);
 void	reset_fds(t_data *minishell);
-
 
 /**
  * exits
  * 
  */
+
 /* exit */
+
 void	exit_with_code(t_data *commands, int code);
 void	exit_error_with_msg(t_data *commands, char *msg);
 

@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:48:29 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/09 23:10:07 by mgama            ###   ########.fr       */
+/*   Created: 2023/07/11 20:30:39 by mgama             #+#    #+#             */
+/*   Updated: 2023/09/26 18:03:22 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+char	**free_tab(char **tab)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < len)
+	while (tab[i])
 	{
-		((char *)b)[i] = (unsigned char)c;
-		i++;
+		free(tab[i++]);
 	}
-	return (b);
+	free(tab);
+	return (0);
 }
 
-void	ft_bzero(void *s, size_t n)
+int	check_separator(char c, char *charset)
 {
-	ft_memset(s, '\0', n);
+	int	i;
+
+	i = 0;
+	while (charset[i] != '\0')
+	{
+		if (c == charset[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }

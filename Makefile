@@ -4,13 +4,15 @@ OBJ_DIR			=	.objs
 SRCS			=	$(shell find $(MANDATORY_DIR) -name "*.c")
 OBJS			=	$(patsubst $(MANDATORY_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS))
 
-HEADER_SRCS		=	minishell.h
-HEADERS_DIR		=	includes/
-HEADERS			=	$(addprefix $(HEADERS_DIR), $(HEADER_SRCS))
+HEADERS_DIR		=	includes
+HEADERS_FONT_DIR =	$(MANDATORY_DIR)/font
+HEADERS			=	$(shell find $(HEADERS_DIR) -name "*.h")
+HEADERS_SOURCES	=	$(shell find $(MANDATORY_DIR) -name "*.h")
+
 CC				=	cc
 RM				=	rm -f
-CFLAGS			=	-Wall -Wextra -Werror -I$(HEADERS_DIR)
-# LIBS			=	-lpthread
+CFLAGS			=	-I$(HEADERS_DIR) -I $(HEADERS_FONT_DIR) -g -O0 #-o3 -Wall -Wextra -Werror
+
 NAME			=	minishell
 
 GREEN			=	\033[1;32m
@@ -21,16 +23,16 @@ DEFAULT			=	\033[0m
 UP				=	"\033[A"
 CUT				=	"\033[K"
 
-$(OBJ_DIR)/%.o: $(MANDATORY_DIR)/%.c $(HEADERS) Makefile
+$(OBJ_DIR)/%.o: $(MANDATORY_DIR)/%.c $(HEADERS) $(HEADERS_SOURCES) Makefile
 	@mkdir -p $(@D)
 	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ -D DEBUG_MODE
 	@printf ${UP}${CUT}
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	@$(CC) $(OBJS) -o $(NAME) -lm -g
 	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 clean:
@@ -43,4 +45,4 @@ fclean: clean
 
 re:				fclean all
 
-.PHONY:			all clean fclean re bonus
+.PHONY:			all clean fclean re

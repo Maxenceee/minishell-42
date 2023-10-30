@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:48:29 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/09 23:10:07 by mgama            ###   ########.fr       */
+/*   Created: 2023/07/10 13:32:31 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/18 17:12:21 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+#include "pcolors.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+int	ft_error(char *str)
 {
-	size_t	i;
+	int	r;
 
-	i = 0;
-	while (i < len)
-	{
-		((char *)b)[i] = (unsigned char)c;
-		i++;
-	}
-	return (b);
+	r = 0;
+	r += write(2, B_RED, 8);
+	r += write(2, str, ft_strlen(str));
+	r += write(2, RESET, 4);
+	return (r);
 }
 
-void	ft_bzero(void *s, size_t n)
+int	ft_warning(char *str)
 {
-	ft_memset(s, '\0', n);
+	int	r;
+
+	r = 0;
+	r += write(2, B_YELLOW, 8);
+	r += write(2, str, ft_strlen(str));
+	r += write(2, RESET, 4);
+	return (r);
+}
+
+int	ft_info(char *str)
+{
+	return (printf("%s%s%s", B_YELLOW, str, RESET));
 }

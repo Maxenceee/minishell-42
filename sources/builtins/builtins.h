@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:48:29 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/09 23:10:07 by mgama            ###   ########.fr       */
+/*   Created: 2023/10/30 12:20:42 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/30 12:21:14 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#ifndef BUILDINS_H
+# define BUILDINS_H
 
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t	i;
+/**
+ * builtin
+ * 
+ */
 
-	i = 0;
-	while (i < len)
-	{
-		((char *)b)[i] = (unsigned char)c;
-		i++;
-	}
-	return (b);
-}
+/* cd */
+/* echo */
+/* env */
+/* exit */
+/* export */
+/* pwd */
+/* unset */
 
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, '\0', n);
-}
+#endif

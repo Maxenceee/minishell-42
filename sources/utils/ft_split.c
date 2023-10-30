@@ -6,26 +6,13 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:28:38 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/09 23:11:29 by mgama            ###   ########.fr       */
+/*   Updated: 2023/09/28 11:27:19 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-static char	**free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-	}
-	free(tab);
-	return (0);
-}
-
-static int	count_strings(const char *str, char charset)
+static int	count_strings(const char *str, char *charset)
 {
 	int	i;
 	int	count;
@@ -34,27 +21,27 @@ static int	count_strings(const char *str, char charset)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		while (str[i] != '\0' && charset == str[i])
+		while (str[i] != '\0' && check_separator(str[i], charset))
 			i++;
 		if (str[i] != '\0')
 			count++;
-		while (str[i] != '\0' && charset != str[i])
+		while (str[i] != '\0' && !check_separator(str[i], charset))
 			i++;
 	}
 	return (count);
 }
 
-static int	ft_strlen_sep(const char *str, char charset)
+static int	ft_strlen_sep(const char *str, char *charset)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] && charset != str[i])
+	while (str[i] && !check_separator(str[i], charset))
 		i++;
 	return (i);
 }
 
-static char	*ft_word(const char *str, char charset)
+static char	*ft_word(const char *str, char *charset)
 {
 	int		len_word;
 	int		i;
@@ -74,7 +61,7 @@ static char	*ft_word(const char *str, char charset)
 	return (word);
 }
 
-char	**ft_split(const char *str, char charset)
+char	**ft_split(const char *str, char *charset)
 {
 	char	**strings;
 	int		i;
@@ -88,7 +75,7 @@ char	**ft_split(const char *str, char charset)
 		return (0);
 	while (*str != '\0')
 	{
-		while (*str != '\0' && *str == charset)
+		while (*str != '\0' && check_separator(*str, charset))
 			str++;
 		if (*str != '\0')
 		{
@@ -96,7 +83,7 @@ char	**ft_split(const char *str, char charset)
 			if (strings[i++] == 0)
 				return (free_tab(strings));
 		}
-		while (*str && *str != charset)
+		while (*str && !check_separator(*str, charset))
 			str++;
 	}
 	strings[i] = 0;

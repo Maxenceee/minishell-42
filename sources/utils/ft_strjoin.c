@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 21:23:49 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/09 23:11:34 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/01 22:05:14 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,31 @@ char	*ft_strjoin_arr(int size, char **strs, char *sep)
 	}
 	*d = '\0';
 	return (string);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	if (!s1)
+		s1 = (char *)ft_calloc(1, sizeof(char));
+	if (!s1)
+		return (NULL);
+	if (!s2)
+		return (free(s1), NULL);
+	str = malloc(
+			sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (free(s1), NULL);
+	i = -1;
+	j = 0;
+	while (s1 && s1[++i] != '\0')
+		str[i] = s1[i];
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	free(s1);
+	return (str);
 }

@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:48:29 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/09 23:10:07 by mgama            ###   ########.fr       */
+/*   Created: 2022/11/07 14:00:27 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/10 15:39:34 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+int	ft_strlcpy(char *dest, char *src, uint32_t size)
 {
-	size_t	i;
+	uint32_t	i;
+	uint32_t	x;
 
+	x = ft_strlen(src);
 	i = 0;
-	while (i < len)
+	if (size != 0)
 	{
-		((char *)b)[i] = (unsigned char)c;
-		i++;
+		while (i < size && src[i] != '\0')
+		{
+			dest[i] = src[i];
+			i++;
+		}
 	}
-	return (b);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, '\0', n);
+	return (x);
 }

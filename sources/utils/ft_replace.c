@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_replace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:48:29 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/09 23:10:07 by mgama            ###   ########.fr       */
+/*   Created: 2023/07/18 13:10:49 by mgama             #+#    #+#             */
+/*   Updated: 2023/09/09 12:24:43 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	ft_replace(char *src, char to_rep, char set)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (i < len)
+	i = -1;
+	while (src[++i])
 	{
-		((char *)b)[i] = (unsigned char)c;
-		i++;
+		if (src[i] == to_rep)
+			src[i] = set;
 	}
-	return (b);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, '\0', n);
 }
