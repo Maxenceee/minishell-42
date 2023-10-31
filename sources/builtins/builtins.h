@@ -6,12 +6,20 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:20:42 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 13:24:35 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/31 16:59:58 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILDINS_H
-# define BUILDINS_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
+
+typedef struct s_data	t_data;
+
+typedef struct s_echo_token
+{
+	char	*token;
+	int		quoted;
+}				t_echo_token;
 
 /**
  * builtin
@@ -22,16 +30,22 @@
 
 /* echo */
 
+int		ft_builtin_echo(t_data *minishell, char *args, int has_newline);
+
 /* env */
-int	builtin_env(t_data *minishell);
+
+int		ft_builtin_in_env(t_data *minishell);
 
 /* export */
-int	builtin_export(t_data *minishell);
+
+int		ft_builtin_in_export(t_data *minishell, char *key, char *value);
 
 /* unset */
+
+int		ft_builtin_in_unset(t_data *minishell, char *key);
 
 /* pwd */
 
 /* exit */
 
-#endif /* BUILDINS_H */
+#endif /* BUILTINS_H */

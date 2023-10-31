@@ -32,7 +32,7 @@ $(OBJ_DIR)/%.o: $(MANDATORY_DIR)/%.c $(HEADERS) $(HEADERS_SOURCES) Makefile
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) -lm -g
+	@$(CC) $(OBJS) -o $(NAME) -lm -g -lreadline
 	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 clean:

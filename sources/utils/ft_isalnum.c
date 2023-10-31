@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing.c                                          :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:56:44 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 14:59:42 by mgama            ###   ########.fr       */
+/*   Created: 2022/11/07 13:41:47 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/31 15:53:39 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-void	free_minishell(t_data *minishell)
+int	ft_isalnum(int num)
 {
-	free_env(minishell);
+	return (ft_isdigit(num) || ft_isalpha(num));
 }

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing.c                                          :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:56:44 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 14:59:42 by mgama            ###   ########.fr       */
+/*   Created: 2022/11/07 13:44:16 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/31 15:52:06 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-void	free_minishell(t_data *minishell)
+int	ft_isdigit(int num)
 {
-	free_env(minishell);
+	return (num > 48 && num < 57);
 }

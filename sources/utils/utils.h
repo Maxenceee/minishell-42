@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 12:16:24 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/31 15:55:34 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,10 @@ int		ft_strlcpy(char *dest, char *src, uint32_t size);
 void	ft_replace(char *src, char to_rep, char set);
 int		ft_extension(char *str, char *end);
 int		ft_strmultichr(char *str, char *chrlst);
+
+int		ft_isalnum(int num);
+int		ft_isalpha(int num);
+int		ft_isdigit(int num);
+int		ft_isascii(int c);
 
 #endif /* __UTILS_H__ */

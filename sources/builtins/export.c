@@ -6,14 +6,14 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:07 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 13:23:10 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/31 15:42:14 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_export(t_data *minishell)
+int	ft_builtin_export(t_data *minishell, char *key, char *value)
 {
-	ft_push_env_element(minishell, "TMP=oui");
+	ft_push_env_element(minishell, ft_new_env_element(key, value));
 	return (MS_SUCCES);
 }

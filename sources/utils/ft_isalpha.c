@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing.c                                          :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:56:44 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 14:59:42 by mgama            ###   ########.fr       */
+/*   Created: 2022/11/07 13:44:11 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/31 15:53:27 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-void	free_minishell(t_data *minishell)
+int	ft_isalpha(int num)
 {
-	free_env(minishell);
+	return (num > 65 && num < 90 || num > 97 && num < 122);
 }
