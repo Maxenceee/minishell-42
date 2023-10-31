@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 15:55:34 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 00:17:04 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*ft_strjoin_arr(int size, char **strs, char *sep);
 char	*ft_strjoin(char *s1, char *s2);
 void	*ft_ljoin(void *s1, void *s2,
 			unsigned int size, unsigned int length);
+char	*ft_strjoin_char(char *s, char c);
 
 char	*ft_strchr(char *s, int c);
 char	*ft_strdup(const char *src);
