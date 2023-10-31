@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 16:56:39 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 00:22:28 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@
 # include <limits.h>
 # include <errno.h>
 # include <signal.h>
+# include <readline/readline.h>
 
 # include "pcolors.h"
-
-typedef struct s_data	t_data;
 
 # include "../sources/builtins/builtins.h"
 # include "../sources/env/env.h"
@@ -38,9 +37,11 @@ typedef struct s_data	t_data;
 # define FORK_ERROR "Fork"
 # define COMMAND_NOT_FOUND "Command not found"
 # define PERM_DENIED "permission denied"
+# define MS_ERROR_MSG "Error: Could not allocate memory.\n"
 
 # define MS_SUCCES 0
 # define MS_ERROR 1
+# define MS_NO_ERROR 2
 
 # define BUFF_SIZE 4096
 # define ERROR 1
@@ -51,7 +52,7 @@ struct s_data
 	int				in;
 	int				out;
 	int				pipein;
-	int 			pipeout;
+	int				pipeout;
 	int				fdin;
 	int				fdout;
 	int				pid;
@@ -59,7 +60,7 @@ struct s_data
 	t_env_element	*env;
 };
 
-typedef struct	s_signal
+typedef struct s_signal
 {
 	int				sigint;
 	int				sigquit;
@@ -101,7 +102,6 @@ int		execcmd(char **command, char *envp[]);
 
 char	*parse_env(char *envp[], char *cmd);
 
-
 /**
  * tools
  * 
@@ -119,8 +119,7 @@ void	reset_fds(t_data *minishell);
 
 /* exit */
 
-void	exit_with_code(t_data *commands, int code);
-void	exit_error_with_msg(t_data *commands, char *msg);
+void	free_minishell(t_data *minishell);
 
 /* freeing */
 
