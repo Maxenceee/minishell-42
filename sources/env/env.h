@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:28:56 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 17:09:29 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/31 13:24:46 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,4 @@ int		ft_push_env_element(t_data *minishell, char *line);
 
 void	print_env(t_data *minishell);
 
-#endif
+#endif /* ENV_H */

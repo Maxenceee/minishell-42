@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:20:42 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 12:21:14 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/31 13:24:35 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,19 @@
  */
 
 /* cd */
+
 /* echo */
+
 /* env */
-/* exit */
+int	builtin_env(t_data *minishell);
+
 /* export */
-/* pwd */
+int	builtin_export(t_data *minishell);
+
 /* unset */
 
-#endif
+/* pwd */
+
+/* exit */
+
+#endif /* BUILDINS_H */
