@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 16:56:18 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/31 23:10:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char *argv[], char *envp[])
 	reset_fds(&minishell);
 	print_name();
 	ft_parse_env(&minishell, envp);
-	print_env(&minishell);
+	// print_env(&minishell);
 	while (1)
 	{
 		char *res = readline(HEADER"$> "RESET);

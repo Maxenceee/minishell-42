@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:20:42 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 16:59:58 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/31 23:48:10 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 # define BUILTINS_H
 
 typedef struct s_data	t_data;
-
-typedef struct s_echo_token
-{
-	char	*token;
-	int		quoted;
-}				t_echo_token;
 
 /**
  * builtin
