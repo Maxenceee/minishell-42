@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:42:36 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 17:16:53 by mgama            ###   ########.fr       */
+/*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
+/*   Updated: 2023/10/30 17:10:17 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *src)
+int	ft_parse_env(t_data *minishell, char **envp)
 {
-	char	*str;
-	int		i;
+	int	i;
 
-	if (!src)
-		return (NULL);
-	str = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (src[i] != '\0')
+	i = -1;
+	while (envp[++i])
 	{
-		str[i] = src[i];
-		i++;
+		if (ft_push_env_element(minishell, envp[i]))
+			return (MS_ERROR);
 	}
-	str[i] = '\0';
-	return (str);
+	return (MS_SUCCES);
 }

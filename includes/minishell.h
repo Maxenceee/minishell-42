@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 12:21:54 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 16:56:39 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 
 # include "pcolors.h"
 
+typedef struct s_data	t_data;
+
 # include "../sources/builtins/builtins.h"
+# include "../sources/env/env.h"
 # include "../sources/utils/utils.h"
 
 # define STDIN 0
@@ -36,21 +39,25 @@
 # define COMMAND_NOT_FOUND "Command not found"
 # define PERM_DENIED "permission denied"
 
+# define MS_SUCCES 0
+# define MS_ERROR 1
+
 # define BUFF_SIZE 4096
 # define ERROR 1
 # define SUCCESS 0
 
-typedef struct s_data {
-	int		in;
-	int		out;
-	int		pipein;
-	int 	pipeout;
-	int		fdin;
-	int		fdout;
-	int		pid;
-	char	**envp;
-	int		exit;
-}				t_data;
+struct s_data
+{
+	int				in;
+	int				out;
+	int				pipein;
+	int 			pipeout;
+	int				fdin;
+	int				fdout;
+	int				pid;
+	int				exit;
+	t_env_element	*env;
+};
 
 typedef struct	s_signal
 {

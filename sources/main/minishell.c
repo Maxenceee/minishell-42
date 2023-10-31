@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 12:22:31 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 17:09:57 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)(argc); // temp ignoring
 	(void)(argv); // temp ignoring
 	ft_bzero(&minishell, sizeof(t_data));
-	minishell.envp = envp;
 	minishell.in = dup(STDIN);
 	minishell.out = dup(STDOUT);
 	reset_fds(&minishell);
 	print_name();
 	// parsing function
-	fork_processes(&minishell);
+	ft_parse_env(&minishell, envp);
+	print_env(&minishell);
 	return (0);
 }

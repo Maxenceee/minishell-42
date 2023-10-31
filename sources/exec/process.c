@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/08 10:48:23 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 16:13:59 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // 	cmd = parse_env(envp, command[0]);
 // 	if (!cmd || ft_strcmp(command[0], "") == 0)
 // 		return (2);
-// 	if (execve(cmd, command, envp) == -1)
+//	if (execve(cmd, command, envp) == -1)
 // 	{
 // 		perror("Could not execute execve");
 // 		return (1);
