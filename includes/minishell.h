@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 00:22:28 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 16:22:41 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,48 +19,45 @@
 # include <errno.h>
 # include <signal.h>
 # include <readline/readline.h>
-
 # include "pcolors.h"
 
-# include "../sources/builtins/builtins.h"
-# include "../sources/env/env.h"
-# include "../sources/utils/utils.h"
+# define MS_STDIN 0
+# define MS_STDOUT 1
+# define MS_STDERR 2
 
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
-
-# define PIPE_ERROR "Pipe error"
-# define EXEVE_ERROR "Could not execute execve"
-# define OPEN_IN_ERROR "Infile"
-# define OPEN_OUT_ERROR "Outfile"
-# define FORK_ERROR "Fork"
-# define COMMAND_NOT_FOUND "Command not found"
-# define PERM_DENIED "permission denied"
-# define MS_ERROR_MSG "Error: Could not allocate memory.\n"
-
-# define MS_SUCCES 0
-# define MS_ERROR 1
-# define MS_NO_ERROR 2
+# define MS_PIPE_ERROR "Pipe error"
+# define MS_EXEVE_ERROR "Could not execute execve"
+# define MS_OPEN_IN_ERROR "Infile"
+# define MS_OPEN_OUT_ERROR "Outfile"
+# define MS_FORK_ERROR "Fork"
+# define MS_COMMAND_NOT_FOUND "Command not found"
+# define MS_PERM_DENIED "permission denied"
+# define MS_PROMPT_NAME "minishell$ "
+# define MS_ALLOC_ERROR_MSG "Error: could not allocate memory.\n"
 
 # define BUFF_SIZE 4096
-# define ERROR 1
-# define SUCCESS 0
+# define MS_ERROR 1
+# define MS_SUCCESS 0
 
-struct s_data
-{
+# include "../sources/utils/utils.h"
+# include "../sources/builtins/builtins.h"
+# include "../sources/parsing/parsing.h"
+
+struct s_data {
 	int				in;
 	int				out;
 	int				pipein;
-	int				pipeout;
+	int 			pipeout;
 	int				fdin;
 	int				fdout;
 	int				pid;
+	char			**envp;
 	int				exit;
-	t_env_element	*env;
+	t_parsing_cmd	*parsing_cmd;
 };
 
-typedef struct s_signal
+typedef struct	s_signal
+
 {
 	int				sigint;
 	int				sigquit;

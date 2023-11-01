@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 00:33:09 by mgama            ###   ########.fr       */
+/*   Updated: 2023/10/30 15:20:59 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,7 @@ int	main(int argc, char *argv[], char *envp[])
 	print_name();
 	ft_parse_env(&minishell, envp);
 	// print_env(&minishell);
-	while (1)
-	{
-		char *res = readline(HEADER"$> "RESET);
-		add_history(res);
-		ft_builtin_echo(&minishell, res, 1);
-		free(res);
-	}
+	ft_mainloop(&minishell);
 	free_minishell(&minishell);
 	return (0);
 }
