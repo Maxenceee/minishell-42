@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/01 18:01:16 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 19:33:11 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,27 @@ typedef struct s_parsing_file		t_parsing_file;
 typedef enum e_parsing_token
 {
 	// PIPE, // |
-	REDIR_IN, // <
+	// REDIR_IN, // <
 	REDIR_OUT, // >
-	CONCAT_IN, // <<
+	// CONCAT_IN, // <<
 	CONCAT_OUT, // >>
 }			t_parsing_token;
 
 struct s_parsing_file
 {
 	char			*file_name;
-	t_parsing_file	*next;	
+	int				fd;
+	t_parsing_file	*next;
 };
 
 struct s_parsing_commands
 {
 	t_parsing_cmd	*next;
 	char			**cmd;
-	char			*line;
+	t_parsing_token	type;
+	int				pipe[2];
+	int				fin;
+	int				fout;
 	t_parsing_file	*files;
 };
 

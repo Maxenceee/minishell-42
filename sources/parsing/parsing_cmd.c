@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/01 15:38:18 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 19:18:51 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ int	ft_compose(char *line, t_parsing_cmd *new_cmd)
 	char *tmp;
 
 	i = -1;
-	while (line[++i] != '>' && line[++i] != '<' && line[++i])
-		;
-	tmp = ft_strtcpy(line, i);
-	if (!tmp)
-		return (MS_ERROR);
-	new_cmd->cmd = ft_split(tmp, " \t");
-	free(tmp);
-	if(!new_cmd->cmd)
-		return (MS_ERROR);
-	new_cmd->line = ft_strdup(line);
-	if(!new_cmd->line)
-		return (free_tab(new_cmd->cmd), MS_ERROR);
+	// while (line[++i] != '>' && line[++i] != '<' && line[++i])
+	// 	;
+	// tmp = ft_strtcpy(line, i);
+	// if (!tmp)
+	// 	return (MS_ERROR);
+	new_cmd->cmd = ft_split(line, " ");
+	// free(tmp);
+	// if(!new_cmd->cmd)
+	// 	return (MS_ERROR);
+	// new_cmd->line = ft_strdup(line);
+	// if(!new_cmd->line)
+	// 	return (free_tab(new_cmd->cmd), MS_ERROR);
 	return (MS_SUCCESS);
 }
 

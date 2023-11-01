@@ -6,91 +6,110 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 18:00:38 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 19:53:13 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	execcmd(char **command, char *envp[])
-// {
-// 	char		*cmd;
+int	execcmd(char **command, t_data *ms)
+{
+	char		*cmd;
+	char		**envp;
 
-// 	if (command[0] == NULL)
-// 		return (5);
-// 	cmd = parse_env(envp, command[0]);
-// 	if (!cmd || ft_strcmp(command[0], "") == 0)
-// 		return (2);
-// 	if (execve(cmd, command, envp) == -1)
-// 	{
-// 		perror("Could not execute execve");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
+	if (command[0] == NULL)
+		return (5);
+	cmd = parse_env(ms, command[0]);
+	if (!cmd || ft_strcmp(command[0], "") == 0)
+		return (2);
+	if (execve(cmd, command, envp) == -1)
+		return (perror(MS_EXEVE_ERROR), MS_ERROR);
+	return (MS_NO_ERROR);
+}
 
-// int	open_fdinout(t_parsing_cmd *cmd)
-// {
-// 	int	fdin;
-// 	int	fdout;
+int	open_fdinout(t_parsing_cmd *cmd)
+{
+	t_parsing_file	*f;
 
-// 	if (idx == 0)
-// 	{
-// 		fdin = open(c->input, O_RDONLY);
-// 		if (fdin == -1)
-// 			perror(OPEN_IN_ERROR);
-// 		if (dup2_fdinout(fdin, c->pipes[1]) < 0)
-// 			return (1);
-// 	}
-// 	else if (idx == c->process_count - 1)
-// 	{
-// 		fdout = open(c->output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-// 		if (fdout == -1)
-// 			exit_error_with_msg(c, OPEN_OUT_ERROR);
-// 		if (dup2_fdinout(c->pipes[2 * idx - 2], fdout) < 0)
-// 			return (1);
-// 	}
-// 	else
-// 		if (dup2_fdinout(c->pipes[2 * idx - 2],
-// 				c->pipes[2 * idx + 1]) < 0)
-// 			return (1);
-// 	return (0);
-// }
+	f = cmd->files;
+	while (f)
+	{
+		if (f->next)
+			f->fd = open(f->file_name, O_CREAT);
+		else
+		{
+			if (cmd->type == REDIR_OUT)
+				f->fd = open(f->file_name, O_TRUNC);
+			else
+				f->fd = open(f->file_name, O_APPEND);
+		}
+		// printf("name %s, fd=%d\n", f->file_name, f->fd);
+		f = f->next;
+	}
+	if (pipe(cmd->pipe) == -1)
+		return (MS_ERROR);
+	// printf("pipe read %d write %d\n", cmd->pipe[0], cmd->pipe[1]);
+	return (MS_SUCCESS);
+}
 
-// int	process_child(t_parsing_cmd *cmd)
-// {
-// 	pid_t	pid;
-// 	int		res;
+int	process_child(t_data *minishell, t_parsing_cmd *cmd)
+{
+	pid_t	pid;
+	int		res;
 
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (MS_ERROR);
-// 	if (pid == 0)
-// 	{
-// 		if (open_fdinout(idx, commands))
-// 			return (MS_ERROR);
-// 		close_pipes(commands);
-// 		res = execcmd(commands->command_list[idx], commands->envp);
-// 		if (res == 5)
-// 			exit_error_with_msg(commands, PERM_DENIED);
-// 		else if (res == 2)
-// 			ft_putstr_fd(commands->command_list[idx][0], COMMAND_NOT_FOUND, 2);
-// 		exit(1);
-// 	}
-// }
+	pid = fork();
+	if (pid == -1)
+		return (MS_ERROR);
+	if (pid == 0)
+	{
+		res = execcmd(cmd->cmd, minishell);
+		if (res == 5)
+			return (MS_ERROR);
+		else if (res == 2)
+		{
+			ft_error(MS_COMMAND_NOT_FOUND);
+			ft_error(cmd->cmd[0]);
+			ft_error("\n");
+		}
+		close_pipes(cmd);
+		exit(1);
+	}
+}
 
-// void	fork_processes(t_data *commands)
-// {
-// 	int		i;
+int	fork_processes(t_data *minishell)
+{
+	t_parsing_cmd	*cmd;
+	t_parsing_cmd	*last;
+	int				fd[2];
 
-// 	commands->pipe_nb = 2 * (commands->process_count - 1);
-// 	commands->pipes = malloc(sizeof(int) * commands->pipe_nb);
-// 	if (!commands->pipes)
-// 		exit_error_with_msg(commands, PIPE_ERROR);
-// 	create_pipes(commands);
-// 	i = -1;
-// 	while (++i < commands->process_count)
-// 		process_child(commands, i);
-// 	close_pipes(commands);
-// 	waitpid(-1, NULL, 0);
-// }
+	cmd = minishell->parsing_cmd;
+	while (cmd)
+	{
+		if (open_fdinout(cmd))
+			return (MS_ERROR);
+		cmd = cmd->next;
+	}
+	cmd = minishell->parsing_cmd;
+	last = NULL;
+	while (cmd)
+	{
+		fd[0] = 0;
+		fd[1] = 1;
+		if (last)
+			fd[0] = last->pipe[0];
+		if (cmd->next)
+			fd[1] = last->pipe[1];
+		if (dup2_fdinout(fd[0], fd[1]))
+			return (MS_ERROR);
+		last = cmd;
+		cmd = cmd->next;
+	}
+	cmd = minishell->parsing_cmd;
+	while (cmd)
+	{
+		process_child(minishell, cmd);
+		cmd = cmd->next;
+	}
+	waitpid(-1, NULL, 0);
+	return (MS_NO_ERROR);
+}

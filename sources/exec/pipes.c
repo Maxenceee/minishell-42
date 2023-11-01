@@ -6,38 +6,32 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:21:50 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/08 10:48:17 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 19:11:44 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	create_pipes(t_data *commands)
-// {
-// 	int	i;
+void	close_pipes(t_parsing_cmd *cmd)
+{
+	t_parsing_file	*f;
 
-// 	i = -1;
-// 	while (++i < commands->process_count)
-// 	{
-// 		if (pipe(commands->pipes + 2 * i) == -1)
-// 			exit_error_with_msg(commands, PIPE_ERROR);
-// 	}
-// }
+	close(cmd->pipe[0]);
+	close(cmd->pipe[1]);
+	f = cmd->files;
+	while (f)
+	{
+		if (f->fd >= 0)
+			close(f->fd);
+		f = f->next;
+	}
+}
 
-// void	close_pipes(t_data *commands)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (++i < commands->pipe_nb)
-// 		close(commands->pipes[i]);
-// }
-
-// int	dup2_fdinout(int fdin, int fdout)
-// {
-// 	if (dup2(fdin, STDIN_FILENO) < 0)
-// 		return (3);
-// 	if (dup2(fdout, STDOUT_FILENO) < 0)
-// 		return (3);
-// 	return (0);
-// }
+int	dup2_fdinout(int fdin, int fdout)
+{
+	if (dup2(fdin, STDIN_FILENO) < 0)
+		return (3);
+	if (dup2(fdout, STDOUT_FILENO) < 0)
+		return (3);
+	return (0);
+}

@@ -63,16 +63,22 @@ char	*ft_parse_expands(t_data *minishell, char *arg)
 				i--;
 				continue ;
 			}
+			if (!res)
+				return (NULL);
 		}
 		if (arg[i] == ' ' && !(quoted || read_env))
 		{
 			res = ft_strjoin_char(res, arg[i]);
+			if (!res)
+				return (NULL);
 			while (!(quoted || read_env) && arg[i] == ' ')
 				i++;
 			i--;
 			continue ;
 		}
 		res = ft_strjoin_char(res, arg[i]);
+		if (!res)
+			return (NULL);
 	}
 	return (res);
 }
