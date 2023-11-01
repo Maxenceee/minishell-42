@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 00:06:15 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 13:24:17 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,14 @@ int	ft_print_echo_arg(t_data *minishell, char *arg)
 				i--;
 				continue ;
 			}
+		}
+		if (arg[i] == ' ' && !(quoted || read_env))
+		{
+			printf("%c", arg[i]);
+			while (!(quoted || read_env) && arg[i] == ' ')
+				i++;
+			i--;
+			continue ;
 		}
 		printf("%c", arg[i]);
 	}
