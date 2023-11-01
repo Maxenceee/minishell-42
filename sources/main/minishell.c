@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 15:20:59 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:45:52 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)(argc);
 	(void)(argv);
 	ft_bzero(&minishell, sizeof(t_data));
-	minishell.in = dup(STDIN);
-	minishell.out = dup(STDOUT);
+	minishell.in = dup(MS_STDIN);
+	minishell.out = dup(MS_STDOUT);
 	reset_fds(&minishell);
 	print_name();
 	ft_parse_env(&minishell, envp);

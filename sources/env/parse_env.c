@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 15:06:51 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 15:36:01 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_parse_env(t_data *minishell, char **envp)
 	{
 		if (ft_push_env_element(minishell,
 				ft_new_env_element_fromline(envp[i])))
-			return (ft_error(MS_ERROR_MSG), MS_ERROR);
+			return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
 	}
-	return (MS_SUCCES);
+	return (MS_SUCCESS);
 }

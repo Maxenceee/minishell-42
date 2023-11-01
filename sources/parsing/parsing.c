@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:40:49 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 16:38:51 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:42:52 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,19 @@ int	ft_mainloop(t_data *minishell)
 	{
 		i = -1;
 		line = readline(MS_PROMPT_NAME);
-		pipline = ft_split(line, "|");
-		if(!pipline)
-			return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
-		while (pipline[++i])
-		{
-			if (ft_push_new_command(minishell, pipline[i]))
-				return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
-			print_linked_list(minishell->parsing_cmd);
-		}
-		free_tab(pipline);
-		ft_destroy_parsing_cmd(minishell);
+		ft_builtin_echo(minishell, line, 1);
+		// pipline = ft_split(line, "|");
+		// if(!pipline)
+		// 	return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
+		// while (pipline[++i])
+		// {
+		// 	if (ft_push_new_command(minishell, pipline[i]))
+		// 		return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
+		// 	print_linked_list(minishell->parsing_cmd);
+		// }
+		// free_tab(pipline);
+		// ft_destroy_parsing_cmd(minishell);
+		free(line);
 	}
 	return (MS_SUCCESS);
 }

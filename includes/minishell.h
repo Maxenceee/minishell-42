@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 16:22:41 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:41:34 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,20 @@
 # define MS_FORK_ERROR "Fork"
 # define MS_COMMAND_NOT_FOUND "Command not found"
 # define MS_PERM_DENIED "permission denied"
-# define MS_PROMPT_NAME "minishell$ "
+# define MS_PROMPT_NAME HEADER"minishell$ "RESET
 # define MS_ALLOC_ERROR_MSG "Error: could not allocate memory.\n"
 
-# define BUFF_SIZE 4096
-# define MS_ERROR 1
-# define MS_SUCCESS 0
+# define BUFF_SIZE		4096
+# define MS_SUCCESS		0
+# define MS_ERROR		1
+# define MS_NO_ERROR	2
 
 # include "../sources/utils/utils.h"
-# include "../sources/builtins/builtins.h"
 # include "../sources/parsing/parsing.h"
+# include "../sources/builtins/builtins.h"
+# include "../sources/env/env.h"
+
+typedef struct s_data	t_data;
 
 struct s_data {
 	int				in;
@@ -51,7 +55,7 @@ struct s_data {
 	int				fdin;
 	int				fdout;
 	int				pid;
-	char			**envp;
+	t_env_element	*env;
 	int				exit;
 	t_parsing_cmd	*parsing_cmd;
 };

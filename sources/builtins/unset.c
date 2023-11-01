@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 15:42:14 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 15:34:40 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ int	ft_builtin_unset(t_data *minishell, char *key)
 		last = env_e;
 		env_e = env_e->next;
 	}
-	return (MS_SUCCES);
+	return (MS_SUCCESS);
 }

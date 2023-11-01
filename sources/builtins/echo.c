@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 13:37:33 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:30:47 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,16 @@ int	ft_print_echo_arg(t_data *minishell, char *arg)
 		}
 		printf("%c", arg[i]);
 	}
-	return (MS_SUCCES);
+	return (MS_SUCCESS);
 }
 
 int	ft_builtin_echo(t_data *minishell, char *args, int has_newline)
 {
 	if (check_quotes(args)) // si il manque une quote, n'affiche rien
-		return (MS_SUCCES);
+		return (MS_SUCCESS);
 	if (ft_print_echo_arg(minishell, args))
-		return (ft_error(MS_ERROR_MSG), MS_ERROR);
+		return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
 	if (has_newline)
 		printf("\n");
-	return (MS_SUCCES);
+	return (MS_SUCCESS);
 }

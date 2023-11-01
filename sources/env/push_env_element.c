@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:07:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 15:07:34 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 15:35:06 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_check_and_reasign_env_e(t_env_element *env_e,
 		}
 		env_e = env_e->next;
 	}
-	return (MS_SUCCES);
+	return (MS_SUCCESS);
 }
 
 int	ft_push_env_element(t_data *minishell, t_env_element *env_e)
@@ -49,7 +49,7 @@ int	ft_push_env_element(t_data *minishell, t_env_element *env_e)
 	if (res == MS_ERROR)
 		return (MS_ERROR);
 	else if (res == MS_NO_ERROR)
-		return (MS_SUCCES);
+		return (MS_SUCCESS);
 	tmp = minishell->env;
 	while (tmp)
 	{
@@ -61,5 +61,5 @@ int	ft_push_env_element(t_data *minishell, t_env_element *env_e)
 		minishell->env = env_e;
 	else
 		tmp->next = env_e;
-	return (MS_SUCCES);
+	return (MS_SUCCESS);
 }

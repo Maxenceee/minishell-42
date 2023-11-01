@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/01 15:10:36 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:38:18 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ int	ft_compose(char *line, t_parsing_cmd *new_cmd)
 	i = -1;
 	while (line[++i] != '>' && line[++i] != '<' && line[++i])
 		;
-	tmp = malloc(sizeof(char) * i + 1);
-	tmp = ft_strlcpy(tmp, line, i);
-	tmp[i] = '\0';
+	tmp = ft_strtcpy(line, i);
+	if (!tmp)
+		return (MS_ERROR);
 	new_cmd->cmd = ft_split(tmp, " \t");
+	free(tmp);
 	if(!new_cmd->cmd)
 		return (MS_ERROR);
 	new_cmd->line = ft_strdup(line);
@@ -72,7 +73,10 @@ int ft_interpretor_line(t_data *minishell)
 	i = -1;
 	//envoyer a l'execve minishell->cmd
 	// si il y a + d'un separateur juste cree les premiers ficher et de rien faire dedans prendre les autre 
-	while(line)
+	// while(line)
+	// {
+		
+	// }
 }
 void	ft_destroy_parsing_cmd(t_data *minishell)
 {

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:27 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 15:42:14 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 15:34:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	ft_builtin_env(t_data *minishell)
 {
 	print_env(minishell);
-	return (MS_SUCCES);
+	return (MS_SUCCESS);
 }
