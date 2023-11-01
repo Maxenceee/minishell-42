@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/30 16:57:54 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/01 18:00:38 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // 	cmd = parse_env(envp, command[0]);
 // 	if (!cmd || ft_strcmp(command[0], "") == 0)
 // 		return (2);
-//	if (execve(cmd, command, envp) == -1)
+// 	if (execve(cmd, command, envp) == -1)
 // 	{
 // 		perror("Could not execute execve");
 // 		return (1);
@@ -29,7 +29,7 @@
 // 	return (0);
 // }
 
-// int	open_fdinout(int idx, t_data *c)
+// int	open_fdinout(t_parsing_cmd *cmd)
 // {
 // 	int	fdin;
 // 	int	fdout;
@@ -57,18 +57,18 @@
 // 	return (0);
 // }
 
-// void	process_child(t_data *commands, int idx)
+// int	process_child(t_parsing_cmd *cmd)
 // {
 // 	pid_t	pid;
 // 	int		res;
 
 // 	pid = fork();
 // 	if (pid == -1)
-// 		exit_error_with_msg(commands, FORK_ERROR);
+// 		return (MS_ERROR);
 // 	if (pid == 0)
 // 	{
 // 		if (open_fdinout(idx, commands))
-// 			return ;
+// 			return (MS_ERROR);
 // 		close_pipes(commands);
 // 		res = execcmd(commands->command_list[idx], commands->envp);
 // 		if (res == 5)

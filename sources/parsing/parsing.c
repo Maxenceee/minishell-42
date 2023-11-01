@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:40:49 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 15:42:52 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 18:01:49 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,15 @@ int	ft_mainloop(t_data *minishell)
 {
 	int		i;
 	char	*line;
+	char	*cmd;
 	char	**pipline;
 	
 	while (!minishell->exit)
 	{
 		i = -1;
 		line = readline(MS_PROMPT_NAME);
-		ft_builtin_echo(minishell, line, 1);
+		cmd = ft_parse_expands(minishell, line);
+		ft_builtin_echo(minishell, cmd, 1);
 		// pipline = ft_split(line, "|");
 		// if(!pipline)
 		// 	return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);

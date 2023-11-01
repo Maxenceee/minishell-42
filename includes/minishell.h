@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 15:41:34 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 17:10:40 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int		dup2_fdinout(int fdin, int fdout);
 
 /* process */
 
-void	fork_processes(t_data *commands);
-void	process_child(t_data *commands, int idx);
+// void	fork_processes(t_data *commands);
+void	process_child(t_parsing_cmd *commands, int idx);
 int		open_fdinout(int idx, t_data *c);
 int		execcmd(char **command, char *envp[]);
 
