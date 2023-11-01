@@ -6,7 +6,7 @@
 /*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/10/30 17:17:49 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:10:36 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	ft_compose(char *line, t_parsing_cmd *new_cmd)
 	new_cmd->line = ft_strdup(line);
 	if(!new_cmd->line)
 		return (free_tab(new_cmd->cmd), MS_ERROR);
+	return (MS_SUCCESS);
 }
 
 int ft_push_new_command(t_data *minishell, char *line)
@@ -64,6 +65,15 @@ int ft_push_new_command(t_data *minishell, char *line)
 	return (MS_SUCCESS);
 }
 
+int ft_interpretor_line(t_data *minishell)
+{
+	int i;
+
+	i = -1;
+	//envoyer a l'execve minishell->cmd
+	// si il y a + d'un separateur juste cree les premiers ficher et de rien faire dedans prendre les autre 
+	while(line)
+}
 void	ft_destroy_parsing_cmd(t_data *minishell)
 {
 	t_parsing_cmd	*tmp;
