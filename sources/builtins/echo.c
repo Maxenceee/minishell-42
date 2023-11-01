@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 13:24:17 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 14:13:04 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,9 @@ int	ft_print_echo_arg(t_data *minishell, char *arg)
 				printf("$");
 			else
 			{
-				token = ft_calloc(i - j + 1, sizeof(char));
+				token = ft_strtcpy(arg + j, i - j);
 				if (!token)
 					return (MS_ERROR);
-				ft_strlcpy(token, arg + j, i - j);
-				token[i - j] = 0;
 				ft_print_env_variable(minishell, token);
 				free(token);
 				i--;
