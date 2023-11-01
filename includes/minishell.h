@@ -19,11 +19,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <readline/readline.h>
-# include <readline/history.h>
-
 # include "pcolors.h"
-
-typedef struct s_data	t_data;
 
 # define MS_STDIN 0
 # define MS_STDOUT 1
@@ -61,6 +57,7 @@ struct s_data {
 };
 
 typedef struct	s_signal
+
 {
 	int				sigint;
 	int				sigquit;
@@ -102,7 +99,6 @@ int		execcmd(char **command, char *envp[]);
 
 char	*parse_env(char *envp[], char *cmd);
 
-
 /**
  * tools
  * 
@@ -120,8 +116,7 @@ void	reset_fds(t_data *minishell);
 
 /* exit */
 
-void	exit_with_code(t_data *commands, int code);
-void	exit_error_with_msg(t_data *commands, char *msg);
+void	free_minishell(t_data *minishell);
 
 /* freeing */
 

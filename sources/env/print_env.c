@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing.c                                          :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:56:44 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 14:59:42 by mgama            ###   ########.fr       */
+/*   Created: 2023/10/30 17:07:58 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/01 00:34:11 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_minishell(t_data *minishell)
+void	print_env(t_data *minishell)
 {
-	free_env(minishell);
+	t_env_element	*el;
+
+	el = minishell->env;
+	while (el)
+	{
+		printf("%s=%s\n", el->key, el->value);
+		el = el->next;
+	}
+}
+
+void	ft_print_env_variable(t_data *minishell, char *key)
+{
+	char	*v;
+
+	v = ft_get_env_variable(minishell, key);
+	if (v)
+		printf("%s", v);
 }

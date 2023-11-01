@@ -27,17 +27,17 @@ void	print_name(void)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	minishell;
-	
-	(void)(argc); // temp ignoring
-	(void)(argv); // temp ignoring
+
+	(void)(argc);
+	(void)(argv);
 	ft_bzero(&minishell, sizeof(t_data));
-	minishell.envp = envp;
-	minishell.in = dup(MS_STDIN);
-	minishell.out = dup(MS_STDOUT);
+	minishell.in = dup(STDIN);
+	minishell.out = dup(STDOUT);
 	reset_fds(&minishell);
 	print_name();
-	// parsing function
-	// fork_processes(&minishell);
+	ft_parse_env(&minishell, envp);
+	// print_env(&minishell);
 	ft_mainloop(&minishell);
+	free_minishell(&minishell);
 	return (0);
 }

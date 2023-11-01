@@ -21,7 +21,7 @@
 // 	cmd = parse_env(envp, command[0]);
 // 	if (!cmd || ft_strcmp(command[0], "") == 0)
 // 		return (2);
-// 	if (execve(cmd, command, envp) == -1)
+//	if (execve(cmd, command, envp) == -1)
 // 	{
 // 		perror("Could not execute execve");
 // 		return (1);
