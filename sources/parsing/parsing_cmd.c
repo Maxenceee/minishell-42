@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 17:22:50 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 17:23:06 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 		printf("[%s] ", new_cmd->cmd[i]);
 	printf("\n");
 	if (ft_strcmp("echo", new_cmd->cmd[0]) == 0)
-		ft_builtin_echo(ms, new_cmd->cmd, 1);
+		ft_builtin_echo(minishell, new_cmd->cmd, 1);
   // fin exemple
 	while (line[++i] != ' ' && line[i]);
 	tmp = ft_strtcpy(line, i);
