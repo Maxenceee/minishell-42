@@ -6,7 +6,7 @@
 /*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 14:13:29 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/02 17:11:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,21 @@ static int	ft_parse_decomp(t_parsing_cmd *new_cmd, char* tmp_line, char *tmp)
 	return(free_tab(tmpsplit), MS_SUCCESS);
 }
 
-int	ft_compose(char *line, t_parsing_cmd *new_cmd, t_data *minishell)
+int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 {
 	int	i;
 	char *tmp;
 	char *tmp_line;
 
 	i = -1;
+  // exemple // à supprimer
+	new_cmd->cmd = ft_split_cmd(ms, line);
+	while (new_cmd->cmd[++i])
+		printf("[%s] ", new_cmd->cmd[i]);
+	printf("\n");
+	if (ft_strcmp("echo", new_cmd->cmd[0]) == 0)
+		ft_builtin_echo(ms, new_cmd->cmd, 1);
+  // fin exemple
 	while (line[++i] != ' ' && line[i]);
 	tmp = ft_strtcpy(line, i);
 	if (!tmp)
@@ -83,8 +91,8 @@ int ft_push_new_command(t_data *minishell, char *tmp_line)
 	new_cmd = ft_calloc(1, sizeof(t_parsing_cmd));
 	if (!new_cmd)
 		return (MS_ERROR);
-	line = ft_strtrim(tmp_line, " ");
-	if (ft_compose(line, new_cmd, minishell))
+  line = ft_strtrim(tmp_line, " ");
+	if (ft_compose(minishell, line, new_cmd))
 		return (free(new_cmd), MS_ERROR);
 	tmp = minishell->parsing_cmd;
 	while (tmp)

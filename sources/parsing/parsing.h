@@ -6,7 +6,7 @@
 /*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/01 18:34:57 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/02 16:08:14 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char	*ft_parse_expands(t_data *minishell, char *arg);
 
 /* expands */
 
+char	**ft_split_cmd(t_data *minishell, char *line);
 char	*ft_parse_expands(t_data *minishell, char *arg);
 
 /* free parsing linked list */

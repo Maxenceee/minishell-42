@@ -6,7 +6,7 @@
 /*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 17:31:22 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/02 17:10:21 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,21 @@ int	ft_print_echo_arg(t_data *minishell, char *arg)
 	return (MS_SUCCESS);
 }
 
-int	ft_builtin_echo(t_data *minishell, char *args, int has_newline)
+int	ft_builtin_echo(t_data *minishell, char **args, int has_newline)
 {
-	if (check_quotes(args)) // si il manque une quote, n'affiche rien
-		return (MS_SUCCESS);
+	int	i;
+
+	i = -1;
+	// if (check_quotes(args)) // si il manque une quote, n'affiche rien
+	// 	return (MS_SUCCESS);
 	// if (ft_print_echo_arg(minishell, args))
 	// 	return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
-	printf("%s", args);
+	while (args[++i])
+	{
+		printf("%s", args[i]);
+		if (args[i])
+			printf(" ");
+	}
 	if (has_newline)
 		printf("\n");
 	return (MS_SUCCESS);

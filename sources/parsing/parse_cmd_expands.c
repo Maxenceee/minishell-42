@@ -80,5 +80,7 @@ char	*ft_parse_expands(t_data *minishell, char *arg)
 		if (!res)
 			return (NULL);
 	}
+	if (!res)
+		return (ft_calloc(1, sizeof(char)));
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:20:42 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 00:27:33 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 17:08:40 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_data	t_data;
 
 /* echo */
 
-int		ft_builtin_echo(t_data *minishell, char *args, int has_newline);
+int		ft_builtin_echo(t_data *minishell, char **args, int has_newline);
 
 /* env */
 
@@ -33,6 +33,7 @@ int		ft_builtin_env(t_data *minishell);
 /* export */
 
 int		ft_builtin_export(t_data *minishell, char *key, char *value);
+char	**dup_env(t_data *ms);
 
 /* unset */
 
