@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/01 19:33:11 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 03:03:11 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,21 @@ typedef struct s_data				t_data;
 typedef struct s_parsing_commands	t_parsing_cmd;
 typedef struct s_parsing_file		t_parsing_file;
 
-typedef enum e_parsing_token
-{
-	// PIPE, // |
-	// REDIR_IN, // <
-	REDIR_OUT, // >
-	// CONCAT_IN, // <<
-	CONCAT_OUT, // >>
-}			t_parsing_token;
+/**
+ * 
+ * Ne plus utiliser,
+ * utiliser O_TRUNC (pour REDIR_OUT)
+ * et O_APPEND (pour CONCAT_OUT)
+ * 
+ */
+// typedef enum e_parsing_token
+// {
+// 	// PIPE, // |
+// 	// REDIR_IN, // <
+// 	REDIR_OUT, // >
+// 	// CONCAT_IN, // <<
+// 	CONCAT_OUT, // >>
+// }			t_parsing_token;
 
 struct s_parsing_file
 {
@@ -37,7 +44,7 @@ struct s_parsing_commands
 {
 	t_parsing_cmd	*next;
 	char			**cmd;
-	t_parsing_token	type;
+	int				type;
 	int				pipe[2];
 	int				fin;
 	int				fout;

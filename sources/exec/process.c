@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 19:53:13 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 03:02:04 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,28 @@ int	open_fdinout(t_parsing_cmd *cmd)
 	t_parsing_file	*f;
 
 	f = cmd->files;
+	cmd->fin = STDIN_FILENO;
+	cmd->fout = STDOUT_FILENO;
 	while (f)
 	{
 		if (f->next)
 			f->fd = open(f->file_name, O_CREAT);
 		else
 		{
-			if (cmd->type == REDIR_OUT)
-				f->fd = open(f->file_name, O_TRUNC);
-			else
-				f->fd = open(f->file_name, O_APPEND);
+			f->fd = open(f->file_name, O_CREAT | cmd->type | O_WRONLY, 0644);
+			cmd->fout = f->fd;
 		}
-		// printf("name %s, fd=%d\n", f->file_name, f->fd);
+		if (f->fd == -1)
+			return (ft_error(MS_OPEN_ERROR), ft_error(f->file_name),
+				ft_error("\n"), MS_ERROR);
 		f = f->next;
 	}
 	if (pipe(cmd->pipe) == -1)
-		return (MS_ERROR);
-	// printf("pipe read %d write %d\n", cmd->pipe[0], cmd->pipe[1]);
+		return (ft_error(MS_PIPE_ERROR), MS_ERROR);
 	return (MS_SUCCESS);
 }
 
-int	process_child(t_data *minishell, t_parsing_cmd *cmd)
+int	process_child(t_data *minishell, t_parsing_cmd *cmd, int fd[2])
 {
 	pid_t	pid;
 	int		res;
@@ -62,6 +63,9 @@ int	process_child(t_data *minishell, t_parsing_cmd *cmd)
 		return (MS_ERROR);
 	if (pid == 0)
 	{
+		if (dup2_fdinout(fd[0], fd[1]))
+			return (MS_ERROR);
+		close_pipes(cmd);
 		res = execcmd(cmd->cmd, minishell);
 		if (res == 5)
 			return (MS_ERROR);
@@ -71,9 +75,9 @@ int	process_child(t_data *minishell, t_parsing_cmd *cmd)
 			ft_error(cmd->cmd[0]);
 			ft_error("\n");
 		}
-		close_pipes(cmd);
 		exit(1);
 	}
+	return (MS_SUCCESS);
 }
 
 int	fork_processes(t_data *minishell)
@@ -89,27 +93,26 @@ int	fork_processes(t_data *minishell)
 			return (MS_ERROR);
 		cmd = cmd->next;
 	}
-	cmd = minishell->parsing_cmd;
 	last = NULL;
+	cmd = minishell->parsing_cmd;
 	while (cmd)
 	{
-		fd[0] = 0;
-		fd[1] = 1;
+		fd[0] = cmd->fin;
+		fd[1] = cmd->fout;
 		if (last)
 			fd[0] = last->pipe[0];
 		if (cmd->next)
-			fd[1] = last->pipe[1];
-		if (dup2_fdinout(fd[0], fd[1]))
-			return (MS_ERROR);
+			fd[1] = cmd->pipe[1];
+		process_child(minishell, cmd, fd);
 		last = cmd;
 		cmd = cmd->next;
 	}
+	waitpid(-1, NULL, 0);
 	cmd = minishell->parsing_cmd;
 	while (cmd)
 	{
-		process_child(minishell, cmd);
+		close_pipes(cmd);
 		cmd = cmd->next;
 	}
-	waitpid(-1, NULL, 0);
-	return (MS_NO_ERROR);
+	return (MS_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/01 19:18:51 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 03:04:05 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ int	ft_compose(char *line, t_parsing_cmd *new_cmd)
 	// if (!tmp)
 	// 	return (MS_ERROR);
 	new_cmd->cmd = ft_split(line, " ");
+	new_cmd->files = ft_calloc(1, sizeof(t_parsing_file));
+	new_cmd->files->file_name = "oui";
+	new_cmd->type = O_APPEND;
+	new_cmd->files->next = ft_calloc(1, sizeof(t_parsing_file));
+	new_cmd->files->next->file_name = "non";
+	new_cmd->type = O_APPEND;
 	// free(tmp);
 	// if(!new_cmd->cmd)
 	// 	return (MS_ERROR);
