@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 02:51:05 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 03:35:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ typedef struct s_data	t_data;
 struct s_data {
 	int				in;
 	int				out;
-	int				pipein;
-	int 			pipeout;
-	int				fdin;
-	int				fdout;
 	int				pid;
 	t_env_element	*env;
 	// char			**envp;
@@ -102,11 +98,6 @@ char	*parse_env(t_data *ms, char *cmd);
  * tools
  * 
  */
-
-/* fds */
-
-void	close_fds(t_data *minishell);
-void	reset_fds(t_data *minishell);
 
 /**
  * exits

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 02:33:20 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 14:52:22 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_bzero(&minishell, sizeof(t_data));
 	minishell.in = dup(STDIN_FILENO);
 	minishell.out = dup(STDOUT_FILENO);
-	reset_fds(&minishell);
 	print_name();
 	ft_parse_env(&minishell, envp);
-	// print_env(&minishell);
+	print_env(&minishell);
+	dup_env(&minishell);
+	return 1;
 	ft_mainloop(&minishell);
 	free_minishell(&minishell);
 	return (0);

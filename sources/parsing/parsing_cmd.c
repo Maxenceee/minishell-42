@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 03:04:05 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 03:59:24 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_linked_list(t_parsing_cmd *cmd)
 	}
 }
 
-int	ft_compose(char *line, t_parsing_cmd *new_cmd)
+int	ft_compose(t_data *ms, char *line, t_parsing_cmd *new_cmd)
 {
 	int	i;
 	char *tmp;
@@ -32,13 +32,21 @@ int	ft_compose(char *line, t_parsing_cmd *new_cmd)
 	// tmp = ft_strtcpy(line, i);
 	// if (!tmp)
 	// 	return (MS_ERROR);
-	new_cmd->cmd = ft_split(line, " ");
-	new_cmd->files = ft_calloc(1, sizeof(t_parsing_file));
-	new_cmd->files->file_name = "oui";
-	new_cmd->type = O_APPEND;
-	new_cmd->files->next = ft_calloc(1, sizeof(t_parsing_file));
-	new_cmd->files->next->file_name = "non";
-	new_cmd->type = O_APPEND;
+	new_cmd->cmd = ft_split(ft_parse_expands(ms, line), " ");
+	while (new_cmd->cmd[++i])
+	{
+		printf("[%s] ", new_cmd->cmd[i]);
+	}
+	printf("\n");
+	if (ft_strcmp(new_cmd->cmd[0], "grep") == 0)
+	{
+		// new_cmd->files = ft_calloc(1, sizeof(t_parsing_file));
+		// new_cmd->files->file_name = "oui";
+		// new_cmd->type = O_APPEND;
+		// new_cmd->files->next = ft_calloc(1, sizeof(t_parsing_file));
+		// new_cmd->files->next->file_name = "non";
+		// new_cmd->type = O_APPEND;
+	}
 	// free(tmp);
 	// if(!new_cmd->cmd)
 	// 	return (MS_ERROR);
@@ -56,7 +64,7 @@ int ft_push_new_command(t_data *minishell, char *line)
 	new_cmd = ft_calloc(1, sizeof(t_parsing_cmd));
 	if (!new_cmd)
 		return (MS_ERROR);
-	if (ft_compose(line, new_cmd))
+	if (ft_compose(minishell, line, new_cmd))
 		return (free(new_cmd), MS_ERROR);
 	tmp = minishell->parsing_cmd;
 	while (tmp)
