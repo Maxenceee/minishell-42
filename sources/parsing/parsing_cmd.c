@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 17:11:29 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 17:22:50 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	print_linked_list(t_parsing_cmd *cmd)
 		cmd = cmd->next;
 	}
 }
+
 static int	ft_parse_decomp(t_parsing_cmd *new_cmd, char* tmp_line, char *tmp)
 {
 	int j;
@@ -53,7 +54,7 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 
 	i = -1;
   // exemple // à supprimer
-	new_cmd->cmd = ft_split_cmd(ms, line);
+	new_cmd->cmd = ft_split_cmd(minishell, line);
 	while (new_cmd->cmd[++i])
 		printf("[%s] ", new_cmd->cmd[i]);
 	printf("\n");
