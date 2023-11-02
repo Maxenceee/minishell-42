@@ -57,8 +57,8 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)(argc);
 	(void)(argv);
 	ft_bzero(&minishell, sizeof(t_data));
-	minishell.in = dup(MS_STDIN);
-	minishell.out = dup(MS_STDOUT);
+	minishell.in = dup(STDIN_FILENO);
+	minishell.out = dup(STDOUT_FILENO);
 	reset_fds(&minishell);
 	print_name();
 	ft_parse_env(&minishell, envp);

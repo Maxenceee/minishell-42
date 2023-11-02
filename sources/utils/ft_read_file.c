@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_len.c                                           :+:      :+:    :+:   */
+/*   ft_read_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 21:23:53 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 03:22:22 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/01 16:57:33 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/01 16:57:41 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_read_file(int fd, char *file)
 {
-	size_t	count;
+	char	*buff;
+	int		read_bytes;
 
-	count = 0;
-	if (!str)
-		return (count);
-	while (str[count])
-		count++;
-	return (count);
-}
-
-int	ft_tablen(char **str)
-{
-	size_t	count;
-
-	count = -1;
-	while (str[++count])
-		;
-	return (count);
+	buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!buff)
+		return (NULL);
+	read_bytes = 1;
+	while (read_bytes != 0)
+	{
+		read_bytes = read(fd, buff, BUFFER_SIZE);
+		if (read_bytes == -1)
+			return (free(buff), NULL);
+		buff[read_bytes] = '\0';
+		file = ft_strjoin(file, buff);
+		if (!file)
+			return (free(buff), NULL);
+	}
+	free(buff);
+	return (file);
 }

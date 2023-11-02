@@ -22,19 +22,15 @@
 # include <readline/history.h>
 # include "pcolors.h"
 
-# define MS_STDIN 0
-# define MS_STDOUT 1
-# define MS_STDERR 2
-
-# define MS_PIPE_ERROR "Pipe error"
-# define MS_EXEVE_ERROR "Could not execute execve"
-# define MS_OPEN_IN_ERROR "Infile"
-# define MS_OPEN_OUT_ERROR "Outfile"
-# define MS_FORK_ERROR "Fork"
-# define MS_COMMAND_NOT_FOUND "Command not found"
-# define MS_PERM_DENIED "permission denied"
-# define MS_PROMPT_NAME HEADER"minishell$ "RESET
-# define MS_ALLOC_ERROR_MSG "Error: could not allocate memory.\n"
+# define MS_PROMPT_NAME			HEADER"minishell$ "RESET
+# define MS_ERROR_PREFIX		"minishell: "
+# define MS_PIPE_ERROR			MS_ERROR_PREFIX"Pipe error"
+# define MS_EXEVE_ERROR			MS_ERROR_PREFIX"could not execute execve"
+# define MS_OPEN_ERROR			MS_ERROR_PREFIX"could not open file "
+# define MS_FORK_ERROR			MS_ERROR_PREFIX"fork"
+# define MS_COMMAND_NOT_FOUND	MS_ERROR_PREFIX"command not found: "
+# define MS_PERM_DENIED			MS_ERROR_PREFIX"permission denied"
+# define MS_ALLOC_ERROR_MSG		"Error: could not allocate memory.\n"
 
 # define BUFF_SIZE		4096
 # define MS_SUCCESS		0
@@ -57,6 +53,7 @@ struct s_data {
 	int				fdout;
 	int				pid;
 	t_env_element	*env;
+	// char			**envp;
 	int				exit;
 	t_parsing_cmd	*parsing_cmd;
 };
@@ -84,16 +81,12 @@ typedef struct	s_signal
 
 /* pipes */
 
-void	create_pipes(t_data *commands);
-void	close_pipes(t_data *commands);
+void	close_pipes(t_parsing_cmd *cmd);
 int		dup2_fdinout(int fdin, int fdout);
 
 /* process */
 
-void	fork_processes(t_data *commands);
-void	process_child(t_data *commands, int idx);
-int		open_fdinout(int idx, t_data *c);
-int		execcmd(char **command, char *envp[]);
+int	fork_processes(t_data *minishell);
 
 /**
  * parsing
@@ -102,7 +95,8 @@ int		execcmd(char **command, char *envp[]);
 
 /* parsing */
 
-char	*parse_env(char *envp[], char *cmd);
+// char	*parse_env(char *envp[], char *cmd);
+char	*parse_env(t_data *ms, char *cmd);
 
 /**
  * tools

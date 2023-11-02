@@ -19,6 +19,10 @@
 # include <stdint.h>
 # include <fcntl.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
 /**
  * 
  * Pas touche aux `utils` !!!
@@ -77,5 +81,7 @@ int		ft_isalnum(int num);
 int		ft_isalpha(int num);
 int		ft_isdigit(int num);
 int		ft_isascii(int c);
+
+char	*ft_read_file(int fd, char *file);
 
 #endif /* __UTILS_H__ */
