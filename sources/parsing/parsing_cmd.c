@@ -6,7 +6,7 @@
 /*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/01 19:59:35 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/02 14:13:29 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,23 @@ int	ft_compose(char *line, t_parsing_cmd *new_cmd, t_data *minishell)
 {
 	int	i;
 	char *tmp;
-	int j;
 	char *tmp_line;
 
 	i = -1;
-	while (line[++i] != ' ' && line[i])
-		;
+	while (line[++i] != ' ' && line[i]);
 	tmp = ft_strtcpy(line, i);
 	if (!tmp)
 		return (MS_ERROR);
-	// if (!line[i])
-	// {
-	// 	new_cmd->cmd[0] = ft_strdup(tmp); 
-	// 	return (free(tmp), MS_SUCCESS);
-	// }
+	if (!line[i])
+	{
+		new_cmd->cmd = ft_calloc(1, sizeof(char *));
+		if(!new_cmd->cmd)
+			return  (MS_ERROR);
+	 	new_cmd->cmd = ft_split(tmp, " ");
+		if(!new_cmd->cmd)
+			return  (MS_ERROR);
+	 	return (free(tmp), MS_SUCCESS);
+	 }
 	tmp_line = ft_parse_expands(minishell, line + i);
 	if(!tmp_line)
 		return (free(tmp), MS_ERROR);
