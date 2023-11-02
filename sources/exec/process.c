@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 14:52:01 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 18:32:10 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	execcmd(char **command, t_data *ms)
 	char		*cmd;
 	char		**envp;
 
-	envp = dup_env(ms);
+	// envp = dup_env(ms);
+	envp = ms->envp;
 	if (command[0] == NULL)
 		return (5);
 	cmd = parse_env(ms, command[0]);
@@ -52,7 +53,7 @@ int	open_fdinout(t_parsing_cmd *cmd)
 	}
 	if (pipe(cmd->pipe) == -1)
 		return (ft_error(MS_PIPE_ERROR), MS_ERROR);
-	printf("read %d write %d\n", cmd->pipe[0], cmd->pipe[1]);
+	// printf("read %d write %d\n", cmd->pipe[0], cmd->pipe[1]);
 	return (MS_SUCCESS);
 }
 
@@ -66,15 +67,9 @@ int	process_child(t_data *minishell, t_parsing_cmd *cmd, int fd[2])
 		return (MS_ERROR);
 	if (pid == 0)
 	{
-		dprintf(2, "in %d out %d\n", fd[0], fd[1]);
+		// dprintf(2, "in %d out %d\n", fd[0], fd[1]);
 		if (dup2_fdinout(fd[0], fd[1]))
 			return (MS_ERROR);
-		// if (fd[0] == 7)
-		// {
-		// 	char buff[2000];
-		// 	read(0, buff, 2000);
-		// 	dprintf(2, "red in -%s-\n", buff);
-		// }
 		close_pipes(cmd);
 		res = execcmd(cmd->cmd, minishell);
 		if (res == 5)
@@ -87,13 +82,13 @@ int	process_child(t_data *minishell, t_parsing_cmd *cmd, int fd[2])
 		}
 		exit(1);
 	}
-	if (cmd->next)
-		return (MS_SUCCESS);
-	wait(&pid);
-	if (WIFEXITED(pid))
-		printf("status for %d: %d\n", pid, WEXITSTATUS(pid));
-	if (WIFSIGNALED(pid))
-		printf("status for %d: %d\n", pid, WTERMSIG(pid));
+	// close(cmd->pipe[0]);
+	// close(cmd->pipe[1]);
+	// wait(&pid);
+	// if (WIFEXITED(pid))
+	// 	printf("status for %d: %d\n", pid, WEXITSTATUS(pid));
+	// if (WIFSIGNALED(pid))
+	// 	printf("status for %d: %d\n", pid, WTERMSIG(pid));
 	return (MS_SUCCESS);
 }
 
@@ -120,18 +115,19 @@ int	fork_processes(t_data *minishell)
 			fd[0] = last->pipe[0];
 		if (cmd->next)
 			fd[1] = cmd->pipe[1];
-		printf("in %d out %d\n", fd[0], fd[1]);
+		// printf("in %d out %d\n", fd[0], fd[1]);
 		if (process_child(minishell, cmd, fd))
 			return (ft_error(MS_EXEVE_ERROR), perror(""), MS_ERROR);
 		last = cmd;
 		cmd = cmd->next;
 	}
-	// waitpid(-1, NULL, 0);
-	// cmd = minishell->parsing_cmd;
-	// while (cmd)
-	// {
-	// 	close_pipes(cmd);
-	// 	cmd = cmd->next;
-	// }
+	cmd = minishell->parsing_cmd;
+	while (cmd)
+	{
+		close(cmd->pipe[0]);
+		close(cmd->pipe[1]);
+		cmd = cmd->next;
+	}
+	waitpid(-1, NULL, 0);
 	return (MS_SUCCESS);
 }

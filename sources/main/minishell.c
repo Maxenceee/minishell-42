@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 16:08:49 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 18:12:35 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,31 @@ void	print_name(void)
 	printf("\n\n"RESET);
 }
 
+char	*prompt(t_data *ms)
+{
+	char	*user;
+
+	user = NULL;
+	user = ft_strjoin(user, ft_strdup(B_GREEN));
+	user = ft_strjoin(user, ft_get_env_variable(ms, "USER"));
+	user = ft_strjoin(user, "@"RESET": "MS_PROMPT_NAME);
+	return (user);
+}
+
 int	ft_mainloop(t_data *minishell)
 {
 	int		i;
 	char	*line;
+	char	*pt;
 	char	**pipline;
 	
+	pt = prompt(minishell);
+	if (!pt)
+		return (MS_ERROR);
 	while (!minishell->exit)
 	{
 		i = -1;
-		line = readline(MS_PROMPT_NAME);
+		line = readline(pt);
 		add_history(line);
 		pipline = ft_split(line, "|");
 		if(!pipline)
@@ -43,10 +58,13 @@ int	ft_mainloop(t_data *minishell)
 			if (ft_push_new_command(minishell, pipline[i]))
 				return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
 		}
-			print_linked_list(minishell->parsing_cmd);
+		if (fork_processes(minishell))
+			return (MS_ERROR);
+		// print_linked_list(minishell->parsing_cmd);
 		ft_destroy_parsing_cmd(minishell);
 		free(line);
 	}
+	free(pt);
 	return (MS_SUCCESS);
 }
 

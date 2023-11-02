@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 16:08:14 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 17:36:52 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,6 @@ struct s_parsing_file
 	t_parsing_file	*next;
 };
 
-struct s_parsing_file
-{
-	char			*file_name;
-	t_parsing_file 	*next;
-	t_parsing_token	type;
-	int				fd;
-};
-
 struct s_parsing_commands
 {
 	t_parsing_cmd	*next;
@@ -66,7 +58,6 @@ int		ft_mainloop(t_data *minishell);
 
 int		ft_push_new_command(t_data *minishell, char *line);
 void	print_linked_list(t_parsing_cmd *cmd);
-char	*ft_parse_expands(t_data *minishell, char *arg);
 
 /* expands */
 

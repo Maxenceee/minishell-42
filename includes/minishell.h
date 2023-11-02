@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 03:35:29 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 18:31:36 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define MS_PROMPT_NAME			HEADER"minishell$ "RESET
 # define MS_ERROR_PREFIX		"minishell: "
 # define MS_PIPE_ERROR			MS_ERROR_PREFIX"Pipe error"
-# define MS_EXEVE_ERROR			MS_ERROR_PREFIX"could not execute execve"
+# define MS_EXEVE_ERROR			MS_ERROR_PREFIX"could not execute execve: "
 # define MS_OPEN_ERROR			MS_ERROR_PREFIX"could not open file "
 # define MS_FORK_ERROR			MS_ERROR_PREFIX"fork"
 # define MS_COMMAND_NOT_FOUND	MS_ERROR_PREFIX"command not found: "
@@ -49,7 +49,7 @@ struct s_data {
 	int				out;
 	int				pid;
 	t_env_element	*env;
-	// char			**envp;
+	char			**envp;
 	int				exit;
 	t_parsing_cmd	*parsing_cmd;
 };

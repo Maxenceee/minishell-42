@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 17:12:59 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 18:34:11 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	*put_cmd(t_data *minishell, char *line, int *i)
 	res = ft_strtcpy(line, len);
 	if (!res)
 		return (NULL);
+	// printf("res: %s\n", res);
 	*i += len;
 	cmd = ft_parse_expands(minishell, res);
 	free(res);
@@ -82,7 +83,7 @@ char	**ft_split_cmd(t_data *minishell, char *line)
 	int		ccount;
 
 	ccount = cmd_count(line);
-	res = (char **)ft_calloc(ccount, sizeof(char *));
+	res = (char **)ft_calloc(ccount + 1, sizeof(char *));
 	if (!res)
 		return (NULL);
 	i = -1;
@@ -96,5 +97,6 @@ char	**ft_split_cmd(t_data *minishell, char *line)
 		while (line[i] && line[i] != ' ')
 			i++;
 	}
+	res[i] = 0;
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 15:09:01 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 18:30:07 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	ft_parse_env(t_data *minishell, char **envp)
 	char	*shlvl;
 
 	i = -1;
+	minishell->envp = envp;
 	while (envp[++i])
 	{
 		if (ft_push_env_element(minishell,
