@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:31 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 15:35:53 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 15:53:45 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**dup_env(t_data *ms)
 	while (e)
 	{
 		// printf("%s=%s - key len %zu\n", e->key, e->value, ft_strlen(e->key));
-		// res[i] = ft_strdup(e->key);
+		res[i] = ft_strdup(e->key);
 		// if (e->value)
 		// {
 		// 	res[i] = ft_strjoin(res[i], "=");

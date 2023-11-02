@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 03:59:24 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 15:45:09 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ int	ft_compose(t_data *ms, char *line, t_parsing_cmd *new_cmd)
 		printf("[%s] ", new_cmd->cmd[i]);
 	}
 	printf("\n");
-	if (ft_strcmp(new_cmd->cmd[0], "grep") == 0)
-	{
-		// new_cmd->files = ft_calloc(1, sizeof(t_parsing_file));
-		// new_cmd->files->file_name = "oui";
-		// new_cmd->type = O_APPEND;
-		// new_cmd->files->next = ft_calloc(1, sizeof(t_parsing_file));
-		// new_cmd->files->next->file_name = "non";
-		// new_cmd->type = O_APPEND;
-	}
+	new_cmd->files = ft_calloc(1, sizeof(t_parsing_file));
+	new_cmd->files->file_name = "oui";
+	new_cmd->type = O_APPEND;
+	new_cmd->files->next = ft_calloc(1, sizeof(t_parsing_file));
+	new_cmd->files->next->file_name = "non";
+	new_cmd->type = O_APPEND;
 	// free(tmp);
 	// if(!new_cmd->cmd)
 	// 	return (MS_ERROR);
