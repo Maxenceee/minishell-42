@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_env.c                                        :+:      :+:    :+:   */
+/*   my_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 17:07:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 17:52:58 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/01 00:07:56 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/01 00:17:15 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_data *minishell)
+char	*my_readline(char *prompt)
 {
-	t_env_element	*el;
+	char	c;
+	char	*res;
 
-	el = minishell->env;
-	while (el)
+	c = 0;
+	res = NULL;
+	printf("%s", prompt);
+	fflush(NULL);
+	while (c != 10)
 	{
-		printf("%s=%s\n", el->key, el->value);
-		el = el->next;
+		read(0, &c, 1);
+		res = ft_strjoin_char(res, c);
 	}
-}
-
-void	ft_print_env_variable(t_data *minishell, char *key)
-{
-	char	*v;
-
-	v = ft_get_env_variable(minishell, key);
-	if (v)
-		printf("%s", v);
+	printf("readline res: %s\n", res);
+	return (res);
 }

@@ -1,39 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_parse_expands.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 18:00:44 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/01 17:59:25 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/01 18:00:24 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	check_quotes(char *string)
-{
-	int	quoted;
-	int	read_env;
-	int	i;
-
-	i = -1;
-	quoted = 0;
-	read_env = 0;
-	while (string[++i])
-	{
-		if (!read_env && string[i] == '\'')
-		{
-			quoted = !quoted;
-		}
-		else if (!quoted && string[i] == '\"')
-		{
-			read_env = !read_env;
-		}
-	}
-	return (quoted || read_env);
-}
 
 /**
  * 
@@ -41,8 +18,10 @@ int	check_quotes(char *string)
  * A normer...
  * 
  */
-int	ft_print_echo_arg(t_data *minishell, char *arg)
+char	*ft_parse_expands(t_data *minishell, char *arg)
 {
+	char	*res;
+	char	*tmp;
 	int		i;
 	int		j;
 	char	*token;
@@ -52,6 +31,7 @@ int	ft_print_echo_arg(t_data *minishell, char *arg)
 	i = -1;
 	read_env = 0;
 	quoted = 0;
+	res = NULL;
 	while (arg[++i])
 	{
 		if (!read_env && arg[i] == '\'')
@@ -70,39 +50,35 @@ int	ft_print_echo_arg(t_data *minishell, char *arg)
 			while (ft_isalnum(arg[i]) && i++)
 				;
 			if (j == i)
-				printf("$");
+				res = ft_strjoin_char(res, '$');
 			else
 			{
 				token = ft_strtcpy(arg + j, i - j);
 				if (!token)
-					return (MS_ERROR);
-				ft_print_env_variable(minishell, token);
+					return (NULL);
+				tmp = ft_get_env_variable(minishell, token);
+				if (tmp)
+					res = ft_strjoin(res, tmp);
 				free(token);
 				i--;
 				continue ;
 			}
+			if (!res)
+				return (NULL);
 		}
 		if (arg[i] == ' ' && !(quoted || read_env))
 		{
-			printf("%c", arg[i]);
+			res = ft_strjoin_char(res, arg[i]);
+			if (!res)
+				return (NULL);
 			while (!(quoted || read_env) && arg[i] == ' ')
 				i++;
 			i--;
 			continue ;
 		}
-		printf("%c", arg[i]);
+		res = ft_strjoin_char(res, arg[i]);
+		if (!res)
+			return (NULL);
 	}
-	return (MS_SUCCESS);
-}
-
-int	ft_builtin_echo(t_data *minishell, char *args, int has_newline)
-{
-	if (check_quotes(args)) // si il manque une quote, n'affiche rien
-		return (MS_SUCCESS);
-	// if (ft_print_echo_arg(minishell, args))
-	// 	return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
-	printf("%s", args);
-	if (has_newline)
-		printf("\n");
-	return (MS_SUCCESS);
+	return (res);
 }

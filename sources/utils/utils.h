@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 14:09:40 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 17:01:07 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 
 /**
  * 
@@ -76,5 +80,7 @@ int		ft_isalnum(int num);
 int		ft_isalpha(int num);
 int		ft_isdigit(int num);
 int		ft_isascii(int c);
+
+char	*ft_read_file(int fd, char *file);
 
 #endif /* __UTILS_H__ */
