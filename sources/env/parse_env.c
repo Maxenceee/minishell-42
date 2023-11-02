@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 15:36:01 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 03:24:03 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_env_element	*ft_new_env_element_fromline(char *line)
 
 int	ft_parse_env(t_data *minishell, char **envp)
 {
-	int	i;
+	int		i;
+	char	*shlvl;
 
 	i = -1;
 	while (envp[++i])
@@ -57,5 +58,9 @@ int	ft_parse_env(t_data *minishell, char **envp)
 				ft_new_env_element_fromline(envp[i])))
 			return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
 	}
+	shlvl = ft_get_env_variable(minishell, "SHLVL");
+	shlvl = ft_itoa(ft_atoi(shlvl) + 1);
+	ft_builtin_export(minishell, "SHLVL", shlvl);
+	free(shlvl);
 	return (MS_SUCCESS);
 }
