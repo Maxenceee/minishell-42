@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 03:03:11 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 18:34:57 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ struct s_parsing_file
 	t_parsing_file	*next;
 };
 
+struct s_parsing_file
+{
+	char			*file_name;
+	t_parsing_file 	*next;
+	t_parsing_token	type;
+	int				fd;
+};
+
 struct s_parsing_commands
 {
 	t_parsing_cmd	*next;
@@ -51,12 +59,14 @@ struct s_parsing_commands
 	t_parsing_file	*files;
 };
 
+
 int		ft_mainloop(t_data *minishell);
 
 /**/
 
 int		ft_push_new_command(t_data *minishell, char *line);
 void	print_linked_list(t_parsing_cmd *cmd);
+char	*ft_parse_expands(t_data *minishell, char *arg);
 
 /* expands */
 
@@ -66,4 +76,4 @@ char	*ft_parse_expands(t_data *minishell, char *arg);
 
 void	ft_destroy_parsing_cmd(t_data *minishell);
 
-#endif /* PARSING_H */
+#endif /* PARSING_H */	

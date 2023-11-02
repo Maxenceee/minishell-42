@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:28:38 by mgama             #+#    #+#             */
-/*   Updated: 2023/09/28 11:27:19 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/01 17:50:23 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-static int	count_strings(const char *str, char *charset)
+int	count_strings(const char *str, char *charset)
 {
 	int	i;
 	int	count;
