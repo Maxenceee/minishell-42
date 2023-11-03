@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 16:00:19 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 16:07:03 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	dup_cmd(t_data *minishell, t_parsing_cmd *cmd)
 	close(cmd->pipe[1]);
 	if (cmd->prev)
 		close(cmd->fin);
-	// res = execcmd(cmd->cmd, minishell);
+	execcmd(cmd->cmd, minishell);
 	// if (res == 5)
 	// 	return (MS_ERROR);
 	// else if (res == 2)
@@ -75,7 +75,6 @@ int	dup_cmd(t_data *minishell, t_parsing_cmd *cmd)
 	// 	ft_error(cmd->cmd[0]);
 	// 	ft_error("\n");
 	// }
-	// exit(1);
 }
 
 int	process_child(t_data *minishell, t_parsing_cmd *cmd)
