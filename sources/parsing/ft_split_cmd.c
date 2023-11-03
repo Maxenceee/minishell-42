@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 16:45:53 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 16:46:42 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ char	**ft_split_cmd(t_data *minishell, char *line)
 	res = (char **)ft_calloc(ccount + 1, sizeof(char *));
 	if (!res)
 		return (NULL);
-	i = -1;
+	i = 0;
 	j = -1;
-	while (line[++i])
+	while (line[i])
 	{
 		while (line[i] == ' ')
 			i++;
