@@ -6,8 +6,13 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:24 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 13:19:04 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 17:45:24 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_builtin_exit()
+{
+	return (MS_SUCCESS);
+}

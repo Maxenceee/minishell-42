@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 18:30:07 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 17:35:28 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_parse_env(t_data *minishell, char **envp)
 	}
 	shlvl = ft_get_env_variable(minishell, "SHLVL");
 	shlvl = ft_itoa(ft_atoi(shlvl) + 1);
-	ft_builtin_export(minishell, "SHLVL", shlvl);
+	ft_push_env_element(minishell, ft_new_env_element( "SHLVL", shlvl));
 	free(shlvl);
 	return (MS_SUCCESS);
 }

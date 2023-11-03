@@ -6,13 +6,13 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 15:34:40 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 17:32:33 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_builtin_unset(t_data *minishell, char *key)
+void	unset_env(t_data *minishell, char *key)
 {
 	t_env_element	*last;
 	t_env_element	*env_e;
@@ -37,5 +37,14 @@ int	ft_builtin_unset(t_data *minishell, char *key)
 		last = env_e;
 		env_e = env_e->next;
 	}
+}
+
+int	ft_builtin_unset(t_data *minishell, t_parsing_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->cmd[++i])
+		unset_env(minishell, cmd->cmd[i]);
 	return (MS_SUCCESS);
 }
