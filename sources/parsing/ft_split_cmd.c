@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 16:44:14 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 16:45:53 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	**ft_split_cmd(t_data *minishell, char *line)
 	int		ccount;
 
 	ccount = cmd_count(line);
+	printf("ccount %d\n", ccount);
 	res = (char **)ft_calloc(ccount + 1, sizeof(char *));
 	if (!res)
 		return (NULL);
