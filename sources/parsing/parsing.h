@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/03 18:35:52 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 20:23:17 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef enum e_parsing_token
 struct s_parsing_file
 {
 	char			*file_name;
+	char			*here_doc_end;
 	int				fd;
 	t_parsing_token	type;
 	t_parsing_file	*next;
@@ -54,8 +55,9 @@ struct s_parsing_commands
 	t_parsing_file	*files;
 };
 
+/**/
 
-int		ft_mainloop(t_data *minishell);
+int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name, t_parsing_token type);
 
 /**/
 

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 18:23:46 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 20:50:12 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	execcmd(char **command, t_data *ms)
 	char		*cmd;
 	char		**envp;
 
-	// envp = dup_env(ms);
 	envp = ms->envp;
 	if (command[0] == NULL)
 		return (5);
@@ -60,8 +59,13 @@ int	execcmd(char **command, t_data *ms)
 	return (MS_NO_ERROR);
 }
 
-int	check_fd_heredoc(int pip[2])
+int	check_fd_heredoc(t_parsing_cmd *cmd, int pip[2])
 {
+	if (cmd->here_doc_fname)
+	{
+		close(pip[0]);
+		return (open(cmd->here_doc_fname, O_RDONLY));
+	}
 	return (pip[0]);
 }
 
@@ -202,12 +206,13 @@ int	fork_processes(t_data *minishell)
 		if (cmd->next)
 			if (pipe(pip) == -1)
 				return (MS_ERROR);
+		open_heredoc(minishell, cmd);
 		if (process_child(minishell, cmd, pip))
 			return (MS_ERROR);
 		close(pip[1]);
 		if (cmd->prev)
 			close(cmd->fin);
-		fin = check_fd_heredoc(pip);
+		fin = check_fd_heredoc(cmd, pip);
 		cmd = cmd->next;
 	}
 	process_wait(minishell);

@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:58:07 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 19:48:01 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/03 20:24:32 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/03 20:46:01 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-int	ft_builtin_export(t_data *minishell, t_parsing_cmd *cmd)
-{
-	char	**env_e;
-	int		i;
+int	open_heredoc(t_data *ms, t_parsing_cmd *cmd);
 
-	i = 0;
-	while (cmd->cmd[++i])
-	{
-		env_e = ft_split(cmd->cmd[i], "=");
-		if (!env_e)
-			exit(1);
-		ft_push_env_element(minishell, ft_new_env_element(env_e[0], env_e[1]));
-	}
-	if (minishell->envp)
-		free_tab(minishell->envp);
-	minishell->envp = dup_env(minishell);
-	return (MS_SUCCESS);
-}
+#endif /* EXEC_H */

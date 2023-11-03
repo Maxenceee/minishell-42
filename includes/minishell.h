@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 17:44:56 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 20:46:57 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "pcolors.h"
 
 # define MS_PROMPT_NAME			HEADER"minishell$ "RESET
+# define MS_HEREDOC_MSG			B_PURPLE"> "RESET
 # define MS_ERROR_PREFIX		"minishell: "
 # define MS_PIPE_ERROR			MS_ERROR_PREFIX"pipe error\n"
 # define MS_EXEVE_ERROR			MS_ERROR_PREFIX"could not execute execve: "
@@ -40,6 +41,7 @@
 
 # include "../sources/utils/utils.h"
 # include "../sources/parsing/parsing.h"
+# include "../sources/exec/exec.h"
 # include "../sources/builtins/builtins.h"
 # include "../sources/env/env.h"
 
@@ -53,6 +55,7 @@ struct s_data {
 	int				exit;
 	int				pipes;
 	// pid_t			*pids;
+	int				in_here_doc;
 	t_parsing_cmd	*parsing_cmd;
 };
 
