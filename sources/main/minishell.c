@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 18:12:35 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 16:02:30 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	ft_mainloop(t_data *minishell)
 			if (ft_push_new_command(minishell, pipline[i]))
 				return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
 		}
-		if (fork_processes(minishell))
-			return (MS_ERROR);
+		// if (fork_processes(minishell))
+		// 	return (MS_ERROR);
 		// print_linked_list(minishell->parsing_cmd);
 		ft_destroy_parsing_cmd(minishell);
 		free(line);
