@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 18:06:35 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 15:50:38 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,11 @@ int ft_push_new_command(t_data *minishell, char *line)
 	if (!minishell->parsing_cmd)
 		minishell->parsing_cmd = new_cmd;
 	else
+	{
+		new_cmd->prev = tmp;
 		tmp->next = new_cmd;
+	}
+	minishell->pipes++;
 	return (MS_SUCCESS);
 }
 
@@ -121,4 +125,5 @@ void	ft_destroy_parsing_cmd(t_data *minishell)
 		tmp = next;
 	}
 	minishell->parsing_cmd = NULL;
+	minishell->pipes = 0;
 }

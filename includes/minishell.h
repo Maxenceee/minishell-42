@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 18:31:36 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 15:50:18 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
 # include "pcolors.h"
 
 # define MS_PROMPT_NAME			HEADER"minishell$ "RESET
@@ -47,15 +48,15 @@ typedef struct s_data	t_data;
 struct s_data {
 	int				in;
 	int				out;
-	int				pid;
 	t_env_element	*env;
 	char			**envp;
 	int				exit;
+	int				pipes;
+	// pid_t			*pids;
 	t_parsing_cmd	*parsing_cmd;
 };
 
 typedef struct	s_signal
-
 {
 	int				sigint;
 	int				sigquit;

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:21:50 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 02:44:20 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/02 18:50:30 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	close_pipes(t_parsing_cmd *cmd)
 
 	close(cmd->pipe[0]);
 	close(cmd->pipe[1]);
+	close(cmd->fin);
+	close(cmd->fout);
 	f = cmd->files;
 	while (f)
 	{
