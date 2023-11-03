@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 16:41:56 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 16:44:14 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	cmd_count(char *line)
 	j = 0;
 	read_env = 0;
 	quoted = 0;
+	printf("line: %s\n\n", line);
 	while (line[i])
 	{
+		printf("%d %c\n", i, line[i]);
 		if (!read_env && line[i] == '\'')
 			quoted = !quoted;
 		else if (!quoted && line[i] == '\"')
@@ -65,7 +67,9 @@ char	*put_cmd(t_data *minishell, char *line, int *i)
 	int		len;
 
 	len = get_cmd_len(line);
+	printf("get_cmd_len: %d\n", len);
 	res = ft_strtcpy(line, len);
+	printf("ft_strtcpy: %s\n", res);
 	if (!res)
 		return (NULL);
 	*i += len;
