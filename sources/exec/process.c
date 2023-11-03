@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 16:07:03 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 16:16:52 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,11 @@ int	open_fdinout(t_parsing_cmd *cmd)
 	t_parsing_file	*f;
 
 	f = cmd->files;
-	cmd->fin = dup(STDIN_FILENO);
-	cmd->fout = dup(STDOUT_FILENO);
-	// while (f)
-	// {
-	// 	if (f->next)
-	// 		f->fd = open(f->file_name, O_CREAT);
-	// 	else
-	// 	{
-	// 		f->fd = open(f->file_name, O_CREAT | cmd->type | O_WRONLY, 0644);
-	// 		cmd->fout = f->fd;
-	// 	}
-	// 	if (f->fd == -1)
-	// 		return (ft_error(MS_OPEN_ERROR), ft_error(f->file_name),
-	// 			ft_error("\n"), MS_ERROR);
-	// 	f = f->next;
-	// }
-	if (cmd->next && pipe(cmd->pipe) == -1)
-		return (ft_error(MS_PIPE_ERROR), MS_ERROR);
-	printf("read %d write %d\n", cmd->pipe[0], cmd->pipe[1]);
+	while (f)
+	{
+		f->fd = open(f->file_name, O_CREAT | cmd->type | O_WRONLY, 0644);
+		f = f->next;
+	}
 	return (MS_SUCCESS);
 }
 

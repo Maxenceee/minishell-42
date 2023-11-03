@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 18:36:45 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 16:41:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	cmd_count(char *line)
 	int		quoted;
 	int		read_env;
 
-	i = -1;
+	i = 0;
 	j = 0;
 	read_env = 0;
 	quoted = 0;
-	while (line[++i])
+	while (line[i])
 	{
 		if (!read_env && line[i] == '\'')
 			quoted = !quoted;
@@ -33,7 +33,7 @@ int	cmd_count(char *line)
 			i++;
 		if (!(quoted || read_env) && line[i])
 			j++;
-		while (!(quoted || read_env) && line[i] != ' ' && line[i])
+		while (line[i] && !(quoted || read_env) && line[i] != ' ')
 			i++;
 	}
 	return (j);
