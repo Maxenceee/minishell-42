@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_readline.c                                      :+:      :+:    :+:   */
+/*   ft_put_fd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 00:07:56 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 00:17:15 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/04 00:40:06 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/04 00:40:24 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-char	*my_readline(char *prompt)
+void	ft_putchar_fd(char c, int fd)
 {
-	char	c;
-	char	*res;
+	write(fd, &c, 1);
+}
 
-	c = 0;
-	res = NULL;
-	printf("%s", prompt);
-	fflush(NULL);
-	while (c != 10)
+void	ft_putnbr_fd(int fd, int n)
+{
+	long long	j;
+
+	j = (long long)n;
+	if (j < 0)
 	{
-		read(0, &c, 1);
-		res = ft_strjoin_char(res, c);
+		ft_putchar_fd('-', fd);
+		j *= -1;
 	}
-	printf("readline res: %s\n", res);
-	return (res);
+	if (j < 10)
+		ft_putchar_fd(j + '0', fd);
+	if (j >= 10)
+	{
+		ft_putnbr_fd(j / 10, fd);
+		ft_putchar_fd((j % 10) + '0', fd);
+	}
 }

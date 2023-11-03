@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 20:52:18 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 00:33:55 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,23 @@ int	create_heredoc(t_data *ms, t_parsing_file *f)
 	int		fd;
 	char	*line;
 
-	ms->in_here_doc = 1;
+	g_signal.stop_heredoc = 0;
+	g_signal.in_here_doc = 1;
 	fd = open(f->file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline(MS_HEREDOC_MSG);
-	while (line && ft_strncmp(f->here_doc_end, line, ft_strlen(f->here_doc_end)))
+	while (line && ft_strncmp(f->here_doc_end, line, ft_strlen(f->here_doc_end))
+		&& !g_signal.stop_heredoc)
 	{
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 		line = readline(MS_HEREDOC_MSG);
 	}
-	if (!line)
+	if (g_signal.stop_heredoc || !line)
 		return (MS_ERROR);
 	free(line);
 	close(fd);
-	ms->in_here_doc = 0;
+	g_signal.in_here_doc = 0;
 	return (MS_SUCCESS);
 }
 

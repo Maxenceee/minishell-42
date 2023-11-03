@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 20:50:12 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 00:41:53 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,8 @@ int	fork_processes(t_data *minishell)
 	int				pip[2];
 	t_parsing_cmd	*cmd;
 
+	// signal(SIGQUIT, sigquit_handler);
+	g_signal.in_cmd = 1;
 	fin = STDIN_FILENO;
 	cmd = minishell->parsing_cmd;
 	while (cmd)
@@ -216,6 +218,7 @@ int	fork_processes(t_data *minishell)
 		cmd = cmd->next;
 	}
 	process_wait(minishell);
+	g_signal.in_cmd = 0;
 	return (MS_SUCCESS);
 }
 
