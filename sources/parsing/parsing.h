@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/02 17:36:52 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 15:50:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ struct s_parsing_file
 struct s_parsing_commands
 {
 	t_parsing_cmd	*next;
+	t_parsing_cmd	*prev;
+	pid_t			pid;
 	char			**cmd;
 	int				type;
 	int				pipe[2];
