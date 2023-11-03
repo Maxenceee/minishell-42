@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/03 15:50:38 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 20:55:20 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	while (new_cmd->cmd[++i])
 		printf("[%s] ", new_cmd->cmd[i]);
 	printf("\n");
-	// if (ft_strcmp("echo", new_cmd->cmd[0]) == 0)
-	// 	ft_builtin_echo(minishell, new_cmd->cmd + 1, 1);
+	if (ft_strcmp("cat", new_cmd->cmd[0]) == 0 && new_cmd->cmd[1])
+	{
+		ft_push_new_file(new_cmd, "oui", CONCAT_IN);
+		new_cmd->cmd[1] = 0;
+	}	
 // fin exemple
 	// while (line[++i] != ' ' && line[i]);
 	// tmp = ft_strtcpy(line, i);
@@ -108,6 +111,31 @@ int ft_push_new_command(t_data *minishell, char *line)
 		tmp->next = new_cmd;
 	}
 	minishell->pipes++;
+	return (MS_SUCCESS);
+}
+
+int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name, t_parsing_token type)
+{
+	t_parsing_file	*new_file;
+	t_parsing_file	*tmp;
+
+	new_file = ft_calloc(1, sizeof(t_parsing_file));
+	if (!new_file)
+		return (MS_ERROR);
+	new_file->file_name = file_name;
+	new_file->type = type;
+	new_file->here_doc_end = "oui";
+	tmp = cmd->files;
+	while (tmp)
+	{
+		if (!tmp->next)
+			break ;
+		tmp = tmp->next;
+	}
+	if (!cmd->files)
+		cmd->files = new_file;
+	else
+		tmp->next = new_file;
 	return (MS_SUCCESS);
 }
 

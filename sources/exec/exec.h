@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:58:24 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 17:45:24 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/03 20:24:32 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/03 20:46:01 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-int	ft_builtin_exit()
-{
-	return (MS_SUCCESS);
-}
+int	open_heredoc(t_data *ms, t_parsing_cmd *cmd);
+
+#endif /* EXEC_H */

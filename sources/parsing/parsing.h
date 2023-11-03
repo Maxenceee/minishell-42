@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/03 15:50:56 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 20:23:17 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,21 @@ typedef struct s_parsing_file		t_parsing_file;
  * et O_APPEND (pour CONCAT_OUT)
  * 
  */
-// typedef enum e_parsing_token
-// {
-// 	// PIPE, // |
-// 	// REDIR_IN, // <
-// 	REDIR_OUT, // >
-// 	// CONCAT_IN, // <<
-// 	CONCAT_OUT, // >>
-// }			t_parsing_token;
+typedef enum e_parsing_token
+{
+	// PIPE, // |
+	REDIR_IN, // <
+	REDIR_OUT, // >
+	CONCAT_IN, // <<
+	CONCAT_OUT, // >>
+}			t_parsing_token;
 
 struct s_parsing_file
 {
 	char			*file_name;
+	char			*here_doc_end;
 	int				fd;
+	t_parsing_token	type;
 	t_parsing_file	*next;
 };
 
@@ -46,15 +48,16 @@ struct s_parsing_commands
 	t_parsing_cmd	*prev;
 	pid_t			pid;
 	char			**cmd;
-	int				type;
-	int				pipe[2];
+	// int				pipe[2];
+	char			*here_doc_fname;
 	int				fin;
 	int				fout;
 	t_parsing_file	*files;
 };
 
+/**/
 
-int		ft_mainloop(t_data *minishell);
+int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name, t_parsing_token type);
 
 /**/
 

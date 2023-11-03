@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 17:10:21 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 17:49:12 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,17 +95,27 @@ int	ft_print_echo_arg(t_data *minishell, char *arg)
 	return (MS_SUCCESS);
 }
 
-int	ft_builtin_echo(t_data *minishell, char **args, int has_newline)
+int	ft_builtin_echo(char **args)
 {
 	int	i;
+	int	j;
+	int	has_newline;
 
 	i = -1;
-	// if (check_quotes(args)) // si il manque une quote, n'affiche rien
-	// 	return (MS_SUCCESS);
-	// if (ft_print_echo_arg(minishell, args))
-	// 	return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
+	has_newline = 0;
 	while (args[++i])
 	{
+		if (i == 1 && ft_strcmp("-n", args[i]) == 0)
+		{
+			j = 0;
+			while (args[i][++j])
+			{
+				if (args[i][j] != 'n')
+					break ;
+			}
+			has_newline = 1;
+			continue ;
+		}
 		printf("%s", args[i]);
 		if (args[i])
 			printf(" ");

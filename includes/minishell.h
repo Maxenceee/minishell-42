@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 15:50:18 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 20:46:57 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@
 # include "pcolors.h"
 
 # define MS_PROMPT_NAME			HEADER"minishell$ "RESET
+# define MS_HEREDOC_MSG			B_PURPLE"> "RESET
 # define MS_ERROR_PREFIX		"minishell: "
-# define MS_PIPE_ERROR			MS_ERROR_PREFIX"Pipe error"
+# define MS_PIPE_ERROR			MS_ERROR_PREFIX"pipe error\n"
 # define MS_EXEVE_ERROR			MS_ERROR_PREFIX"could not execute execve: "
-# define MS_OPEN_ERROR			MS_ERROR_PREFIX"could not open file "
-# define MS_FORK_ERROR			MS_ERROR_PREFIX"fork"
+# define MS_OPEN_ERROR			MS_ERROR_PREFIX"could not open file\n"
+# define MS_FORK_ERROR			MS_ERROR_PREFIX"fork\n"
 # define MS_COMMAND_NOT_FOUND	MS_ERROR_PREFIX"command not found: "
-# define MS_PERM_DENIED			MS_ERROR_PREFIX"permission denied"
+# define MS_PERM_DENIED			MS_ERROR_PREFIX"permission denied\n"
 # define MS_ALLOC_ERROR_MSG		"Error: could not allocate memory.\n"
 
 # define BUFF_SIZE		4096
@@ -40,6 +41,7 @@
 
 # include "../sources/utils/utils.h"
 # include "../sources/parsing/parsing.h"
+# include "../sources/exec/exec.h"
 # include "../sources/builtins/builtins.h"
 # include "../sources/env/env.h"
 
@@ -53,6 +55,7 @@ struct s_data {
 	int				exit;
 	int				pipes;
 	// pid_t			*pids;
+	int				in_here_doc;
 	t_parsing_cmd	*parsing_cmd;
 };
 
@@ -83,7 +86,7 @@ int		dup2_fdinout(int fdin, int fdout);
 
 /* process */
 
-int	fork_processes(t_data *minishell);
+int		mini_exec(t_data *minishell);
 
 /**
  * parsing
