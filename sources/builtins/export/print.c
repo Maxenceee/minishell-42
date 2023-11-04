@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:31 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 19:45:01 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 02:14:52 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**dup_env(t_data *ms)
 	t_env_element	*e;
 
 	i = 0;
-	res = (char **)ft_calloc(get_env_count(ms), sizeof(char *));
+	res = (char **)ft_calloc(get_env_count(ms) + 1, sizeof(char *));
 	if (!res)
 		return (NULL);
 	e = ms->env;
@@ -50,5 +50,6 @@ char	**dup_env(t_data *ms)
 		res[i++] = row;
 		e = e->next;
 	}
+	res[i] = 0;
 	return (res);
 }

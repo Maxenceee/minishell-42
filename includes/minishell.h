@@ -6,13 +6,14 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 20:46:57 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 04:35:33 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include <dirent.h>
 # include <sys/wait.h>
 # include <limits.h>
@@ -48,24 +49,22 @@
 typedef struct s_data	t_data;
 
 struct s_data {
-	int				in;
-	int				out;
 	t_env_element	*env;
 	char			**envp;
 	int				exit;
 	int				pipes;
-	// pid_t			*pids;
-	int				in_here_doc;
 	t_parsing_cmd	*parsing_cmd;
 };
 
 typedef struct	s_signal
 {
-	int				sigint;
-	int				sigquit;
-	int				exit_status;
-	pid_t			pid;
+	int			exit_code;
+	int			stop_heredoc;
+	int			in_cmd;
+	int			in_here_doc;
 }				t_signal;
+
+t_signal	g_signal;
 
 /**
  * main
@@ -74,15 +73,14 @@ typedef struct	s_signal
 
 /* signal */
 
+void	sigint_handler(int sig);
+void	sigquit_handler(int sig);
+void	setup_signals(void);
+
 /**
  * exec
  * 
  */
-
-/* pipes */
-
-void	close_pipes(t_parsing_cmd *cmd);
-int		dup2_fdinout(int fdin, int fdout);
 
 /* process */
 
@@ -95,13 +93,7 @@ int		mini_exec(t_data *minishell);
 
 /* parsing */
 
-// char	*parse_env(char *envp[], char *cmd);
 char	*parse_env(t_data *ms, char *cmd);
-
-/**
- * tools
- * 
- */
 
 /**
  * exits
@@ -110,6 +102,8 @@ char	*parse_env(t_data *ms, char *cmd);
 
 /* exit */
 
+void 	exit_with_code(t_data *ms, int error_code, char *message);
+void	exit_with_error(t_data *ms, int error_code, char *message);
 void	free_minishell(t_data *minishell);
 
 /* freeing */

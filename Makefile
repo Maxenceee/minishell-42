@@ -9,9 +9,12 @@ HEADERS_FONT_DIR =	$(MANDATORY_DIR)/font
 HEADERS			=	$(shell find $(HEADERS_DIR) -name "*.h")
 HEADERS_SOURCES	=	$(shell find $(MANDATORY_DIR) -name "*.h")
 
+READLINE_DIR	=	$(shell brew --prefix readline)
+READLINE_LIB	=	-lreadline -lhistory -L $(READLINE_DIR)/lib
+
 CC				=	cc
 RM				=	rm -f
-CFLAGS			=	-I$(HEADERS_DIR) -I $(HEADERS_FONT_DIR) -g -O0 #-o3 -Wall -Wextra -Werror
+CFLAGS			=	-I$(HEADERS_DIR) -I$(HEADERS_FONT_DIR) -I$(READLINE_DIR)/include -g #-o3 -Wall -Wextra -Werror
 
 NAME			=	minishell
 
@@ -32,7 +35,7 @@ $(OBJ_DIR)/%.o: $(MANDATORY_DIR)/%.c $(HEADERS) $(HEADERS_SOURCES) Makefile
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) -lm -g -lreadline
+	@$(CC) $(OBJS) -o $(NAME) -lm -g $(READLINE_LIB)
 	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 clean:

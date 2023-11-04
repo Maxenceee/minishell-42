@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 21:03:17 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 04:56:23 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,26 @@ int	ft_mainloop(t_data *minishell)
 	{
 		i = -1;
 		line = readline(pt);
+		if (!line)
+			exit_with_code(minishell, EXIT_SUCCESS, "exit\n");
+		if (*line == '\0')
+			continue ;
 		add_history(line);
+		if (check_quotes(line))
+		{
+			ft_warning(MS_ERROR_PREFIX"invalid pattern\n");
+			continue ;
+		}
 		pipline = ft_split(line, "|");
 		if(!pipline)
-			return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
+			return (ft_error(MS_ALLOC_ERROR_MSG"split"), MS_ERROR);
 		while (pipline[++i])
 		{
 			if (ft_push_new_command(minishell, pipline[i]))
-				return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
+				return (MS_ERROR);
 		}
 		if (mini_exec(minishell))
 			return (MS_ERROR);
-		// print_linked_list(minishell->parsing_cmd);
 		ft_destroy_parsing_cmd(minishell);
 		free_tab(pipline);
 		free(line);
@@ -75,13 +83,13 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)(argc);
 	(void)(argv);
-	ft_bzero(&minishell, sizeof(t_data));
-	minishell.in = dup(STDIN_FILENO);
-	minishell.out = dup(STDOUT_FILENO);
 	print_name();
+	ft_bzero(&minishell, sizeof(t_data));
+	ft_bzero(&g_signal, sizeof(t_signal));
+	setup_signals();
 	ft_parse_env(&minishell, envp);
-	// print_env(&minishell);
-	ft_mainloop(&minishell);
+	if (ft_mainloop(&minishell))
+		exit_with_code(&minishell, MS_ERROR, NULL);
 	free_minishell(&minishell);
 	return (0);
 }
