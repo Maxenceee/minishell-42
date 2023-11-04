@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 02:01:21 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:49:31 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 13:03:01 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int	exec_builtin(t_data *minishell, t_parsing_cmd *cmd)
 	else if (ft_strcmp("pwd", cmd->cmd[0]) == 0)
 		return (ft_builtin_pwd(minishell));
 	else if (ft_strcmp("exit", cmd->cmd[0]) == 0)
-		return (ft_builtin_exit(minishell));
+		return (ft_builtin_exit(minishell, cmd));
 	return (MS_SUCCESS);
 }
