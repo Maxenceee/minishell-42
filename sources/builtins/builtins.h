@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:20:42 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:13:51 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 13:02:43 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int		ft_builtin_pwd(t_data *minishell);
 
 /* exit */
 
-int		ft_builtin_exit(t_data *minishell);
+int		ft_builtin_exit(t_data *minishell, t_parsing_cmd *cmd);
 
 #endif /* BUILTINS_H */

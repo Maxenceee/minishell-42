@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:07 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 04:56:00 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 13:17:50 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**export_split(t_data *ms, char *token)
 	len = 1;
 	while (token[++i] && (ft_isalnum(token[i]) || token[i] == '_'))
 		;
-	if (!(token[i] == '=' || token[i] == '\0'))
+	if (!(token[i] == '=' || token[i] == '\0') || i == 0)
 		return (NULL);
 	if (token[i] == '=')
 		len++;
@@ -71,9 +71,9 @@ int	ft_builtin_export(t_data *minishell, t_parsing_cmd *cmd)
 		env_e = export_split(minishell, cmd->cmd[i]);
 		if (!env_e)
 		{
-			ft_putfd(2, MS_ERROR_PREFIX"export: ");
+			ft_putfd(2, MS_ERROR_PREFIX"export: `");
 			ft_putfd(2, cmd->cmd[i]);
-			ft_putfd(2, ": not a valid identifier\n");
+			ft_putfd(2, "': not a valid identifier\n");
 			continue ;
 		}
 		ft_push_env_element(minishell, ft_new_env_element(env_e[0], env_e[1]));
