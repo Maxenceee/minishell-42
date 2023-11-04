@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing.c                                          :+:      :+:    :+:   */
+/*   exit_with_code.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:56:44 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:16:57 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/04 01:52:30 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/04 01:56:03 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_minishell(t_data *minishell)
+void	exit_with_code(t_data *ms, int error_code, char *message)
 {
-	free_env(minishell);
-	if (minishell->envp)
-		free_tab(minishell->envp);
+	free_minishell(ms);
+	if (message && error_code == 0)
+		printf("%s", message);
+	else if (message)
+		ft_putfd(STDERR_FILENO, message);
+	exit(error_code);
+}
+
+void	exit_with_error(t_data *ms, int error_code, char *message)
+{
+	free_minishell(ms);
+	if (message)
+		ft_error(message);
+	exit(error_code);
 }

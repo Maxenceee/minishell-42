@@ -44,7 +44,14 @@ char	*ft_parse_expands(t_data *minishell, char *arg)
 			read_env = !read_env;
 			continue;
 		}
-		if ((read_env || !quoted) && arg[i] == '$')
+		if ((read_env || !quoted) && arg[i] == '$' && arg[i + 1] == '?')
+		{
+			res = exit_status(res);
+			if (!res)
+				return (NULL);
+			i += 2;
+		}
+		else if ((read_env || !quoted) && arg[i] == '$')
 		{
 			j = ++i;
 			while (ft_isalnum(arg[i]) && i++)

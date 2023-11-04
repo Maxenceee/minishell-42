@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 00:54:04 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 04:35:33 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ struct s_data {
 
 typedef struct	s_signal
 {
-	int			error_num;
+	int			exit_code;
 	int			stop_heredoc;
 	int			in_cmd;
 	int			in_here_doc;
@@ -102,6 +102,8 @@ char	*parse_env(t_data *ms, char *cmd);
 
 /* exit */
 
+void 	exit_with_code(t_data *ms, int error_code, char *message);
+void	exit_with_error(t_data *ms, int error_code, char *message);
 void	free_minishell(t_data *minishell);
 
 /* freeing */

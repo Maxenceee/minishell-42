@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing.c                                          :+:      :+:    :+:   */
+/*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:56:44 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:16:57 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/04 01:43:27 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/04 01:49:38 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_minishell(t_data *minishell)
+char	*exit_status(char *line)
 {
-	free_env(minishell);
-	if (minishell->envp)
-		free_tab(minishell->envp);
+	char	*res;
+	char	*tmp;
+
+	tmp = ft_itoa(g_signal.exit_code);
+	res = ft_strjoin(line, tmp);
+	free(tmp);
+	return (res);
 }

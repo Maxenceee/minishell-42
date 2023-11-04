@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:11:39 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 00:40:19 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 03:05:27 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ void	sigint_handler(int sig)
 {
 	(void)sig;
 	if (!g_signal.in_here_doc)
-		write(STDERR_FILENO, "\n", 1);
+		ft_putfd(STDERR_FILENO, "\n");
 	if (g_signal.in_cmd)
 	{
+		g_signal.exit_code = 130;
 		g_signal.stop_heredoc = 1;
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -33,14 +34,13 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	(void) sig;
 }
 
 void	sigquit_handler(int sig)
 {
-	write(STDERR_FILENO, "Quit: ", 7);
+	ft_putfd(STDERR_FILENO, "Quit: ");
 	ft_putnbr_fd(STDERR_FILENO, sig);
-	write(STDERR_FILENO, "\n", 1);
+	ft_putfd(STDERR_FILENO, "\n");
 }
 
 void	setup_signals(void)

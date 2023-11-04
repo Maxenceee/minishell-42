@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/03 20:23:17 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 02:34:47 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	print_linked_list(t_parsing_cmd *cmd);
 
 /* expands */
 
+int		check_quotes(char *string);
 char	**ft_split_cmd(t_data *minishell, char *line);
 char	*ft_parse_expands(t_data *minishell, char *arg);
 

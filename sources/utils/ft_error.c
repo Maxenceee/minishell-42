@@ -6,12 +6,17 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 13:32:31 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/18 17:12:21 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 02:52:25 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "pcolors.h"
+
+int	ft_putfd(int fd, char *str)
+{
+	return (write(fd, str, ft_strlen(str)));
+}
 
 int	ft_error(char *str)
 {

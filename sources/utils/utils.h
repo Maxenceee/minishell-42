@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 00:40:42 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 02:52:43 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
  *  
  */
 
+int		ft_putfd(int fd, char *str);
 int		ft_error(char *str);
 int		ft_warning(char *str);
 int		ft_info(char *str);

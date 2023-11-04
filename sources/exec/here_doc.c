@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 00:33:55 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 02:05:09 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,23 @@ int	open_heredoc(t_data *ms, t_parsing_cmd *cmd)
 			}
 			cmd->here_doc_fname = new_here_doc_fname();
 			if (create_heredoc(ms, f))
-				return (MS_ERROR);
+			{
+				g_signal.exit_code = EXIT_FAILURE;
+				return (MS_NO_ERROR);
+			}
 				
 		}
 		f = f->next;
 	}
 	return (MS_SUCCESS);
+}
+
+int	check_fd_heredoc(t_parsing_cmd *cmd, int pip[2])
+{
+	if (cmd->here_doc_fname)
+	{
+		close(pip[0]);
+		return (open(cmd->here_doc_fname, O_RDONLY));
+	}
+	return (pip[0]);
 }
