@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:47:46 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 19:11:22 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,30 @@ int	check_quotes(char *string)
 	return (quoted || read_env);
 }
 
-int	ft_builtin_echo(char **args)
+int	ft_builtin_echo(t_data *minishell, t_parsing_cmd *cmd)
 {
 	int	i;
 	int	j;
 	int	has_newline;
 
+	(void)minishell;
 	i = 0;
 	has_newline = 1;
-	while (args[++i])
+	while (cmd->cmd[++i])
 	{
-		// if (i == 1 && ft_strcmp("-n", args[i]) == 0)
-		// {
-		// 	j = 0;
-		// 	while (args[i][++j])
-		// 	{
-		// 		if (args[i][j] != 'n')
-		// 			break ;
-		// 	}
-		// 	has_newline = 0;
-		// 	continue ;
-		// }
-		printf("%s", args[i]);
-		if (args[i])
+		if (i == 1 && ft_strcmp("-n", cmd->cmd[i]) == 0)
+		{
+			j = 0;
+			while (cmd->cmd[i][++j])
+			{
+				if (cmd->cmd[i][j] != 'n')
+					break ;
+			}
+			has_newline = 0;
+			continue ;
+		}
+		printf("%s", cmd->cmd[i]);
+		if (cmd->cmd[i])
 			printf(" ");
 	}
 	if (has_newline)

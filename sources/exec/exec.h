@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:24:32 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:02:03 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 19:05:20 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int		execcmd(char **command, t_data *ms);
 
 /* builtins */
 
-int		exec_builtin(t_data *minishell, t_parsing_cmd *cmd);
-int		is_builtin(t_parsing_cmd *cmd);
+void	*get_builtin(char *cmd);
+// int		exec_builtin(t_data *minishell, t_parsing_cmd *cmd);
+int		is_builtin_no_out(t_parsing_cmd *cmd);
 
 #endif /* EXEC_H */

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 04:35:33 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 19:49:54 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ struct s_data {
 	char			**envp;
 	int				exit;
 	int				pipes;
+	char			*pwd;
+	// char			*old_pwd;
 	t_parsing_cmd	*parsing_cmd;
 };
 
