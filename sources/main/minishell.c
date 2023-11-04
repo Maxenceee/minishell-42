@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 04:56:23 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 20:08:21 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ void	print_name(void)
 char	*prompt(t_data *ms)
 {
 	char	*user;
+	char	*tmp;
 
 	user = NULL;
 	user = ft_strjoin(user, ft_strdup(B_GREEN));
-	user = ft_strjoin(user, ft_get_env_variable(ms, "USER"));
+	tmp = ft_get_env_variable(ms, "USER");
+	if (tmp)
+		user = ft_strjoin(user, tmp);
 	user = ft_strjoin(user, "@"RESET": "MS_PROMPT_NAME);
 	return (user);
 }
@@ -81,7 +84,8 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	minishell;
 
-	(void)(argc);
+	if (argc > 1)
+		return (ft_error(MS_ERROR_PREFIX"this program does not take any aruments\n"), MS_ERROR);
 	(void)(argv);
 	print_name();
 	ft_bzero(&minishell, sizeof(t_data));

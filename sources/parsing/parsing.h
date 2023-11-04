@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/04 02:34:47 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 19:07:52 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ struct s_parsing_commands
 	t_parsing_cmd	*prev;
 	pid_t			pid;
 	char			**cmd;
-	// int				pipe[2];
+	int				(*builtin)(t_data *, t_parsing_cmd *);
 	char			*here_doc_fname;
 	int				fin;
 	int				fout;
@@ -57,7 +57,8 @@ struct s_parsing_commands
 
 /**/
 
-int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name, t_parsing_token type);
+int		ft_push_new_file(t_parsing_cmd *cmd, char *file_name,
+			t_parsing_token type, char *here_doc_end);
 
 /**/
 

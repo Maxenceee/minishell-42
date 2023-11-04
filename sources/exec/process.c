@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:13:14 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 19:05:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 {
 	int	status;
 
-	if (is_builtin(cmd))
+	if (cmd->builtin && is_builtin_no_out(cmd))
 	{
-		g_signal.exit_code = exec_builtin(minishell, cmd);
+		g_signal.exit_code = cmd->builtin(minishell, cmd);
 		return ;
 	}
 	open_heredoc(minishell, cmd);

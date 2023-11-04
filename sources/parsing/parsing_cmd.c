@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/04 00:56:32 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 19:08:23 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,14 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 
 	i = -1;
 	new_cmd->cmd = ft_split_cmd(minishell, line);
+	new_cmd->builtin = get_builtin(new_cmd->cmd[0]);
 // exemple 
 	while (new_cmd->cmd[++i])
 		printf("[%s] ", new_cmd->cmd[i]);
 	printf("\n");
 	// if (ft_strcmp("cat", new_cmd->cmd[0]) == 0 && new_cmd->cmd[1])
 	// {
-	// 	ft_push_new_file(new_cmd, "oui", CONCAT_IN);
+	// 	ft_push_new_file(new_cmd, "oui", CONCAT_OUT, NULL);
 	// 	new_cmd->cmd[1] = 0;
 	// }	
 // fin exemple
@@ -114,7 +115,8 @@ int ft_push_new_command(t_data *minishell, char *line)
 	return (MS_SUCCESS);
 }
 
-int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name, t_parsing_token type)
+int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name,
+	t_parsing_token type, char *here_doc_end)
 {
 	t_parsing_file	*new_file;
 	t_parsing_file	*tmp;
@@ -124,7 +126,7 @@ int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name, t_parsing_token type)
 		return (MS_ERROR);
 	new_file->file_name = file_name;
 	new_file->type = type;
-	new_file->here_doc_end = "oui";
+	new_file->here_doc_end = here_doc_end;
 	tmp = cmd->files;
 	while (tmp)
 	{

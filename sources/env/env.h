@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:28:56 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 01:49:10 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 19:58:34 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void			free_env(t_data *minishell);
 /* print env */
 
 void			print_env(t_data *minishell);
-void			ft_print_env_variable(t_data *minishell, char *key);
+void			ft_print_env_variable(t_data *minishell, char *key, int new_line);
 
 /* exit status */
 
