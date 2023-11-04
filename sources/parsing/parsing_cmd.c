@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/03 20:55:20 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 00:56:32 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	while (new_cmd->cmd[++i])
 		printf("[%s] ", new_cmd->cmd[i]);
 	printf("\n");
-	if (ft_strcmp("cat", new_cmd->cmd[0]) == 0 && new_cmd->cmd[1])
-	{
-		ft_push_new_file(new_cmd, "oui", CONCAT_IN);
-		new_cmd->cmd[1] = 0;
-	}	
+	// if (ft_strcmp("cat", new_cmd->cmd[0]) == 0 && new_cmd->cmd[1])
+	// {
+	// 	ft_push_new_file(new_cmd, "oui", CONCAT_IN);
+	// 	new_cmd->cmd[1] = 0;
+	// }	
 // fin exemple
 	// while (line[++i] != ' ' && line[i]);
 	// tmp = ft_strtcpy(line, i);

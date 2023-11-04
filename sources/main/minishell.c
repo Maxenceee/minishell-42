@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 00:41:46 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 01:01:27 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,11 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)(argv);
 	ft_bzero(&minishell, sizeof(t_data));
 	ft_bzero(&g_signal, sizeof(t_signal));
+	printf("stop_heredoc %d in_cmd %d in_here_doc %d\n", g_signal.stop_heredoc, g_signal.in_cmd, g_signal.in_here_doc);
 	print_name();
 	// setup_signals();
 	ft_parse_env(&minishell, envp);
-	// print_env(&minishell);
+	print_env(&minishell);
 	ft_mainloop(&minishell);
 	free_minishell(&minishell);
 	return (0);

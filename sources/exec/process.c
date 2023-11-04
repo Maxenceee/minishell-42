@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 00:41:53 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 00:58:50 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	execcmd(char **command, t_data *ms)
 	cmd = parse_env(ms, command[0]);
 	if (!cmd || ft_strcmp(command[0], "") == 0)
 		return (2);
+	printf("execve(%s)\n", cmd);
 	if (execve(cmd, command, envp) == -1)
 		return (perror(MS_EXEVE_ERROR), MS_ERROR);
 	return (MS_NO_ERROR);
@@ -133,6 +134,8 @@ int	dup_cmd(t_data *minishell, t_parsing_cmd *cmd, int pip[2])
 {
 	int	exit_code;
 
+	dprintf(2, "pipe read %d write %d\n", cmd->fin, pip[1]);
+	dprintf(2, "cmd files %p\n", cmd->files);
 	if (cmd->prev && dup2(cmd->fin, STDIN_FILENO) < 0)
 		return (MS_ERROR);
 	close(pip[0]);
