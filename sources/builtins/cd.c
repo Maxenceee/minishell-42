@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:40 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 20:05:10 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 20:36:18 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	update_wd(t_data *ms)
 {
 	ft_push_env_element(ms, ft_new_env_element("OLDPWD", ms->pwd));
+	if (ms->pwd)
+		free(ms->pwd);
 	ms->pwd = getcwd(NULL, sizeof(NULL));
 	if (!ms->pwd)
 		return (MS_ERROR);

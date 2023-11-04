@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 20:05:49 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 20:35:52 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	parse_env_pwd(t_data *ms)
 		update_wd(ms);
 		tmp = ft_get_env_variable(ms, "PWD");
 	}
-	ms->pwd = tmp;
+	ms->pwd = ft_strdup(tmp);
 	return (MS_SUCCESS);
 }
 
