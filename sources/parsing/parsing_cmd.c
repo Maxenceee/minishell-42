@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/05 19:43:30 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/05 19:47:28 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,23 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	while (new_cmd->cmd[++i])
 		printf("[%s] ", new_cmd->cmd[i]);
 	printf("\n");
+// fin exemple
 	i = -1;
 	// if (ft_strcmp("echo", new_cmd->cmd[0]) == 0)
 	// 	ft_builtin_echo(minishell, new_cmd->cmd + 1, 1);
 	while (new_cmd->cmd[++i])
 	{
-	if (ft_strcmp(">>", new_cmd->cmd[i]) == 0)
-		ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], CONCAT_OUT);
-	else if (ft_strcmp(">", new_cmd->cmd[i]) == 0)
-		ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_OUT);
-	else if (ft_strcmp("<", new_cmd->cmd[i]) == 0)
-		ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_IN);
-	else if (ft_strcmp("<<", new_cmd->cmd[i]) == 0)
-		ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], CONCAT_IN);
-	printf("%d\n", i);
-	// ft_parse_decomp(new_cmd, i);
+		if (ft_strcmp(">>", new_cmd->cmd[i]) == 0)
+			ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], CONCAT_OUT);
+		else if (ft_strcmp(">", new_cmd->cmd[i]) == 0)
+			ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_OUT);
+		else if (ft_strcmp("<", new_cmd->cmd[i]) == 0)
+			ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_IN);
+		else if (ft_strcmp("<<", new_cmd->cmd[i]) == 0)
+			ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], CONCAT_IN);
+		// printf("%d\n", i);
+		// ft_parse_decomp(new_cmd, i);
 	}
-// fin exemple
-
 	return (MS_SUCCESS);
 }
 
