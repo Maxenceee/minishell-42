@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 14:58:27 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 19:11:02 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/04 01:43:27 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/04 01:49:38 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_builtin_env(t_data *minishell, t_parsing_cmd *cmd)
+char	*exit_status(char *line)
 {
-	(void)cmd;
-	print_env(minishell);
-	return (MS_SUCCESS);
+	char	*res;
+	char	*tmp;
+
+	tmp = ft_itoa(g_signal.exit_code);
+	res = ft_strjoin(line, tmp);
+	free(tmp);
+	return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/01 17:50:44 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/04 02:52:43 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
  *  
  */
 
+int		ft_putfd(int fd, char *str);
 int		ft_error(char *str);
 int		ft_warning(char *str);
 int		ft_info(char *str);
@@ -83,5 +84,8 @@ int		ft_isdigit(int num);
 int		ft_isascii(int c);
 
 char	*ft_read_file(int fd, char *file);
+
+void	ft_putnbr_fd(int fd, int n);
+void	ft_putchar_fd(char c, int fd);
 
 #endif /* __UTILS_H__ */

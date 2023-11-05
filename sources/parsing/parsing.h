@@ -36,6 +36,7 @@ typedef enum e_parsing_token
 struct s_parsing_file
 {
 	char			*file_name;
+	char			*here_doc_end;
 	int				fd;
 	t_parsing_token	type;
 	t_parsing_file	*next;
@@ -47,14 +48,17 @@ struct s_parsing_commands
 	t_parsing_cmd	*prev;
 	pid_t			pid;
 	char			**cmd;
-	int				pipe[2];
+	int				(*builtin)(t_data *, t_parsing_cmd *);
+	char			*here_doc_fname;
 	int				fin;
 	int				fout;
 	t_parsing_file	*files;
 };
 
+/**/
 
-int		ft_mainloop(t_data *minishell);
+int		ft_push_new_file(t_parsing_cmd *cmd, char *file_name,
+			t_parsing_token type, char *here_doc_end);
 
 /**/
 
@@ -63,6 +67,7 @@ void	print_linked_list(t_parsing_cmd *cmd);
 
 /* expands */
 
+int		check_quotes(char *string);
 char	**ft_split_cmd(t_data *minishell, char *line);
 char	*ft_parse_expands(t_data *minishell, char *arg);
 

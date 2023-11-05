@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 16:13:46 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 20:08:21 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ void	print_name(void)
 char	*prompt(t_data *ms)
 {
 	char	*user;
+	char	*tmp;
 
 	user = NULL;
 	user = ft_strjoin(user, ft_strdup(B_GREEN));
-	user = ft_strjoin(user, ft_get_env_variable(ms, "USER"));
+	tmp = ft_get_env_variable(ms, "USER");
+	if (tmp)
+		user = ft_strjoin(user, tmp);
 	user = ft_strjoin(user, "@"RESET": "MS_PROMPT_NAME);
 	return (user);
 }
@@ -49,19 +52,28 @@ int	ft_mainloop(t_data *minishell)
 	{
 		i = -1;
 		line = readline(pt);
+		if (!line)
+			exit_with_code(minishell, EXIT_SUCCESS, "exit\n");
+		if (*line == '\0')
+			continue ;
 		add_history(line);
+		if (check_quotes(line))
+		{
+			ft_warning(MS_ERROR_PREFIX"invalid pattern\n");
+			continue ;
+		}
 		pipline = ft_split(line, "|");
 		if(!pipline)
-			return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
+			return (ft_error(MS_ALLOC_ERROR_MSG"split"), MS_ERROR);
 		while (pipline[++i])
 		{
 			if (ft_push_new_command(minishell, pipline[i]))
-				return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
+				return (MS_ERROR);
 		}
-		// if (fork_processes(minishell))
-		// 	return (MS_ERROR);
-		// print_linked_list(minishell->parsing_cmd);
-		// ft_destroy_parsing_cmd(minishell);
+		if (mini_exec(minishell))
+			return (MS_ERROR);
+		ft_destroy_parsing_cmd(minishell);
+		free_tab(pipline);
 		free(line);
 	}
 	free(pt);
@@ -72,17 +84,16 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	minishell;
 
-	(void)(argc);
+	if (argc > 1)
+		return (ft_error(MS_ERROR_PREFIX"this program does not take any aruments\n"), MS_ERROR);
 	(void)(argv);
-	ft_bzero(&minishell, sizeof(t_data));
-	minishell.in = dup(STDIN_FILENO);
-	minishell.out = dup(STDOUT_FILENO);
 	print_name();
+	ft_bzero(&minishell, sizeof(t_data));
+	ft_bzero(&g_signal, sizeof(t_signal));
+	setup_signals();
 	ft_parse_env(&minishell, envp);
-	// print_env(&minishell);
-	// dup_env(&minishell);
-	// return 1;
-	ft_mainloop(&minishell);
+	if (ft_mainloop(&minishell))
+		exit_with_code(&minishell, MS_ERROR, NULL);
 	free_minishell(&minishell);
 	return (0);
 }

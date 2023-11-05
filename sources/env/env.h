@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:28:56 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/31 15:22:03 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 19:58:34 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,17 @@ int				ft_push_env_element(t_data *minishell, t_env_element *env_e);
 char			*ft_get_env_variable(t_data *minishell, char *key);
 
 /* freeing env element */
+
 void			destroy_env_element(t_env_element *env_e);
 void			free_env(t_data *minishell);
 
 /* print env */
 
 void			print_env(t_data *minishell);
-void			ft_print_env_variable(t_data *minishell, char *key);
+void			ft_print_env_variable(t_data *minishell, char *key, int new_line);
+
+/* exit status */
+
+char			*exit_status(char *line);
 
 #endif /* ENV_H */

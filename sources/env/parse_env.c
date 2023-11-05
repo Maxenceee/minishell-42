@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/02 18:30:07 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/04 20:35:52 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,44 @@ t_env_element	*ft_new_env_element_fromline(char *line)
 	return (env_e);
 }
 
+int	parse_env_pwd(t_data *ms)
+{
+	char	*tmp;
+
+	tmp = ft_get_env_variable(ms, "PWD");
+	if (!tmp)
+	{
+		update_wd(ms);
+		tmp = ft_get_env_variable(ms, "PWD");
+	}
+	ms->pwd = ft_strdup(tmp);
+	return (MS_SUCCESS);
+}
+
+int	increment_shelllvl(t_data *ms)
+{
+	char	*shlvl;
+
+	shlvl = ft_get_env_variable(ms, "SHLVL");
+	shlvl = ft_itoa(ft_atoi(shlvl) + 1);
+	ft_push_env_element(ms, ft_new_env_element( "SHLVL", shlvl));
+	free(shlvl);
+	return (MS_SUCCESS);
+}
+
 int	ft_parse_env(t_data *minishell, char **envp)
 {
 	int		i;
-	char	*shlvl;
 
 	i = -1;
-	minishell->envp = envp;
 	while (envp[++i])
 	{
 		if (ft_push_env_element(minishell,
 				ft_new_env_element_fromline(envp[i])))
 			return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
 	}
-	shlvl = ft_get_env_variable(minishell, "SHLVL");
-	shlvl = ft_itoa(ft_atoi(shlvl) + 1);
-	ft_builtin_export(minishell, "SHLVL", shlvl);
-	free(shlvl);
+	parse_env_pwd(minishell);
+	increment_shelllvl(minishell);
+	minishell->envp = dup_env(minishell);
 	return (MS_SUCCESS);
 }

@@ -62,6 +62,7 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	int	i;
 	i = -1;
 	new_cmd->cmd = ft_split_cmd(minishell, line);
+	new_cmd->builtin = get_builtin(new_cmd->cmd[0]);
 // exemple 
 	while (new_cmd->cmd[++i])
 		printf("[%s] ", new_cmd->cmd[i]);
@@ -111,6 +112,32 @@ int ft_push_new_command(t_data *minishell, char *line)
 		tmp->next = new_cmd;
 	}
 	minishell->pipes++;
+	return (MS_SUCCESS);
+}
+
+int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name,
+	t_parsing_token type, char *here_doc_end)
+{
+	t_parsing_file	*new_file;
+	t_parsing_file	*tmp;
+
+	new_file = ft_calloc(1, sizeof(t_parsing_file));
+	if (!new_file)
+		return (MS_ERROR);
+	new_file->file_name = file_name;
+	new_file->type = type;
+	new_file->here_doc_end = here_doc_end;
+	tmp = cmd->files;
+	while (tmp)
+	{
+		if (!tmp->next)
+			break ;
+		tmp = tmp->next;
+	}
+	if (!cmd->files)
+		cmd->files = new_file;
+	else
+		tmp->next = new_file;
 	return (MS_SUCCESS);
 }
 
