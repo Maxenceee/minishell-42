@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
 /*   Updated: 2023/11/03 16:49:36 by mgama            ###   ########.fr       */

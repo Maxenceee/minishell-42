@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/04 19:07:52 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 18:08:36 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_parsing_file		t_parsing_file;
  */
 typedef enum e_parsing_token
 {
-	// PIPE, // |
+	PIPE, // |
 	REDIR_IN, // <
 	REDIR_OUT, // >
 	CONCAT_IN, // <<
