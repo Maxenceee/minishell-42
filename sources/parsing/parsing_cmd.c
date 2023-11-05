@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/03 15:50:38 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/05 17:17:49 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,65 +21,69 @@ void	print_linked_list(t_parsing_cmd *cmd)
 	}
 }
 
-// static int	ft_parse_decomp(t_parsing_cmd *new_cmd, char* tmp_line, char *tmp)
-// {
-// 	int j;
-// 	char **tmpsplit;
-	
-// 	tmpsplit = ft_split(tmp_line, " ");
-// 	if(!tmpsplit)
-// 		return (MS_ERROR);
-// 	j = count_strings(tmp_line, " ");
-// 	new_cmd->cmd = ft_calloc((j + 1), sizeof(char *));
-// 	if(!new_cmd->cmd)
-// 		return (free_tab(tmpsplit), MS_ERROR);
-// 	new_cmd->cmd[0] = ft_strdup(tmp);
-// 	if(!new_cmd->cmd[0])
-// 		return (free_tab(tmpsplit), free(new_cmd->cmd), MS_ERROR);
-// 	j = -1;
-// 	while (tmpsplit[++j])
-// 	{
-// 		new_cmd->cmd[j + 1] = ft_strdup(tmpsplit[j]);
-// 		if(!new_cmd->cmd[j + 1])
-// 			return (free_tab(tmpsplit), free_tab(new_cmd->cmd), MS_ERROR);
-// 	}	
-// 	return(free_tab(tmpsplit), MS_SUCCESS);
-// }
+static int	ft_parse_decomp(t_parsing_cmd *new_cmd, int i)
+{
+	// // if(new_cmd->files->type)
+	// // 	new_cmd->files->file_name = ft_strdup(new_cmd->cmd[i-1]);
+	// if (!new_cmd->files->file_name)
+	// 	return (MS_ERROR);
+	// return (MS_SUCCESS);
+}
+ 
+int    ft_push_new_file(t_parsing_cmd *cmd, char *file_name, t_parsing_token type)
+{
+    t_parsing_file    *new_file;
+    t_parsing_file    *tmp;
+
+    new_file = ft_calloc(1, sizeof(t_parsing_file));
+    if (!new_file)
+        return (MS_ERROR);
+    new_file->file_name = file_name;
+    new_file->type = type;
+    tmp = cmd->files;
+	printf("file name :%s\n", file_name);
+	if (type == CONCAT_OUT)
+		printf("type : concat out");
+    while (tmp)
+    {
+        if (!tmp->next)
+            break ;
+        tmp = tmp->next;
+    }
+    if (!cmd->files)
+        cmd->files = new_file;
+    else
+        tmp->next = new_file;
+    return (MS_SUCCESS);
+}
 
 int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 {
 	int	i;
-	// char *tmp;
-	// char *tmp_line;
-
 	i = -1;
 	new_cmd->cmd = ft_split_cmd(minishell, line);
 // exemple 
 	while (new_cmd->cmd[++i])
 		printf("[%s] ", new_cmd->cmd[i]);
 	printf("\n");
+	i = -1;
 	// if (ft_strcmp("echo", new_cmd->cmd[0]) == 0)
 	// 	ft_builtin_echo(minishell, new_cmd->cmd + 1, 1);
+	while (new_cmd->cmd[++i])
+	{
+	if (ft_strcmp(">>", new_cmd->cmd[i]) == 0)
+		ft_push_new_file(new_cmd, new_cmd->cmd[i - 1], CONCAT_OUT);
+	else if (ft_strcmp(">", new_cmd->cmd[i]) == 0)
+		ft_push_new_file(new_cmd, new_cmd->cmd[i - 1], REDIR_OUT);
+	else if (ft_strcmp("<", new_cmd->cmd[i]) == 0)
+		ft_push_new_file(new_cmd, new_cmd->cmd[i - 1], REDIR_IN);
+	else if (ft_strcmp("<<", new_cmd->cmd[i]) == 0)
+		ft_push_new_file(new_cmd, new_cmd->cmd[i - 1], CONCAT_IN);
+	printf("%d\n", i);
+	// ft_parse_decomp(new_cmd, i);
+	}
 // fin exemple
-	// while (line[++i] != ' ' && line[i]);
-	// tmp = ft_strtcpy(line, i);
-	// if (!tmp)
-	// 	return (MS_ERROR);
-	// if (!line[i])
-	// {
-	// 	new_cmd->cmd = ft_calloc(1, sizeof(char *));
-	// 	if(!new_cmd->cmd)
-	// 		return  (MS_ERROR);
-	//  	new_cmd->cmd = ft_split(tmp, " ");
-	// 	if(!new_cmd->cmd)
-	// 		return  (MS_ERROR);
-	//  	return (free(tmp), MS_SUCCESS);
-	//  }
-	// tmp_line = ft_parse_expands(minishell, line + i);
-	// if(!tmp_line)
-	// 	return (free(tmp), MS_ERROR);
-	// if (ft_parse_decomp(new_cmd, tmp_line, tmp))
-	// 	return(free(tmp), free(tmp_line), MS_ERROR);
+
 	return (MS_SUCCESS);
 }
 

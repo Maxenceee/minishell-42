@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 16:16:52 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 18:32:23 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	open_fdinout(t_parsing_cmd *cmd)
 	f = cmd->files;
 	while (f)
 	{
-		f->fd = open(f->file_name, O_CREAT | cmd->type | O_WRONLY, 0644);
+		f->fd = open(f->file_name, O_CREAT | cmd->files->type | O_WRONLY, 0644);
 		f = f->next;
 	}
 	return (MS_SUCCESS);

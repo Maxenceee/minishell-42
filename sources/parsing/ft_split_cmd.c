@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/03 16:46:42 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 17:11:25 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ int	cmd_count(char *line)
 	j = 0;
 	read_env = 0;
 	quoted = 0;
-	printf("line: %s\n\n", line);
 	while (line[i])
 	{
-		printf("%d %c\n", i, line[i]);
 		if (!read_env && line[i] == '\'')
 			quoted = !quoted;
 		else if (!quoted && line[i] == '\"')
@@ -67,9 +65,7 @@ char	*put_cmd(t_data *minishell, char *line, int *i)
 	int		len;
 
 	len = get_cmd_len(line);
-	printf("get_cmd_len: %d\n", len);
 	res = ft_strtcpy(line, len);
-	printf("ft_strtcpy: %s\n", res);
 	if (!res)
 		return (NULL);
 	*i += len;
@@ -86,7 +82,6 @@ char	**ft_split_cmd(t_data *minishell, char *line)
 	int		ccount;
 
 	ccount = cmd_count(line);
-	printf("ccount %d\n", ccount);
 	res = (char **)ft_calloc(ccount + 1, sizeof(char *));
 	if (!res)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/03 15:50:56 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/03 18:08:36 by ffreze           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,20 @@ typedef struct s_parsing_file		t_parsing_file;
  * et O_APPEND (pour CONCAT_OUT)
  * 
  */
-// typedef enum e_parsing_token
-// {
-// 	// PIPE, // |
-// 	// REDIR_IN, // <
-// 	REDIR_OUT, // >
-// 	// CONCAT_IN, // <<
-// 	CONCAT_OUT, // >>
-// }			t_parsing_token;
+typedef enum e_parsing_token
+{
+	PIPE, // |
+	REDIR_IN, // <
+	REDIR_OUT, // >
+	CONCAT_IN, // <<
+	CONCAT_OUT, // >>
+}			t_parsing_token;
 
 struct s_parsing_file
 {
 	char			*file_name;
 	int				fd;
+	t_parsing_token	type;
 	t_parsing_file	*next;
 };
 
@@ -46,7 +47,6 @@ struct s_parsing_commands
 	t_parsing_cmd	*prev;
 	pid_t			pid;
 	char			**cmd;
-	int				type;
 	int				pipe[2];
 	int				fin;
 	int				fout;
