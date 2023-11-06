@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:07 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 13:17:50 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/06 00:52:57 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,16 @@ char	**export_split(t_data *ms, char *token)
 		len++;
 	res = ft_calloc(len + 1, sizeof(char *));
 	if (!res)
+	{
+		free(res);
 		exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
+	}
 	res[0] = ft_strtcpy(token, i);
 	if (!res[0])
+	{
+		free(res);
 		exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
+	}
 	if (len > 1 && token + ++i)
 		res[1] = ft_strdup(token + i);
 	else if (len > 1)
@@ -39,6 +45,7 @@ char	**export_split(t_data *ms, char *token)
 	if (len > 1 && !res[1])
 	{
 		free(res[0]);
+		free(res);
 		exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	}
 	res[len] = 0;
@@ -64,8 +71,10 @@ int	ft_builtin_export(t_data *minishell, t_parsing_cmd *cmd)
 {
 	char	**env_e;
 	int		i;
+	int		code;
 
 	i = 0;
+	code = MS_SUCCESS;
 	while (cmd->cmd[++i])
 	{
 		env_e = export_split(minishell, cmd->cmd[i]);
@@ -74,9 +83,11 @@ int	ft_builtin_export(t_data *minishell, t_parsing_cmd *cmd)
 			ft_putfd(2, MS_ERROR_PREFIX"export: `");
 			ft_putfd(2, cmd->cmd[i]);
 			ft_putfd(2, "': not a valid identifier\n");
+			code = MS_ERROR;
 			continue ;
 		}
 		ft_push_env_element(minishell, ft_new_env_element(env_e[0], env_e[1]));
+		free_tab(env_e);
 	}
 	if (i == 1)
 		print_export_env(minishell);
@@ -86,5 +97,5 @@ int	ft_builtin_export(t_data *minishell, t_parsing_cmd *cmd)
 			free_tab(minishell->envp);
 		minishell->envp = dup_env(minishell);
 	}
-	return (MS_SUCCESS);
+	return (code);
 }

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 19:49:54 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/06 00:40:43 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 # include <stdio.h>
 # include <dirent.h>
-# include <sys/wait.h>
 # include <limits.h>
 # include <errno.h>
 # include <signal.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -31,8 +33,11 @@
 # define MS_EXEVE_ERROR			MS_ERROR_PREFIX"could not execute execve: "
 # define MS_OPEN_ERROR			MS_ERROR_PREFIX"could not open file\n"
 # define MS_FORK_ERROR			MS_ERROR_PREFIX"fork\n"
-# define MS_COMMAND_NOT_FOUND	MS_ERROR_PREFIX"command not found: "
-# define MS_PERM_DENIED			MS_ERROR_PREFIX"permission denied\n"
+# define MS_COMMAND_NOT_FOUND	"command not found\n"
+# define MS_IS_DIR				"is a directory\n"
+# define MS_NO_FILE_DIR			"No such file or directory\n"
+# define MS_PERM_DENIED			"Permission denied\n"
+# define MS_TOO_MANY			"too many arguments\n"
 # define MS_ALLOC_ERROR_MSG		"Error: could not allocate memory.\n"
 
 # define BUFF_SIZE		4096
@@ -56,6 +61,7 @@ struct s_data {
 	char			*pwd;
 	// char			*old_pwd;
 	t_parsing_cmd	*parsing_cmd;
+	char			*prompt;
 };
 
 typedef struct	s_signal

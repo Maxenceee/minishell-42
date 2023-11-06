@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:31 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:14:52 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/06 00:53:26 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**dup_env(t_data *ms)
 	i = 0;
 	res = (char **)ft_calloc(get_env_count(ms) + 1, sizeof(char *));
 	if (!res)
-		return (NULL);
+		exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	e = ms->env;
 	while (e)
 	{

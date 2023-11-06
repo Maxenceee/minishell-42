@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:52:43 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/06 00:10:02 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
  */
 
 int		ft_putfd(int fd, char *str);
+void	ft_cmderror(char *head, char *cmd, char *msg);
 int		ft_error(char *str);
 int		ft_warning(char *str);
 int		ft_info(char *str);
@@ -82,6 +83,7 @@ int		ft_isalnum(int num);
 int		ft_isalpha(int num);
 int		ft_isdigit(int num);
 int		ft_isascii(int c);
+int		ft_strisdigit(char *str);
 
 char	*ft_read_file(int fd, char *file);
 

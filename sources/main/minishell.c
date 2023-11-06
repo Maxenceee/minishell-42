@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 20:08:21 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/06 00:46:28 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*prompt(t_data *ms)
 	char	*tmp;
 
 	user = NULL;
-	user = ft_strjoin(user, ft_strdup(B_GREEN));
+	user = ft_strjoin(user, B_GREEN);
 	tmp = ft_get_env_variable(ms, "USER");
 	if (tmp)
 		user = ft_strjoin(user, tmp);
@@ -42,18 +42,17 @@ int	ft_mainloop(t_data *minishell)
 {
 	int		i;
 	char	*line;
-	char	*pt;
 	char	**pipline;
 	
-	pt = prompt(minishell);
-	if (!pt)
+	minishell->prompt = prompt(minishell);
+	if (!minishell->prompt)
 		return (MS_ERROR);
 	while (!minishell->exit)
 	{
 		i = -1;
-		line = readline(pt);
+		line = readline(minishell->prompt);
 		if (!line)
-			exit_with_code(minishell, EXIT_SUCCESS, "exit\n");
+			exit_with_code(minishell, MS_SUCCESS, "exit\n");
 		if (*line == '\0')
 			continue ;
 		add_history(line);
@@ -63,6 +62,7 @@ int	ft_mainloop(t_data *minishell)
 			continue ;
 		}
 		pipline = ft_split(line, "|");
+		free(line);
 		if(!pipline)
 			return (ft_error(MS_ALLOC_ERROR_MSG"split"), MS_ERROR);
 		while (pipline[++i])
@@ -70,13 +70,11 @@ int	ft_mainloop(t_data *minishell)
 			if (ft_push_new_command(minishell, pipline[i]))
 				return (MS_ERROR);
 		}
+		free_tab(pipline);
 		if (mini_exec(minishell))
 			return (MS_ERROR);
 		ft_destroy_parsing_cmd(minishell);
-		free_tab(pipline);
-		free(line);
 	}
-	free(pt);
 	return (MS_SUCCESS);
 }
 
