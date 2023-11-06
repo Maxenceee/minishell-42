@@ -6,7 +6,8 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:34:01 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/06 01:02:01 by mgama            ###   ########.fr       */
+
+/*   Updated: 2023/11/06 00:55:37 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,47 +22,15 @@ void	print_linked_list(t_parsing_cmd *cmd)
 	}
 }
 
-static int	ft_parse_decomp(t_parsing_cmd *new_cmd, int i)
-{
-	// // if(new_cmd->files->type)
-	// // 	new_cmd->files->file_name = ft_strdup(new_cmd->cmd[i-1]);
-	// if (!new_cmd->files->file_name)
-	// 	return (MS_ERROR);
-	// return (MS_SUCCESS);
-}
- 
-int    ft_push_new_file(t_parsing_cmd *cmd, char *file_name, t_parsing_token type)
-{
-    t_parsing_file    *new_file;
-    t_parsing_file    *tmp;
-
-    new_file = ft_calloc(1, sizeof(t_parsing_file));
-    if (!new_file)
-        return (MS_ERROR);
-    new_file->file_name = file_name;
-    new_file->type = type;
-    tmp = cmd->files;
-	printf("file name :%s\n", file_name);
-	if (type == CONCAT_OUT)
-		printf("type : concat out");
-    while (tmp)
-    {
-        if (!tmp->next)
-            break ;
-        tmp = tmp->next;
-    }
-    if (!cmd->files)
-        cmd->files = new_file;
-    else
-        tmp->next = new_file;
-    return (MS_SUCCESS);
-}
-
 int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 {
 	int	i;
+	int	code;
+
 	i = -1;
 	new_cmd->cmd = ft_split_cmd(minishell, line);
+	if (!new_cmd->cmd)
+		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	new_cmd->builtin = get_builtin(new_cmd->cmd[0]);
 // exemple 
 	while (new_cmd->cmd[++i])
@@ -69,20 +38,19 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	printf("\n");
 // fin exemple
 	i = -1;
-	// if (ft_strcmp("echo", new_cmd->cmd[0]) == 0)
-	// 	ft_builtin_echo(minishell, new_cmd->cmd + 1, 1);
+	code = MS_SUCCESS;
 	while (new_cmd->cmd[++i])
 	{
 		if (ft_strcmp(">>", new_cmd->cmd[i]) == 0)
-			ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], CONCAT_OUT);
+			code = ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], CONCAT_OUT, NULL);
 		else if (ft_strcmp(">", new_cmd->cmd[i]) == 0)
-			ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_OUT);
+			code = ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_OUT, NULL);
 		else if (ft_strcmp("<", new_cmd->cmd[i]) == 0)
-			ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_IN);
+			code = ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_IN, NULL);
 		else if (ft_strcmp("<<", new_cmd->cmd[i]) == 0)
-			ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], CONCAT_IN);
-		// printf("%d\n", i);
-		// ft_parse_decomp(new_cmd, i);
+			code = ft_push_new_file(new_cmd, NULL, CONCAT_IN, new_cmd->cmd[i + 1]);
+		if (code)
+			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	}
 	return (MS_SUCCESS);
 }
@@ -94,7 +62,7 @@ int ft_push_new_command(t_data *minishell, char *line)
 
 	new_cmd = ft_calloc(1, sizeof(t_parsing_cmd));
 	if (!new_cmd)
-		return (MS_ERROR);
+		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	if (ft_compose(minishell, line, new_cmd))
 		return (free(new_cmd), MS_ERROR);
 	tmp = minishell->parsing_cmd;
@@ -141,6 +109,24 @@ int	ft_push_new_file(t_parsing_cmd *cmd, char *file_name,
 	return (MS_SUCCESS);
 }
 
+void	ft_destroy_parsing_files(t_parsing_cmd	*cmd)
+{
+	t_parsing_file	*tmp;
+	t_parsing_file	*next;
+
+	tmp = cmd->files;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (tmp->file_name)
+			free(tmp->file_name);
+		if (tmp->here_doc_end)
+			free(tmp->here_doc_end);
+		free(tmp);
+		tmp = next;
+	}
+}
+
 void	ft_destroy_parsing_cmd(t_data *minishell)
 {
 	t_parsing_cmd	*tmp;
@@ -151,6 +137,13 @@ void	ft_destroy_parsing_cmd(t_data *minishell)
 	{
 		next = tmp->next;
 		free_tab(tmp->cmd);
+		if (tmp->here_doc_fname)
+		{
+			unlink(tmp->here_doc_fname);
+			free(tmp->here_doc_fname);
+		}
+		if (tmp->files)
+			ft_destroy_parsing_files(tmp);
 		free(tmp);
 		tmp = next;
 	}

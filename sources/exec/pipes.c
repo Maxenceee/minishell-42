@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:21:50 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 19:31:17 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/05 22:54:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	handle_infile(char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		return (ft_putfd(STDERR_FILENO, MS_ERROR_PREFIX),
+		return (ft_putfd(STDERR_FILENO, MS_ERROR_PREFIX"open: "),
 			perror(""), MS_ERROR);
 	if (fd > 0 && dup2(fd, STDIN_FILENO) < 0)
 		return (ft_error(MS_PIPE_ERROR), MS_ERROR);
@@ -32,13 +32,13 @@ int	handle_outfile(t_parsing_file *f, char *file_name)
 	int	fd;
 
 	if (f->type == REDIR_OUT)
-		fd = open(file_name, O_CREAT | O_RDWR | O_APPEND, 0644);
+		fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else
 		fd = open(file_name, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd < 0)
-		return (ft_putfd(STDERR_FILENO, MS_ERROR_PREFIX),
+		return (ft_putfd(STDERR_FILENO, MS_ERROR_PREFIX"open: "),
 			perror(""), MS_ERROR);
-	if (fd > 0 && dup2(fd, STDIN_FILENO) < 0)
+	if (fd > 0 && dup2(fd, STDOUT_FILENO) < 0)
 		return (ft_error(MS_PIPE_ERROR), MS_ERROR);
 	if (fd > 0)
 		close(fd);
@@ -64,7 +64,7 @@ int	open_fdinout(t_parsing_cmd *cmd)
 		}
 		else if (f->type == CONCAT_IN)
 		{
-			if (handle_infile(f->file_name))
+			if (handle_infile(cmd->here_doc_fname))
 				return (MS_ERROR);
 		}
 		f = f->next;

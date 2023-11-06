@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 13:17:32 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/06 00:18:59 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ void	unset_env(t_data *minishell, char *key)
 int	ft_builtin_unset(t_data *minishell, t_parsing_cmd *cmd)
 {
 	int	i;
+	int	code;
 
 	i = 0;
+	code = MS_SUCCESS;
 	while (cmd->cmd[++i])
 	{
 		if (check_unset_key(cmd->cmd[i]))
@@ -63,9 +65,10 @@ int	ft_builtin_unset(t_data *minishell, t_parsing_cmd *cmd)
 			ft_putfd(2, MS_ERROR_PREFIX"unset: `");
 			ft_putfd(2, cmd->cmd[i]);
 			ft_putfd(2, "': not a valid identifier\n");
+			code = MS_ERROR;
 			continue ;
 		}
 		unset_env(minishell, cmd->cmd[i]);
 	}
-	return (MS_SUCCESS);
+	return (code);
 }

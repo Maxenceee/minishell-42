@@ -6,12 +6,19 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 13:32:31 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 02:52:25 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/05 23:17:58 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "pcolors.h"
+
+void	ft_cmderror(char *head, char *cmd, char *msg)
+{
+	write(STDERR_FILENO, head, ft_strlen(head));
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, msg, ft_strlen(msg));
+}
 
 int	ft_putfd(int fd, char *str)
 {

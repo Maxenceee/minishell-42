@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:07:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 19:49:10 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/06 00:19:06 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_push_env_element(t_data *minishell, t_env_element *env_e)
 	int				res;
 
 	if (!env_e)
-		exit_with_error(minishell, EXIT_FAILURE, MS_ALLOC_ERROR_MSG);
+		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	res = ft_check_and_reasign_env_e(minishell->env, env_e);
 	if (res == MS_ERROR)
 		return (MS_ERROR);

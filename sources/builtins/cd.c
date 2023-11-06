@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:40 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 20:36:18 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/06 00:03:54 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,9 @@ int	change_dir(t_data *ms, char *path, char *env_v)
 	if (res)
 	{
 		ft_putfd(2, MS_ERROR_PREFIX"cd: ");
-		ft_putfd(2, path);
-		perror(": ");
+		perror(path);
 	}
-	return (res);
+	return (MS_ERROR);
 }
 
 int	ft_builtin_cd(t_data *minishell, t_parsing_cmd *cmd)
