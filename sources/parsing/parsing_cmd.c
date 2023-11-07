@@ -22,6 +22,40 @@ void	print_linked_list(t_parsing_cmd *cmd)
 	}
 }
 
+int realloc_doubletab(t_parsing_cmd *new_cmd, int i)
+{
+	int j;
+	int k;
+	char **cmdrea;
+
+	j = -1;
+	k = -1;
+	if (ft_strcmp(">>", new_cmd->cmd[i]) == 0 || \
+	ft_strcmp(">", new_cmd->cmd[i]) == 0 || \
+	ft_strcmp("<", new_cmd->cmd[i]) == 0 || \
+	ft_strcmp("<<", new_cmd->cmd[i]) == 0)
+	{
+		while(new_cmd->cmd[++j] != 0)
+			j++;
+		j = j - 2;
+		cmdrea = malloc(sizeof(char *) * j + 1);
+		while(++k <= j + 2)
+		{
+			if(k != i && k != i + 1)
+				cmdrea[k] = ft_strdup(new_cmd->cmd[k]);
+			
+		}
+		free_tab(new_cmd->cmd);
+		new_cmd->cmd = malloc(sizeof(char *) * j + 1);
+		k = -1;
+		while(cmdrea[++k] != 0)
+		{
+				new_cmd->cmd[i] = ft_strdup(cmdrea[k]);
+		}
+	}
+	
+}
+
 int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 {
 	int	i;
@@ -49,6 +83,7 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 			code = ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_IN, NULL);
 		else if (ft_strcmp("<<", new_cmd->cmd[i]) == 0)
 			code = ft_push_new_file(new_cmd, NULL, CONCAT_IN, new_cmd->cmd[i + 1]);
+		realloc_doubletab(new_cmd, i);
 		if (code)
 			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	}
