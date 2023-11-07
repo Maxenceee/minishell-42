@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:46:28 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/07 15:45:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*prompt(t_data *ms)
 int	ft_mainloop(t_data *minishell)
 {
 	int		i;
+	int		code;
 	char	*line;
 	char	**pipline;
 	
@@ -58,7 +59,7 @@ int	ft_mainloop(t_data *minishell)
 		add_history(line);
 		if (check_quotes(line))
 		{
-			ft_warning(MS_ERROR_PREFIX"invalid pattern\n");
+			ft_cmderror(MS_ERROR_PREFIX, "invalid pattern", "\n");
 			continue ;
 		}
 		pipline = ft_split(line, "|");
@@ -67,11 +68,12 @@ int	ft_mainloop(t_data *minishell)
 			return (ft_error(MS_ALLOC_ERROR_MSG"split"), MS_ERROR);
 		while (pipline[++i])
 		{
-			if (ft_push_new_command(minishell, pipline[i]))
-				return (MS_ERROR);
+			code = ft_push_new_command(minishell, pipline[i]);
+			if (code)
+				break ;
 		}
 		free_tab(pipline);
-		if (mini_exec(minishell))
+		if (!code && mini_exec(minishell))
 			return (MS_ERROR);
 		ft_destroy_parsing_cmd(minishell);
 	}

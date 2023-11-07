@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:24 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:13:16 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/07 16:23:20 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	ft_builtin_exit(t_data *ms, t_parsing_cmd *cmd)
 		;
 	if (i > 1 && !ft_strisdigit(cmd->cmd[1]))
 	{
+		write(2, "exit\n", 6);
 		ft_cmderror(MS_ERROR_PREFIX, "exit", ": ");
 		ft_putfd(STDERR_FILENO, cmd->cmd[1]);
 		ft_putfd(STDERR_FILENO, ": numeric argument required\n");

@@ -22,35 +22,67 @@ void	print_linked_list(t_parsing_cmd *cmd)
 	}
 }
 
+int realloc_doubletab(t_data *ms, t_parsing_cmd *new_cmd, int i, char ***tmp)
+{
+	int j;
+	int k;
+	char **cmdrea;
+
+	j = 0;
+	k = -1;
+	if (ft_strcmp(">>", new_cmd->cmd[i]) == 0 || ft_strcmp(">", new_cmd->cmd[i]) == 0 || \
+		ft_strcmp("<", new_cmd->cmd[i]) == 0 || ft_strcmp("<<", new_cmd->cmd[i]) == 0)
+	{
+		if (!new_cmd->cmd[i + 1])
+			return (ft_cmderror(MS_ERROR_PREFIX,
+				"syntax error near unexpected token `newline'", "\n"), MS_ERROR);
+		while(new_cmd->cmd[j])
+			j++;
+		cmdrea = ft_calloc(j - 1, sizeof(char *));
+		if (!cmdrea)
+			exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
+		while(++k < j)
+			if(k != i && k != i + 1)
+				cmdrea[k] = ft_strdup(new_cmd->cmd[k]);
+		if (*tmp)
+			free_tab(*tmp);
+		*tmp = cmdrea;
+	}
+	return (MS_SUCCESS);
+}
+
 int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 {
-	int	i;
-	int	code;
+	int		i;
+	int		code;
+	char	**tmp;
 
-	i = -1;
 	new_cmd->cmd = ft_split_cmd(minishell, line);
 	if (!new_cmd->cmd)
 		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	new_cmd->builtin = get_builtin(new_cmd->cmd[0]);
-// exemple 
-	while (new_cmd->cmd[++i])
-		printf("[%s] ", new_cmd->cmd[i]);
-	printf("\n");
-// fin exemple
+	tmp = NULL;
 	i = -1;
 	code = MS_SUCCESS;
 	while (new_cmd->cmd[++i])
 	{
 		if (ft_strcmp(">>", new_cmd->cmd[i]) == 0)
-			code = ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], CONCAT_OUT, NULL);
+			code = ft_push_new_file(new_cmd, ft_strdup(new_cmd->cmd[i + 1]), CONCAT_OUT, NULL);
 		else if (ft_strcmp(">", new_cmd->cmd[i]) == 0)
-			code = ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_OUT, NULL);
+			code = ft_push_new_file(new_cmd, ft_strdup(new_cmd->cmd[i + 1]), REDIR_OUT, NULL);
 		else if (ft_strcmp("<", new_cmd->cmd[i]) == 0)
-			code = ft_push_new_file(new_cmd, new_cmd->cmd[i + 1], REDIR_IN, NULL);
+			code = ft_push_new_file(new_cmd, ft_strdup(new_cmd->cmd[i + 1]), REDIR_IN, NULL);
 		else if (ft_strcmp("<<", new_cmd->cmd[i]) == 0)
-			code = ft_push_new_file(new_cmd, NULL, CONCAT_IN, new_cmd->cmd[i + 1]);
+			code = ft_push_new_file(new_cmd, NULL, CONCAT_IN, ft_strdup(new_cmd->cmd[i + 1]));
 		if (code)
 			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
+		if (realloc_doubletab(minishell, new_cmd, i, &tmp))
+			return (MS_ERROR);
+	}
+	if (tmp)
+	{
+		free_tab(new_cmd->cmd);
+		new_cmd->cmd = tmp;
 	}
 	return (MS_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 19:05:29 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/07 16:21:22 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	fork_processes(t_data *minishell)
 
 void	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 {
+	int	hd_sts;
 	int	status;
 
 	if (cmd->builtin && is_builtin_no_out(cmd))
@@ -84,7 +85,9 @@ void	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 		g_signal.exit_code = cmd->builtin(minishell, cmd);
 		return ;
 	}
-	open_heredoc(minishell, cmd);
+	hd_sts = open_heredoc(minishell, cmd);
+	if (hd_sts)
+		return ;
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		exit_with_code(minishell, MS_ERROR, NULL);
