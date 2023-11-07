@@ -6,11 +6,13 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/07 15:45:29 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/07 17:37:35 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
+
+uint32_t	g_signal = 0;
 
 void	print_name(void)
 {

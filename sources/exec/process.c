@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/07 16:21:22 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/07 17:40:04 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	process_wait(t_data *ms)
 		cmd = cmd->next;
 	}
 	if (WIFEXITED(status))
-		g_signal.exit_code = WEXITSTATUS(status);
+		set_g_signal_val(EXIT_CODE, WEXITSTATUS(status));
 }
 
 int	fork_processes(t_data *minishell)
@@ -82,7 +82,7 @@ void	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 
 	if (cmd->builtin && is_builtin_no_out(cmd))
 	{
-		g_signal.exit_code = cmd->builtin(minishell, cmd);
+		set_g_signal_val(EXIT_CODE, cmd->builtin(minishell, cmd));
 		return ;
 	}
 	hd_sts = open_heredoc(minishell, cmd);
@@ -95,7 +95,7 @@ void	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 		handle_cmd(minishell, cmd);
 	waitpid(cmd->pid, &status, 0);
 	if (WIFEXITED(status))
-		g_signal.exit_code = WEXITSTATUS(status);
+		set_g_signal_val(EXIT_CODE, WEXITSTATUS(status));
 }
 
 int	mini_exec(t_data *minishell)
@@ -103,11 +103,11 @@ int	mini_exec(t_data *minishell)
 	if (!minishell->parsing_cmd)
 		return (MS_ERROR);
 	signal(SIGQUIT, sigquit_handler);
-	g_signal.in_cmd = 1;
+	set_g_signal_val(IN_CMD, 1);
 	if (!minishell->parsing_cmd->next)
 		fork_single(minishell, minishell->parsing_cmd);
 	else if (fork_processes(minishell))
 		return (MS_ERROR);
-	g_signal.in_cmd = 0;
+	set_g_signal_val(IN_CMD, 0);
 	return (MS_SUCCESS);
 }

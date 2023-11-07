@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:40:43 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/07 17:26:07 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # include "../sources/builtins/builtins.h"
 # include "../sources/env/env.h"
 
+extern uint32_t			g_signal;
 typedef struct s_data	t_data;
 
 struct s_data {
@@ -64,15 +65,23 @@ struct s_data {
 	char			*prompt;
 };
 
-typedef struct	s_signal
+typedef	enum e_signal
 {
-	int			exit_code;
-	int			stop_heredoc;
-	int			in_cmd;
-	int			in_here_doc;
+	EXIT_CODE		= 255,
+	STOP_HEREDOC	= 256,
+	IN_CMD			= 512,
+	IN_HERE_DOC		= 1024,
 }				t_signal;
 
-t_signal	g_signal;
+// typedef struct	s_signal
+// {
+// 	int			exit_code;
+// 	int			stop_heredoc;
+// 	int			in_cmd;
+// 	int			in_here_doc;
+// }				t_signal;
+
+// t_signal	g_signal;
 
 /**
  * main
@@ -81,6 +90,8 @@ t_signal	g_signal;
 
 /* signal */
 
+int		get_g_signal_val(int flag);
+void	set_g_signal_val(int flag, int val);
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	setup_signals(void);

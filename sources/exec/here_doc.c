@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:19:06 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/07 17:39:43 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,26 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 	int		fd;
 	char	*line;
 
-	g_signal.stop_heredoc = 0;
-	g_signal.in_here_doc = 1;
+	set_g_signal_val(STOP_HEREDOC, 0);
+	set_g_signal_val(IN_HERE_DOC, 1);
 	fd = open(path, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		return (ft_putfd(STDERR_FILENO, MS_ERROR_PREFIX"heredoc open: "),
 			perror(""), MS_ERROR);
 	line = readline(MS_HEREDOC_MSG);
 	while (line && ft_strncmp(f->here_doc_end, line, ft_strlen(f->here_doc_end))
-		&& !g_signal.stop_heredoc)
+		&& !get_g_signal_val(STOP_HEREDOC))
 	{
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 		line = readline(MS_HEREDOC_MSG);
 	}
-	if (g_signal.stop_heredoc || !line)
+	if (get_g_signal_val(STOP_HEREDOC) || !line)
 		return (MS_ERROR);
 	free(line);
 	close(fd);
-	g_signal.in_here_doc = 0;
+	set_g_signal_val(IN_HERE_DOC, 0);
 	return (MS_SUCCESS);
 }
 
@@ -70,7 +70,7 @@ int	open_heredoc(t_data *ms, t_parsing_cmd *cmd)
 			cmd->here_doc_fname = new_here_doc_fname();
 			if (create_heredoc(ms, f, cmd->here_doc_fname))
 			{
-				g_signal.exit_code = MS_ERROR;
+				set_g_signal_val(EXIT_CODE, MS_ERROR);
 				return (MS_NO_ERROR);
 			}
 				
