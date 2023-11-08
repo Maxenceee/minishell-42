@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 01:32:27 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 02:24:25 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 	int		fd;
 	char	*line;
 
+	/**
+	 * 
+	 * TODO:
+	 * regler de le probleme du signal SIGINT dans le here doc
+	 * 
+	 */
 	setup_hd_signals(0);
 	set_g_signal_val(STOP_HEREDOC, 0);
 	set_g_signal_val(IN_HERE_DOC, 1);
