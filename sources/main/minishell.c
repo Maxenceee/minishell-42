@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/07 17:37:35 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 01:23:16 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	ft_mainloop(t_data *minishell)
 	while (!minishell->exit)
 	{
 		i = -1;
+		// setup_signals();
+		setup_signals();
 		line = readline(minishell->prompt);
 		if (!line)
 			exit_with_code(minishell, MS_SUCCESS, "exit\n");
@@ -89,10 +91,10 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc > 1)
 		return (ft_error(MS_ERROR_PREFIX"this program does not take any aruments\n"), MS_ERROR);
 	(void)(argv);
-	print_name();
+	if (isatty(STDOUT_FILENO))
+		print_name();
 	ft_bzero(&minishell, sizeof(t_data));
 	ft_bzero(&g_signal, sizeof(t_signal));
-	setup_signals();
 	ft_parse_env(&minishell, envp);
 	if (ft_mainloop(&minishell))
 		exit_with_code(&minishell, MS_ERROR, NULL);

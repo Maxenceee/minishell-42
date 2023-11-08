@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/07 17:26:07 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 01:23:45 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,12 @@ typedef	enum e_signal
 
 int		get_g_signal_val(int flag);
 void	set_g_signal_val(int flag, int val);
-void	sigint_handler(int sig);
-void	sigquit_handler(int sig);
+// void	sigint_handler(int sig);
+// void	sigquit_handler(int sig);
+// void	setup_signals(void);
 void	setup_signals(void);
+void	setup_exec_signals(int child_pid);
+void	setup_hd_signals(int child_pid);
 
 /**
  * exec

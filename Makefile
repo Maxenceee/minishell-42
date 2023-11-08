@@ -9,7 +9,9 @@ HEADERS_FONT_DIR =	$(MANDATORY_DIR)/font
 HEADERS			=	$(shell find $(HEADERS_DIR) -name "*.h")
 HEADERS_SOURCES	=	$(shell find $(MANDATORY_DIR) -name "*.h")
 
+ifeq ($(shell uname), Darwin)
 READLINE_DIR	=	$(shell brew --prefix readline)
+endif
 READLINE_LIB	=	-lreadline -lhistory -L $(READLINE_DIR)/lib
 
 CC				=	cc

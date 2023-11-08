@@ -6,3 +6,4 @@
 .objs
 */*.objs
 minishell
+minishell_tester

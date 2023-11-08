@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/07 17:39:43 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 01:32:27 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 	int		fd;
 	char	*line;
 
+	setup_hd_signals(0);
 	set_g_signal_val(STOP_HEREDOC, 0);
 	set_g_signal_val(IN_HERE_DOC, 1);
 	fd = open(path, O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -45,10 +46,11 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 		free(line);
 		line = readline(MS_HEREDOC_MSG);
 	}
+	close(fd);
 	if (get_g_signal_val(STOP_HEREDOC) || !line)
 		return (MS_ERROR);
 	free(line);
-	close(fd);
+	setup_signals();
 	set_g_signal_val(IN_HERE_DOC, 0);
 	return (MS_SUCCESS);
 }

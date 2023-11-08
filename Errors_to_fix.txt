@@ -1,0 +1,7 @@
+commands
+
+echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
+
+cat <./minishell_tester/test_files/infile
+
+echo hi < ./minishell_tester/test_files/infile bye bye

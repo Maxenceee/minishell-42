@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/07 17:40:04 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 01:23:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	process_child(t_data *minishell, t_parsing_cmd *cmd, int pip[2])
 {
 	cmd->pid = fork();
+	setup_exec_signals(cmd->pid);
 	if (cmd->pid == -1)
 		return (MS_ERROR);
 	if (cmd->pid == 0)
@@ -89,6 +90,7 @@ void	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 	if (hd_sts)
 		return ;
 	cmd->pid = fork();
+	setup_exec_signals(cmd->pid);
 	if (cmd->pid == -1)
 		exit_with_code(minishell, MS_ERROR, NULL);
 	if (cmd->pid == 0)
@@ -102,7 +104,7 @@ int	mini_exec(t_data *minishell)
 {
 	if (!minishell->parsing_cmd)
 		return (MS_ERROR);
-	signal(SIGQUIT, sigquit_handler);
+	// signal(SIGQUIT, sigquit_handler);
 	set_g_signal_val(IN_CMD, 1);
 	if (!minishell->parsing_cmd->next)
 		fork_single(minishell, minishell->parsing_cmd);

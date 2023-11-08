@@ -61,6 +61,12 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	if (!new_cmd->cmd)
 		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	new_cmd->builtin = get_builtin(new_cmd->cmd[0]);
+// tmp
+	// i = -1;
+	// while (new_cmd->cmd[++i])
+	// 	printf("[%s] ", new_cmd->cmd[i]);
+	// printf("\n");
+// end tmp
 	tmp = NULL;
 	i = -1;
 	code = MS_SUCCESS;
@@ -84,6 +90,12 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 		free_tab(new_cmd->cmd);
 		new_cmd->cmd = tmp;
 	}
+// tmp
+	// i = -1;
+	// while (new_cmd->cmd[++i])
+	// 	printf("[%s] ", new_cmd->cmd[i]);
+	// printf("\n");
+// end tmp
 	return (MS_SUCCESS);
 }
 

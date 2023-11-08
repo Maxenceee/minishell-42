@@ -57,7 +57,11 @@ char	*ft_parse_expands(t_data *minishell, char *arg)
 			while (ft_isalnum(arg[i]) && i++)
 				;
 			if (j == i)
+			{
 				res = ft_strjoin_char(res, '$');
+				if (arg[i] == '\"' || arg[i] == '\'')
+					continue ;
+			}
 			else
 			{
 				token = ft_strtcpy(arg + j, i - j);

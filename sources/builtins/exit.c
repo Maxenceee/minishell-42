@@ -6,12 +6,14 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:24 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/07 16:23:20 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 01:55:43 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+*/
 int	ft_builtin_exit(t_data *ms, t_parsing_cmd *cmd)
 {
 	int	i;
@@ -37,6 +39,7 @@ int	ft_builtin_exit(t_data *ms, t_parsing_cmd *cmd)
 	write(2, "exit\n", 6);
 	if (i == 2)
 		code = ft_atoi(cmd->cmd[1]);
+	code = code % 256;
 	exit_with_code(ms, code, NULL);
 	return (MS_SUCCESS);
 }
