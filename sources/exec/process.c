@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 01:23:29 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 19:36:57 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	process_child(t_data *minishell, t_parsing_cmd *cmd, int pip[2])
 	cmd->pid = fork();
 	setup_exec_signals(cmd->pid);
 	if (cmd->pid == -1)
-		return (MS_ERROR);
+		exit_with_error(minishell, MS_ERROR, MS_FORK_ERROR);
 	if (cmd->pid == 0)
 	{
 		if (dup_cmd(minishell, cmd, pip))
@@ -26,21 +26,6 @@ int	process_child(t_data *minishell, t_parsing_cmd *cmd, int pip[2])
 	if (cmd->next)
 		return (MS_SUCCESS);
 	return (MS_SUCCESS);
-}
-
-void	process_wait(t_data *ms)
-{
-	int				status;
-	t_parsing_cmd	*cmd;
-
-	cmd = ms->parsing_cmd;
-	while (cmd)
-	{
-		waitpid(cmd->pid, &status, 0);
-		cmd = cmd->next;
-	}
-	if (WIFEXITED(status))
-		set_g_signal_val(EXIT_CODE, WEXITSTATUS(status));
 }
 
 int	fork_processes(t_data *minishell)
@@ -72,11 +57,11 @@ int	fork_processes(t_data *minishell)
 		fin = check_fd_heredoc(cmd, pip);
 		cmd = cmd->next;
 	}
-	process_wait(minishell);
+	wait_all_process(minishell);
 	return (MS_SUCCESS);
 }
 
-void	fork_single(t_data *minishell, t_parsing_cmd *cmd)
+int	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 {
 	int	hd_sts;
 	int	status;
@@ -84,20 +69,23 @@ void	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 	if (cmd->builtin && is_builtin_no_out(cmd))
 	{
 		set_g_signal_val(EXIT_CODE, cmd->builtin(minishell, cmd));
-		return ;
+		return (MS_SUCCESS);
 	}
 	hd_sts = open_heredoc(minishell, cmd);
 	if (hd_sts)
-		return ;
+		return (MS_ERROR);
 	cmd->pid = fork();
 	setup_exec_signals(cmd->pid);
 	if (cmd->pid == -1)
-		exit_with_code(minishell, MS_ERROR, NULL);
+		exit_with_error(minishell, MS_ERROR, MS_FORK_ERROR);
 	if (cmd->pid == 0)
 		handle_cmd(minishell, cmd);
-	waitpid(cmd->pid, &status, 0);
-	if (WIFEXITED(status))
-		set_g_signal_val(EXIT_CODE, WEXITSTATUS(status));
+	// waitpid(cmd->pid, &status, 0);
+	// if (WIFEXITED(status))
+	// 	set_g_signal_val(EXIT_CODE, WEXITSTATUS(status));
+	else
+		return (wait_process(cmd->pid, 1));
+	exit(MS_ERROR);
 }
 
 int	mini_exec(t_data *minishell)

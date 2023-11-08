@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 01:23:45 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 19:35:10 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 # define MS_PIPE_ERROR			MS_ERROR_PREFIX"pipe error\n"
 # define MS_EXEVE_ERROR			MS_ERROR_PREFIX"could not execute execve: "
 # define MS_OPEN_ERROR			MS_ERROR_PREFIX"could not open file\n"
-# define MS_FORK_ERROR			MS_ERROR_PREFIX"fork\n"
+# define MS_FORK_ERROR			MS_ERROR_PREFIX"could not fork\n"
+# define MS_WAIT_ERROR			MS_ERROR_PREFIX"could not wait\n"
 # define MS_COMMAND_NOT_FOUND	"command not found\n"
 # define MS_IS_DIR				"is a directory\n"
 # define MS_NO_FILE_DIR			"No such file or directory\n"

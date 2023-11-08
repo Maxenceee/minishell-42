@@ -6,12 +6,16 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:24:32 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 19:05:20 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 19:15:13 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
+
+/* wait */
+int		wait_process(pid_t pid, int last);
+void	wait_all_process(t_data *ms);
 
 /* heredoc */
 

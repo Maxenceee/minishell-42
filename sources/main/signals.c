@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:11:39 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 01:23:45 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 19:40:12 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	setup_signals(void)
 	struct sigaction	sa_sigint;
 	struct sigaction	sa_sigquit;
 
+	// printf("setup main sig\n");
 	sa_sigint.sa_handler = &handle_sigint;
 	sa_sigint.sa_flags = 0;
 	sigemptyset(&sa_sigint.sa_mask);
@@ -112,6 +113,7 @@ void	setup_exec_signals(int child_pid)
 {
 	struct sigaction	sa;
 
+	// printf("setup exec sig\n");
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
 	if (child_pid == 0)
@@ -127,6 +129,7 @@ void	setup_hd_signals(int child_pid)
 	struct sigaction	sa_sigint;
 	struct sigaction	sa_sigquit;
 
+	// printf("setup hd sig\n");
 	sa_sigint.sa_flags = 0;
 	sigemptyset(&sa_sigint.sa_mask);
 	if (child_pid == 0)
