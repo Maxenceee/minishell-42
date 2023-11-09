@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 20:46:47 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 00:58:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,13 @@ int	run_cmd(t_data *minishell, char **pipline)
 int	ft_mainloop(t_data *minishell)
 {
 	char	*line;
-	// char	**pipline;
+	char	**pipline;
 	
 	minishell->prompt = prompt(minishell);
 	if (!minishell->prompt)
 		return (MS_ERROR);
 	while (!minishell->exit)
 	{
-		// setup_signals();
 		setup_signals();
 		line = readline(minishell->prompt);
 		if (!line)
@@ -82,9 +81,11 @@ int	ft_mainloop(t_data *minishell)
 			ft_cmderror(MS_ERROR_PREFIX, "invalid pattern", "\n");
 			continue ;
 		}
-		ft_parse_expands(minishell, line);
-		// run_cmd(minishell, line);
+		pipline = ft_pipe_split(ft_parse_expands(minishell, line, 1));
+		if (!pipline)
+			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 		free(line);
+		run_cmd(minishell, pipline);
 	}
 	return (MS_SUCCESS);
 }
