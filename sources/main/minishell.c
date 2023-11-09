@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 14:49:56 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:25:47 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*prompt(t_data *ms)
 	tmp = ft_get_env_variable(ms, "USER");
 	if (tmp)
 		user = ft_strjoin(user, tmp);
-	user = ft_strjoin(user, "@"RESET": "
+	user = ft_strjoin(user, "@"RESET": "\
 HEADER"minishell$ "RESET);
 	return (user);
 }

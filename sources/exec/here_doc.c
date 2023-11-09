@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 14:48:50 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:25:12 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 	char		*pline;
 	const char	*hd_pt = B_PURPLE"> "RESET;
 
-	set_g_signal_val(STOP_HEREDOC, 0);
-	set_g_signal_val(IN_HERE_DOC, 1);
 	fd = open(path, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		return (ft_cmderror("heredoc open: ", ""),
@@ -51,7 +49,6 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 	}
 	free(line);
 	close(fd);
-	set_g_signal_val(IN_HERE_DOC, 0);
 	exit(MS_SUCCESS);
 }
 
