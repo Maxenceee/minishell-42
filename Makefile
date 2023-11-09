@@ -49,7 +49,7 @@ fclean: clean
 	@$(RM) $(NAME)
 
 leak: all
-	valgrind --leak-check=full --suppressions=local.supp \
+	valgrind --leak-check=full --suppressions=.local.supp \
 	--show-leak-kinds=all --track-fds=yes --trace-children=yes ./$(NAME)
 
 re:				fclean all
