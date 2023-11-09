@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 15:43:40 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:47:19 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	unset_env(t_data *minishell, char *key)
 			}
 			destroy_env_element(env_e);
 		}
-		last = env_e;
+		else
+			last = env_e;
 		env_e = env_e->next;
 	}
 }
