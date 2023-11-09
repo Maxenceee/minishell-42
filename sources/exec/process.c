@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 14:37:37 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:25:20 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,9 @@ int	mini_exec(t_data *minishell)
 {
 	if (!minishell->parsing_cmd)
 		return (MS_ERROR);
-	set_g_signal_val(IN_CMD, 1);
 	if (!minishell->parsing_cmd->next)
 		fork_single(minishell, minishell->parsing_cmd);
 	else if (fork_processes(minishell))
 		return (MS_ERROR);
-	set_g_signal_val(IN_CMD, 0);
 	return (MS_SUCCESS);
 }
