@@ -48,6 +48,10 @@ fclean: clean
 	@echo "$(RED)Cleaning $(NAME)$(DEFAULT)"
 	@$(RM) $(NAME)
 
+leak: all
+	valgrind --leak-check=full --suppressions=.local.supp \
+	--show-leak-kinds=all --track-fds=yes --trace-children=yes ./$(NAME)
+
 re:				fclean all
 
 .PHONY:			all clean fclean re

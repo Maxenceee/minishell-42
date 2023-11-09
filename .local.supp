@@ -1,0 +1,7 @@
+# .local.supp
+{
+   ms-readline
+   Memcheck:Leak
+   fun:readline
+   ...
+}

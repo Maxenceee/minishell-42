@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 13:17:15 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:50:42 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,11 @@ void	unset_env(t_data *minishell, char *key)
 		if (ft_iscmp(env_e->key, key))
 		{
 			if (!last)
-			{
 				minishell->env = env_e->next;
-				destroy_env_element(env_e);
-			}
 			else
-			{
 				last->next = env_e->next;
-				destroy_env_element(env_e);
-			}
+			destroy_env_element(env_e);
+			break ;
 		}
 		last = env_e;
 		env_e = env_e->next;
