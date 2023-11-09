@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 15:47:19 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:49:43 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,25 @@ void	unset_env(t_data *minishell, char *key)
 	while (env_e)
 	{
 		printf("%s %s\n", env_e->key, key);
+		printf("env_e: %p\n", env_e);
 		if (ft_iscmp(env_e->key, key))
 		{
 			if (!last)
 			{
 
 				minishell->env = env_e->next;
-				printf("%p %p\n", minishell->env, env_e->next);
+				printf("minishell->env: %p %p\n", minishell->env, env_e->next);
 			}
 			else
 			{
 				last->next = env_e->next;
-				printf("%p %p\n", last->next, env_e->next);
+				printf("last->next: %p %p\n", last->next, env_e->next);
 			}
 			destroy_env_element(env_e);
+			break ;
 		}
-		else
-			last = env_e;
+		last = env_e;
+		printf("last: %p\n", last);
 		env_e = env_e->next;
 	}
 }
