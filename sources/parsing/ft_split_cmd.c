@@ -6,96 +6,116 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:54:17 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 23:24:49 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_count(char *line)
+void	replace_spaces_in_quotes(char *arg, char cmp, int *i)
 {
-	int		j;
-	int		i;
-	int		quoted;
-	int		read_env;
-
-	i = 0;
-	j = 0;
-	read_env = 0;
-	quoted = 0;
-	while (line[i])
+	(*i)++;
+	while (arg[*i] && arg[*i] != cmp)
 	{
-		if (!read_env && line[i] == '\'')
-			quoted = !quoted;
-		else if (!quoted && line[i] == '\"')
-			read_env = !read_env;
-		while (!(quoted || read_env) && line[i] == ' ')
-			i++;
-		if (!(quoted || read_env) && line[i])
-			j++;
-		while (line[i] && !(quoted || read_env) && line[i] != ' ')
-			i++;
+		if (arg[*i] == ' ')
+			arg[*i] = -1;
+		(*i)++;
 	}
-	return (j);
 }
 
-int	get_cmd_len(char *line)
+void	replace_spaces(char *arg)
 {
-	int	i;
-	int	quoted;
-	int	read_env;
+	int		i;
 
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '\'')
+			replace_spaces_in_quotes(arg, '\'', &i);
+		if (arg[i] == '\"')
+			replace_spaces_in_quotes(arg, '\"', &i);
+		i++;
+	}
+}
+
+// void	replace_quotes(char **arg)
+// {
+// 	int		i;
+// 	int		quoted;
+// 	int		read_env;
+// 	char	*r;
+
+// 	i = 0;
+// 	read_env = 0;
+// 	quoted = 0;
+// 	r = NULL;
+// 	while ((*arg)[i])
+// 	{
+// 		if (!read_env && (*arg)[i] == '\'')
+// 		{
+// 			i++;
+// 			while ((*arg)[i] && (*arg)[i] != '\'')
+// 				r = ft_strjoin_char(r, (*arg)[i++]);
+// 			quoted = !quoted;
+// 			continue ;
+// 		}
+// 		if (!quoted && (*arg)[i] == '\"')
+// 		{
+// 			i++;
+// 			while ((*arg)[i] && (*arg)[i] != '\"')
+// 				r = ft_strjoin_char(r, (*arg)[i++]);
+// 			read_env = !read_env;
+// 			continue ;
+// 		}
+// 		r = ft_strjoin_char(r, (*arg)[i++]);
+// 	}
+// 	free(*arg);
+// 	if (!r)
+// 		r = ft_calloc(1, sizeof(char));
+// 	*arg = r;
+// }
+
+void	replace_quotes(char *str)
+{
+	char	last_opened;
+
+	last_opened = 0;
+	while (*str && !last_opened)
+	{
+		if (*str == '\'' || *str == '"')
+		{
+			last_opened = *str;
+			ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
+		}
+		else
+			str++;
+	}
+	while (*str && last_opened)
+	{
+		if (*str && *str == last_opened)
+		{
+			last_opened = 0;
+			ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
+		}
+		else
+			str++;
+	}
+	if (*str)
+		return (replace_quotes(str));
+}
+
+char	**ft_split_cmd(char *arg)
+{
+	int		i;
+	char	**cmds;
+
+	replace_spaces(arg);
+	cmds = ft_split(arg, " ");
 	i = -1;
-	read_env = 0;
-	quoted = 0;
-	while (line[++i] && (line[i] != ' ' || (quoted || read_env)))
+	while (cmds[++i])
 	{
-		if (!read_env && line[i] == '\'')
-			quoted = !quoted;
-		else if (!quoted && line[i] == '\"')
-			read_env = !read_env;
+		replace_quotes(cmds[i]);
+		ft_replace(cmds[i], -1, ' ');
 	}
-	return (i);
-}
-
-char	*put_cmd(t_data *minishell, char *line, int *i)
-{
-	char	*res;
-	char	*cmd;
-	int		len;
-
-	len = get_cmd_len(line);
-	res = ft_strtcpy(line, len);
-	if (!res)
-		return (NULL);
-	*i += len;
-	cmd = ft_parse_expands(minishell, res);
-	free(res);
-	return (cmd);
-}
-
-char	**ft_split_cmd(t_data *minishell, char *line)
-{
-	int		i;
-	int		j;
-	char	**res;
-	int		ccount;
-
-	ccount = cmd_count(line);
-	res = (char **)ft_calloc(ccount + 1, sizeof(char *));
-	if (!res)
-		return (NULL);
-	i = 0;
-	j = -1;
-	while (line[i])
-	{
-		while (line[i] == ' ')
-			i++;
-		if (line[i])
-			res[++j] = put_cmd(minishell, line + i, &i);
-		while (line[i] && line[i] != ' ')
-			i++;
-	}
-	res[++j] = 0;
-	return (res);
+	return (cmds);
 }

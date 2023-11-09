@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffreze <ffreze@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/03 18:08:36 by ffreze           ###   ########.fr       */
+/*   Updated: 2023/11/09 02:32:33 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@ typedef struct s_data				t_data;
 typedef struct s_parsing_commands	t_parsing_cmd;
 typedef struct s_parsing_file		t_parsing_file;
 
-/**
- * 
- * Ne plus utiliser,
- * utiliser O_TRUNC (pour REDIR_OUT)
- * et O_APPEND (pour CONCAT_OUT)
- * 
- */
 typedef enum e_parsing_token
 {
 	PIPE, // |
@@ -67,12 +60,18 @@ void	print_linked_list(t_parsing_cmd *cmd);
 
 /* expands */
 
+char	**ft_pipe_split(char *arg);
 int		check_quotes(char *string);
-char	**ft_split_cmd(t_data *minishell, char *line);
-char	*ft_parse_expands(t_data *minishell, char *arg);
+char	**ft_split_cmd(char *arg);
+char	*ft_parse_expands(t_data *minishell, char *arg, int t);
 
 /* free parsing linked list */
 
 void	ft_destroy_parsing_cmd(t_data *minishell);
+
+/* utils */
+
+int		is_empty(char *str);
+int		is_dir(char *str);
 
 #endif /* PARSING_H */	

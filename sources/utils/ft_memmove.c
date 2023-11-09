@@ -1,41 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_utils.c                                   :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 20:30:39 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 00:42:46 by mgama            ###   ########.fr       */
+/*   Created: 2022/11/07 18:12:36 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/08 23:25:42 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-char	**free_tab(char **tab)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int	i;
+	char		*d;
+	const char	*s;
+	char		*lasts;
+	char		*lastd;
 
-	i = 0;
-	while (tab[i])
+	d = dst;
+	if (len == 0 || dst == src)
+		return (dst);
+	s = src;
+	if (d < s)
+		while (len--)
+			*d++ = *s++;
+	else
 	{
-		free(tab[i++]);
+		lasts = (char *)(s + (len - 1));
+		lastd = (char *)(d + (len - 1));
+		while (len--)
+			*lastd-- = *lasts--;
 	}
-	free(tab);
-	tab = NULL;
-	return (0);
-}
-
-int	check_separator(char c, char *charset)
-{
-	int	i;
-
-	i = 0;
-	while (charset[i] != '\0')
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	return (dst);
 }

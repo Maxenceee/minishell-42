@@ -22,33 +22,97 @@ void	print_linked_list(t_parsing_cmd *cmd)
 	}
 }
 
-int realloc_doubletab(t_data *ms, t_parsing_cmd *new_cmd, int i, char ***tmp)
-{
-	int j;
-	int k;
-	char **cmdrea;
+// int realloc_doubletab(t_data *ms, t_parsing_cmd *new_cmd, int i, char ***tmp)
+// {
+// 	int j;
+// 	int k;
+// 	char **cmdrea;
 
-	j = 0;
-	k = -1;
-	if (ft_strcmp(">>", new_cmd->cmd[i]) == 0 || ft_strcmp(">", new_cmd->cmd[i]) == 0 || \
-		ft_strcmp("<", new_cmd->cmd[i]) == 0 || ft_strcmp("<<", new_cmd->cmd[i]) == 0)
+// 	j = 0;
+// 	k = -1;
+// 	if (ft_strcmp(">>", new_cmd->cmd[i]) == 0 || ft_strcmp(">", new_cmd->cmd[i]) == 0 || \
+// 		ft_strcmp("<", new_cmd->cmd[i]) == 0 || ft_strcmp("<<", new_cmd->cmd[i]) == 0)
+// 	{
+// 		printf("%s %s\n", new_cmd->cmd[i], new_cmd->cmd[i + 1]);
+// 		if (!new_cmd->cmd[i + 1])
+// 			return (ft_cmderror(MS_ERROR_PREFIX,
+// 				"syntax error near unexpected token `newline'", "\n"), MS_ERROR);
+// 		while (new_cmd->cmd[j])
+// 			j++;
+// 		cmdrea = (char **)ft_calloc(j - 1, sizeof(char *));
+// 		if (!cmdrea)
+// 			exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
+// 		while (++k < j)
+// 		{
+// 			if(k < i)
+// 				cmdrea[k] = ft_strdup(new_cmd->cmd[k]);
+// 			else if (k > i + 1)
+// 				cmdrea[k - 2] = ft_strdup(new_cmd->cmd[k]);
+// 		}
+// 		if (*tmp)
+// 			free_tab(*tmp);
+// 		*tmp = cmdrea;
+// 	}
+// 	return (MS_SUCCESS);
+// }
+
+char	**ft_joinf_tab(char **tab, char *str)
+{
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	while (tab && tab[i])
+		i++;
+	tmp = (char **)ft_calloc(i + 2, sizeof(char *));
+	if (!tmp)
+		return (NULL);
+	i = -1;
+	while (tab && tab[++i])
 	{
-		if (!new_cmd->cmd[i + 1])
-			return (ft_cmderror(MS_ERROR_PREFIX,
-				"syntax error near unexpected token `newline'", "\n"), MS_ERROR);
-		while(new_cmd->cmd[j])
-			j++;
-		cmdrea = ft_calloc(j - 1, sizeof(char *));
-		if (!cmdrea)
-			exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
-		while(++k < j)
-			if(k != i && k != i + 1)
-				cmdrea[k] = ft_strdup(new_cmd->cmd[k]);
-		if (*tmp)
-			free_tab(*tmp);
-		*tmp = cmdrea;
+		tmp[i] = ft_strdup(tab[i]);
+		if (!tmp[i])
+			return (free_tab(tab),
+				free_tab(tmp), NULL);
 	}
-	return (MS_SUCCESS);
+	if (!tab)
+		i = 0;
+	if (tab)
+		free_tab(tab);
+	tmp[i] = ft_strdup(str);
+	if (!tmp[i])
+		return (free_tab(tmp), NULL);
+	return (tmp);
+}
+
+int	parse_redirection(t_parsing_cmd *cmd, int *i, char ***tmp)
+{
+	int	code;
+
+	code = MS_SUCCESS;
+	// printf("[%d]: %s\n", *i, cmd->cmd[*i]);
+	if ((ft_strcmp(">>", cmd->cmd[*i]) == 0 || ft_strcmp(">", cmd->cmd[*i]) == 0 || \
+		ft_strcmp("<", cmd->cmd[*i]) == 0 || ft_strcmp("<<", cmd->cmd[*i]) == 0)
+		&& !cmd->cmd[*i + 1])
+		return (ft_cmderror(MS_ERROR_PREFIX,
+			"syntax error near unexpected token `newline'", "\n"), MS_ERROR);
+	if (ft_strcmp(">>", cmd->cmd[*i]) == 0)
+		code = ft_push_new_file(cmd, ft_strdup(cmd->cmd[*i + 1]), CONCAT_OUT, NULL);
+	else if (ft_strcmp(">", cmd->cmd[*i]) == 0)
+		code = ft_push_new_file(cmd, ft_strdup(cmd->cmd[*i + 1]), REDIR_OUT, NULL);
+	else if (ft_strcmp("<", cmd->cmd[*i]) == 0)
+		code = ft_push_new_file(cmd, ft_strdup(cmd->cmd[*i + 1]), REDIR_IN, NULL);
+	else if (ft_strcmp("<<", cmd->cmd[*i]) == 0)
+		code = ft_push_new_file(cmd, NULL, CONCAT_IN, ft_strdup(cmd->cmd[*i + 1]));
+	else
+	{
+		*tmp = ft_joinf_tab(*tmp, cmd->cmd[*i]);
+		if (!*tmp)
+			return (MS_ERROR);
+		return (code);
+	}
+	(*i)++;
+	return (code);
 }
 
 int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
@@ -57,7 +121,8 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	int		code;
 	char	**tmp;
 
-	new_cmd->cmd = ft_split_cmd(minishell, line);
+	tmp = NULL;
+	new_cmd->cmd = ft_split_cmd(line);
 	if (!new_cmd->cmd)
 		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	new_cmd->builtin = get_builtin(new_cmd->cmd[0]);
@@ -67,23 +132,12 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	// 	printf("[%s] ", new_cmd->cmd[i]);
 	// printf("\n");
 // end tmp
-	tmp = NULL;
 	i = -1;
-	code = MS_SUCCESS;
 	while (new_cmd->cmd[++i])
 	{
-		if (ft_strcmp(">>", new_cmd->cmd[i]) == 0)
-			code = ft_push_new_file(new_cmd, ft_strdup(new_cmd->cmd[i + 1]), CONCAT_OUT, NULL);
-		else if (ft_strcmp(">", new_cmd->cmd[i]) == 0)
-			code = ft_push_new_file(new_cmd, ft_strdup(new_cmd->cmd[i + 1]), REDIR_OUT, NULL);
-		else if (ft_strcmp("<", new_cmd->cmd[i]) == 0)
-			code = ft_push_new_file(new_cmd, ft_strdup(new_cmd->cmd[i + 1]), REDIR_IN, NULL);
-		else if (ft_strcmp("<<", new_cmd->cmd[i]) == 0)
-			code = ft_push_new_file(new_cmd, NULL, CONCAT_IN, ft_strdup(new_cmd->cmd[i + 1]));
+		code = parse_redirection(new_cmd, &i, &tmp);
 		if (code)
 			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
-		if (realloc_doubletab(minishell, new_cmd, i, &tmp))
-			return (MS_ERROR);
 	}
 	if (tmp)
 	{

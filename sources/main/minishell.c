@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 01:23:16 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 00:58:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,27 @@ char	*prompt(t_data *ms)
 	return (user);
 }
 
-int	ft_mainloop(t_data *minishell)
+int	run_cmd(t_data *minishell, char **pipline)
 {
 	int		i;
 	int		code;
+
+	i = -1;
+	while (pipline[++i])
+	{
+		code = ft_push_new_command(minishell, pipline[i]);
+		if (code)
+			break ;
+	}
+	free_tab(pipline);
+	if (!code && mini_exec(minishell))
+		return (MS_ERROR);
+	ft_destroy_parsing_cmd(minishell);
+	return (MS_SUCCESS);
+}
+
+int	ft_mainloop(t_data *minishell)
+{
 	char	*line;
 	char	**pipline;
 	
@@ -52,8 +69,6 @@ int	ft_mainloop(t_data *minishell)
 		return (MS_ERROR);
 	while (!minishell->exit)
 	{
-		i = -1;
-		// setup_signals();
 		setup_signals();
 		line = readline(minishell->prompt);
 		if (!line)
@@ -66,20 +81,11 @@ int	ft_mainloop(t_data *minishell)
 			ft_cmderror(MS_ERROR_PREFIX, "invalid pattern", "\n");
 			continue ;
 		}
-		pipline = ft_split(line, "|");
+		pipline = ft_pipe_split(ft_parse_expands(minishell, line, 1));
+		if (!pipline)
+			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 		free(line);
-		if(!pipline)
-			return (ft_error(MS_ALLOC_ERROR_MSG"split"), MS_ERROR);
-		while (pipline[++i])
-		{
-			code = ft_push_new_command(minishell, pipline[i]);
-			if (code)
-				break ;
-		}
-		free_tab(pipline);
-		if (!code && mini_exec(minishell))
-			return (MS_ERROR);
-		ft_destroy_parsing_cmd(minishell);
+		run_cmd(minishell, pipline);
 	}
 	return (MS_SUCCESS);
 }

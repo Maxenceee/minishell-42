@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 19:36:57 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 23:35:25 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,6 @@ int	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 		exit_with_error(minishell, MS_ERROR, MS_FORK_ERROR);
 	if (cmd->pid == 0)
 		handle_cmd(minishell, cmd);
-	// waitpid(cmd->pid, &status, 0);
-	// if (WIFEXITED(status))
-	// 	set_g_signal_val(EXIT_CODE, WEXITSTATUS(status));
 	else
 		return (wait_process(cmd->pid, 1));
 	exit(MS_ERROR);
@@ -92,7 +89,6 @@ int	mini_exec(t_data *minishell)
 {
 	if (!minishell->parsing_cmd)
 		return (MS_ERROR);
-	// signal(SIGQUIT, sigquit_handler);
 	set_g_signal_val(IN_CMD, 1);
 	if (!minishell->parsing_cmd->next)
 		fork_single(minishell, minishell->parsing_cmd);

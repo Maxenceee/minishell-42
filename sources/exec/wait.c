@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:14:46 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 19:39:36 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/08 23:34:12 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ void	wait_all_process(t_data *ms)
 		status = wait_process(cmd->pid, cmd->next == NULL);
 		cmd = cmd->next;
 	}
-	set_g_signal_val(EXIT_CODE, WEXITSTATUS(status));
+	set_g_signal_val(EXIT_CODE, status);
 }
