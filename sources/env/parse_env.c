@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:53:52 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 14:43:36 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env_element	*ft_new_env_element(char *key, char *value)
 	t_env_element	*env_e;
 
 	if (!key)
-		return (ft_error("Error: missing key for env variable.\n"), NULL);
+		return (ft_error("Error: ", "missing key for env variable.\n"), NULL);
 	env_e = ft_calloc(1, sizeof(t_env_element));
 	if (!env_e)
 		return (NULL);
@@ -66,7 +66,7 @@ int	increment_shelllvl(t_data *ms)
 
 	shlvl = ft_get_env_variable(ms, "SHLVL");
 	shlvl = ft_itoa(ft_atoi(shlvl) + 1);
-	ft_push_env_element(ms, ft_new_env_element( "SHLVL", shlvl));
+	ft_push_env_element(ms, ft_new_env_element("SHLVL", shlvl));
 	free(shlvl);
 	return (MS_SUCCESS);
 }
@@ -80,7 +80,8 @@ int	ft_parse_env(t_data *minishell, char **envp)
 	{
 		if (ft_push_env_element(minishell,
 				ft_new_env_element_fromline(envp[i])))
-			return (ft_error(MS_ALLOC_ERROR_MSG), MS_ERROR);
+			exit_with_error(minishell, MS_ERROR,
+				MS_ALLOC_ERROR_MSG);
 	}
 	parse_env_pwd(minishell);
 	increment_shelllvl(minishell);

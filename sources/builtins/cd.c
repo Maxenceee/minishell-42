@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:40 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 01:52:39 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 13:15:45 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,13 @@ int	change_dir(t_data *ms, char *path, char *env_v)
 
 	if (env_v && !path)
 	{
-		ft_putfd(2, MS_ERROR_PREFIX"cd: ");
-		ft_putfd(2, env_v);
-		ft_putfd(2, " not set\n");
+		ft_cmderror_ex("cd: ", env_v, " not set\n");
 		return (MS_ERROR);
 	}
 	res = chdir(path);
 	if (res)
 	{
-		ft_putfd(2, MS_ERROR_PREFIX"cd: ");
+		ft_cmderror("cd: ", "");
 		perror(path);
 		return (MS_ERROR);
 	}
@@ -50,11 +48,13 @@ int	ft_builtin_cd(t_data *minishell, t_parsing_cmd *cmd)
 	int	status;
 
 	if (!cmd->cmd[1])
-		status = change_dir(minishell, ft_get_env_variable(minishell, "HOME"), "HOME");
-	else if (cmd->cmd[1] && ft_strcmp(cmd->cmd[1], "-") == 0)
+		status = change_dir(minishell,
+				ft_get_env_variable(minishell, "HOME"), "HOME");
+	else if (cmd->cmd[1] && ft_iscmp(cmd->cmd[1], "-"))
 	{
 		ft_print_env_variable(minishell, "OLDPWD", 1);
-		status = change_dir(minishell, ft_get_env_variable(minishell, "OLDPWD"), "OLDPWD");
+		status = change_dir(minishell,
+				ft_get_env_variable(minishell, "OLDPWD"), "OLDPWD");
 	}
 	else
 		status = change_dir(minishell, cmd->cmd[1], NULL);

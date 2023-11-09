@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:30:15 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 14:06:35 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,37 @@ int	check_quotes(char *string)
 	return (quoted || read_env);
 }
 
+int	handle_new_line(t_parsing_cmd *cmd, int i, int *has_newline)
+{
+	int	j;
+
+	j = 0;
+	while (cmd->cmd[i][++j])
+	{
+		if (cmd->cmd[i][j] != 'n')
+		{
+			if (cmd->cmd[i][j])
+				return (1);
+		}
+	}
+	*has_newline = 0;
+	return (0);
+}
+
 int	ft_builtin_echo(t_data *minishell, t_parsing_cmd *cmd)
 {
 	int	i;
-	int	j;
 	int	has_newline;
-	int	print;
 
 	(void)minishell;
 	i = 0;
-	print = 0;
 	has_newline = 1;
 	while (cmd->cmd[++i])
 	{
 		if (i == 1 && ft_strncmp("-n", cmd->cmd[i], 2) == 0)
 		{
-			j = 0;
-			while (cmd->cmd[i][++j])
-			{
-				if (cmd->cmd[i][j] != 'n')
-				{
-					if (cmd->cmd[i][j])
-						print = 1;
-					break ;
-				}
-			}
-			if (!print)
-			{
-				has_newline = 0;
+			if (!handle_new_line(cmd, i, &has_newline))
 				continue ;
-			}
 		}
 		printf("%s", cmd->cmd[i]);
 		if (cmd->cmd[i + 1])

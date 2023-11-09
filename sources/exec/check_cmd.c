@@ -1,27 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_variable.c                                 :+:      :+:    :+:   */
+/*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 12:57:13 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 13:06:49 by mgama            ###   ########.fr       */
+/*   Created: 2023/11/09 14:29:45 by mgama             #+#    #+#             */
+/*   Updated: 2023/11/09 14:31:10 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_env_variable(t_data *minishell, char *key)
+int	is_empty(char *str)
 {
-	t_env_element	*tmp;
-
-	tmp = minishell->env;
-	while (tmp)
+	if (!str)
+		return (1);
+	while (*str)
 	{
-		if (ft_iscmp(tmp->key, key))
-			return (tmp->value);
-		tmp = tmp->next;
+		if (*str != ' ')
+			return (0);
+		str++;
 	}
-	return (NULL);
+	return (1);
+}
+
+int	is_dir(char *str)
+{
+	struct stat	f;
+
+	if (lstat(str, &f) != 0)
+		return (0);
+	if (S_ISDIR(f.st_mode))
+	{
+		if (*str == '.')
+			str++;
+		if (*str == '.')
+			str++;
+		if (*str == '/')
+			return (1);
+	}
+	return (0);
 }

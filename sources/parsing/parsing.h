@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/09 02:32:33 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 14:30:47 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ typedef struct s_parsing_file		t_parsing_file;
 
 typedef enum e_parsing_token
 {
-	PIPE, // |
-	REDIR_IN, // <
-	REDIR_OUT, // >
-	CONCAT_IN, // <<
-	CONCAT_OUT, // >>
+	PIPE,
+	R_IN,
+	R_OUT,
+	C_IN,
+	C_OUT,
 }			t_parsing_token;
 
 struct s_parsing_file
@@ -48,6 +48,15 @@ struct s_parsing_commands
 	t_parsing_file	*files;
 };
 
+typedef struct s_expands_parsing
+{
+	int		i;
+	int		quoted;
+	int		read_env;
+	char	*token;
+	char	*res;
+}				t_expands_p;
+
 /**/
 
 int		ft_push_new_file(t_parsing_cmd *cmd, char *file_name,
@@ -56,7 +65,6 @@ int		ft_push_new_file(t_parsing_cmd *cmd, char *file_name,
 /**/
 
 int		ft_push_new_command(t_data *minishell, char *line);
-void	print_linked_list(t_parsing_cmd *cmd);
 
 /* expands */
 
@@ -67,11 +75,12 @@ char	*ft_parse_expands(t_data *minishell, char *arg, int t);
 
 /* free parsing linked list */
 
+void	ft_destroy_parsing_files(t_parsing_cmd	*cmd);
 void	ft_destroy_parsing_cmd(t_data *minishell);
 
 /* utils */
 
-int		is_empty(char *str);
-int		is_dir(char *str);
+int		get_env_var_token(t_data *ms, char *line,
+			t_expands_p *p);
 
 #endif /* PARSING_H */	

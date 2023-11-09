@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:14:46 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 23:34:12 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 14:00:07 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	wait_process(pid_t pid, int last)
 		return (EXIT_FAILURE);
 	res = EXIT_SUCCESS;
 	if (waitpid(pid, &status, 0) == -1)
-		return (ft_cmderror(MS_ERROR_PREFIX, "wait", "\n"), MS_ERROR);
+		return (ft_cmderror("wait", "\n"), MS_ERROR);
 	if (WIFSIGNALED(status))
 		res = handle_signal_interrupt(status, last);
 	else if (WIFEXITED(status))

@@ -6,13 +6,13 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 23:35:25 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 14:37:37 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	process_child(t_data *minishell, t_parsing_cmd *cmd, int pip[2])
+int	exec_child(t_data *minishell, t_parsing_cmd *cmd, int pip[2])
 {
 	cmd->pid = fork();
 	setup_exec_signals(cmd->pid);
@@ -25,6 +25,22 @@ int	process_child(t_data *minishell, t_parsing_cmd *cmd, int pip[2])
 	}
 	if (cmd->next)
 		return (MS_SUCCESS);
+	return (MS_SUCCESS);
+}
+
+int	process_child(t_data *minishell, t_parsing_cmd *cmd, int pip[2])
+{
+	int				hd_sts;
+
+	hd_sts = open_heredoc(minishell, cmd);
+	if (hd_sts)
+		return (hd_sts);
+	if (exec_child(minishell, cmd, pip))
+		return (MS_ERROR);
+	if (cmd->next)
+		close(pip[1]);
+	if (cmd->prev)
+		close(cmd->fin);
 	return (MS_SUCCESS);
 }
 
@@ -43,17 +59,11 @@ int	fork_processes(t_data *minishell)
 		if (cmd->next)
 			if (pipe(pip) == -1)
 				return (MS_ERROR);
-		hd_sts = open_heredoc(minishell, cmd);
+		hd_sts = process_child(minishell, cmd, pip);
 		if (hd_sts == MS_ERROR)
 			return (MS_ERROR);
 		else if (hd_sts)
 			return (MS_SUCCESS);
-		if (process_child(minishell, cmd, pip))
-			return (MS_ERROR);
-		if (cmd->next)
-			close(pip[1]);
-		if (cmd->prev)
-			close(cmd->fin);
 		fin = check_fd_heredoc(cmd, pip);
 		cmd = cmd->next;
 	}
