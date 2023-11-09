@@ -1,5 +1,6 @@
 # .local.supp
 {
-   readline*
+   ms-readline
+   fun:readline*
    Memcheck:Leak
 }
