@@ -2,5 +2,6 @@
 {
    ms-readline
    Memcheck:Leak
-   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:readline
+   ...
 }
