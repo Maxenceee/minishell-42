@@ -2,5 +2,5 @@
 {
    ms-readline
    Memcheck:Leak
-   obj:readline*
+   fun:readline
 }
