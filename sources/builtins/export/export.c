@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:07 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 14:25:35 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:02:10 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,13 @@ void	print_export_env(t_data *minishell)
 	el = minishell->env;
 	while (el)
 	{
-		printf("declare -x %s", el->key);
-		if (el->value)
-			printf("=\"%s\"", el->value);
-		printf("\n");
+		if (!ft_iscmp(el->key, "_"))
+		{
+			printf("declare -x %s", el->key);
+			if (el->value)
+				printf("=\"%s\"", el->value);
+			printf("\n");
+		}
 		el = el->next;
 	}
 }

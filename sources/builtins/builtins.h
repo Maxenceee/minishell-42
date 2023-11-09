@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:20:42 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/04 20:05:05 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:10:44 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ int		ft_builtin_env(t_data *minishell, t_parsing_cmd *cmd);
 
 int		ft_builtin_export(t_data *minishell, t_parsing_cmd *cmd);
 char	**dup_env(t_data *ms);
+char	**export_split(t_data *ms, char *token);
 
 /* unset */
 
 int		ft_builtin_unset(t_data *minishell, t_parsing_cmd *cmd);
+void	unset_env(t_data *minishell, char *key);
 
 /* pwd */
 
