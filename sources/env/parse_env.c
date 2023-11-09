@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 14:43:36 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 15:16:11 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ t_env_element	*ft_new_env_element(char *key, char *value)
 	return (env_e);
 }
 
-t_env_element	*ft_new_env_element_fromline(char *line)
+t_env_element	*ft_new_env_element_fromline(t_data *ms, char *line)
 {
 	char			**splt;
 	t_env_element	*env_e;
 
-	splt = ft_split(line, "=");
+	splt = export_split(ms, line);
 	if (!splt)
 		return (NULL);
 	env_e = ft_new_env_element(splt[0], splt[1]);
@@ -57,6 +57,7 @@ int	parse_env_pwd(t_data *ms)
 		tmp = ft_get_env_variable(ms, "PWD");
 	}
 	ms->pwd = ft_strdup(tmp);
+	unset_env(ms, "OLDPWD");
 	return (MS_SUCCESS);
 }
 
@@ -79,7 +80,7 @@ int	ft_parse_env(t_data *minishell, char **envp)
 	while (envp[++i])
 	{
 		if (ft_push_env_element(minishell,
-				ft_new_env_element_fromline(envp[i])))
+				ft_new_env_element_fromline(minishell, envp[i])))
 			exit_with_error(minishell, MS_ERROR,
 				MS_ALLOC_ERROR_MSG);
 	}
