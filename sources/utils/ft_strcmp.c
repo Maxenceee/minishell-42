@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 14:02:03 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/10 15:39:24 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 13:05:39 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,9 @@ int	ft_extension(char *str, char *end)
 	if (count == 0)
 		return (1);
 	return (0);
+}
+
+int	ft_iscmp(const char *s1, const char *s2)
+{
+	return (ft_strcmp(s1, s2) == 0);
 }

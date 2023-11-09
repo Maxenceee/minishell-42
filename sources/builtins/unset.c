@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:18:59 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 13:17:15 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_unset_key(char *key)
 	i = -1;
 	while (key[++i] && (ft_isalnum(key[i]) || key[i] == '_'))
 		;
-	if (key[i] != '\0'|| i == 0)
+	if (key[i] != '\0' || i == 0)
 		return (MS_ERROR);
 	return (MS_SUCCESS);
 }
@@ -33,7 +33,7 @@ void	unset_env(t_data *minishell, char *key)
 	env_e = minishell->env;
 	while (env_e)
 	{
-		if (ft_strcmp(env_e->key, key) == 0)
+		if (ft_iscmp(env_e->key, key))
 		{
 			if (!last)
 			{
@@ -62,9 +62,8 @@ int	ft_builtin_unset(t_data *minishell, t_parsing_cmd *cmd)
 	{
 		if (check_unset_key(cmd->cmd[i]))
 		{
-			ft_putfd(2, MS_ERROR_PREFIX"unset: `");
-			ft_putfd(2, cmd->cmd[i]);
-			ft_putfd(2, "': not a valid identifier\n");
+			ft_cmderror_ex("unset: `", cmd->cmd[i],
+				"': not a valid identifier\n");
 			code = MS_ERROR;
 			continue ;
 		}

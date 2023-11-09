@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:07:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/06 00:19:06 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 13:55:30 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_check_and_reasign_env_e(t_env_element *env_e,
 {
 	while (env_e)
 	{
-		if (ft_strcmp(env_e->key, new_env_e->key) == 0)
+		if (ft_iscmp(env_e->key, new_env_e->key))
 		{
 			if (new_env_e->value && env_e->value)
 			{
@@ -38,10 +38,32 @@ int	ft_check_and_reasign_env_e(t_env_element *env_e,
 	return (MS_SUCCESS);
 }
 
-int	ft_push_env_element(t_data *minishell, t_env_element *env_e)
+void	link_new_env(t_data *minishell, t_env_element *env_e)
 {
 	t_env_element	*tmp;
 	t_env_element	*prev;
+
+	prev = NULL;
+	tmp = minishell->env;
+	while (tmp && ft_strcmp(tmp->key, env_e->key) < 0)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	if (prev == NULL)
+	{
+		env_e->next = minishell->env;
+		minishell->env = env_e;
+	}
+	else
+	{
+		prev->next = env_e;
+		env_e->next = tmp;
+	}
+}
+
+int	ft_push_env_element(t_data *minishell, t_env_element *env_e)
+{
 	int				res;
 
 	if (!env_e)
@@ -51,22 +73,6 @@ int	ft_push_env_element(t_data *minishell, t_env_element *env_e)
 		return (MS_ERROR);
 	else if (res == MS_NO_ERROR)
 		return (MS_SUCCESS);
-	prev = NULL;
-	tmp = minishell->env;
-	while (tmp && ft_strcmp(tmp->key, env_e->key) < 0)
-	{
-		prev = tmp;
-		tmp = tmp->next;
-	}
-	if (prev == NULL)
-    {
-        env_e->next = minishell->env;
-        minishell->env = env_e;
-    }
-    else
-    {
-        prev->next = env_e;
-        env_e->next = tmp;
-    }
+	link_new_env(minishell, env_e);
 	return (MS_SUCCESS);
 }

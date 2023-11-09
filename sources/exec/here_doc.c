@@ -6,13 +6,13 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 23:06:17 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 14:48:50 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*new_here_doc_fname()
+char	*new_here_doc_fname(void)
 {
 	static int	i = 0;
 	char		*num;
@@ -27,25 +27,27 @@ char	*new_here_doc_fname()
 
 int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 {
-	int		fd;
-	char	*line;
-	char	*pline;
+	int			fd;
+	char		*line;
+	char		*pline;
+	const char	*hd_pt = B_PURPLE"> "RESET;
 
 	set_g_signal_val(STOP_HEREDOC, 0);
 	set_g_signal_val(IN_HERE_DOC, 1);
 	fd = open(path, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
-		return (ft_putfd(STDERR_FILENO, MS_ERROR_PREFIX"heredoc open: "),
+		return (ft_cmderror("heredoc open: ", ""),
 			perror(""), MS_ERROR);
-	line = readline(MS_HEREDOC_MSG);
-	while (line && ft_strncmp(f->here_doc_end, line, ft_strlen(f->here_doc_end)))
+	line = readline(hd_pt);
+	while (line && ft_strncmp(f->here_doc_end, line,
+			ft_strlen(f->here_doc_end)))
 	{
 		pline = ft_parse_expands(ms, line, 0);
 		ft_putfd(fd, pline);
 		ft_putfd(fd, "\n");
 		free(pline);
 		free(line);
-		line = readline(MS_HEREDOC_MSG);
+		line = readline(hd_pt);
 	}
 	free(line);
 	close(fd);
@@ -84,7 +86,7 @@ int	open_heredoc(t_data *ms, t_parsing_cmd *cmd)
 	f = cmd->files;
 	while (f)
 	{
-		if (f->type == CONCAT_IN)
+		if (f->type == C_IN)
 		{
 			if (cmd->here_doc_fname)
 			{

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 00:58:56 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 14:49:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,22 @@ char	*prompt(t_data *ms)
 	tmp = ft_get_env_variable(ms, "USER");
 	if (tmp)
 		user = ft_strjoin(user, tmp);
-	user = ft_strjoin(user, "@"RESET": "MS_PROMPT_NAME);
+	user = ft_strjoin(user, "@"RESET": "
+HEADER"minishell$ "RESET);
 	return (user);
 }
 
-int	run_cmd(t_data *minishell, char **pipline)
+int	run_cmd(t_data *minishell, char *line)
 {
 	int		i;
 	int		code;
+	char	**pipline;
 
 	i = -1;
+	pipline = ft_pipe_split(ft_parse_expands(minishell, line, 1));
+	free(line);
+	if (!pipline)
+		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	while (pipline[++i])
 	{
 		code = ft_push_new_command(minishell, pipline[i]);
@@ -62,8 +68,7 @@ int	run_cmd(t_data *minishell, char **pipline)
 int	ft_mainloop(t_data *minishell)
 {
 	char	*line;
-	char	**pipline;
-	
+
 	minishell->prompt = prompt(minishell);
 	if (!minishell->prompt)
 		return (MS_ERROR);
@@ -78,14 +83,10 @@ int	ft_mainloop(t_data *minishell)
 		add_history(line);
 		if (check_quotes(line))
 		{
-			ft_cmderror(MS_ERROR_PREFIX, "invalid pattern", "\n");
+			ft_cmderror("invalid pattern", "\n");
 			continue ;
 		}
-		pipline = ft_pipe_split(ft_parse_expands(minishell, line, 1));
-		if (!pipline)
-			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
-		free(line);
-		run_cmd(minishell, pipline);
+		run_cmd(minishell, line);
 	}
 	return (MS_SUCCESS);
 }
@@ -95,12 +96,12 @@ int	main(int argc, char *argv[], char *envp[])
 	t_data	minishell;
 
 	if (argc > 1)
-		return (ft_error(MS_ERROR_PREFIX"this program does not take any aruments\n"), MS_ERROR);
+		return (ft_error(MS_ERROR_PREFIX, "this program \
+does not take any aruments\n"), MS_ERROR);
 	(void)(argv);
 	if (isatty(STDOUT_FILENO))
 		print_name();
 	ft_bzero(&minishell, sizeof(t_data));
-	ft_bzero(&g_signal, sizeof(t_signal));
 	ft_parse_env(&minishell, envp);
 	if (ft_mainloop(&minishell))
 		exit_with_code(&minishell, MS_ERROR, NULL);

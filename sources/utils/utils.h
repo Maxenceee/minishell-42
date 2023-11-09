@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 23:26:00 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/09 14:42:34 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@
  */
 
 int		ft_putfd(int fd, char *str);
-void	ft_cmderror(char *head, char *cmd, char *msg);
-int		ft_error(char *str);
+int		ft_error(char *head, char *str);
 int		ft_warning(char *str);
 int		ft_info(char *str);
 
@@ -55,6 +54,7 @@ int		count_strings(const char *str, char *charset);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, uint32_t n);
 int		ft_strnrcmp(const char *s1, const char *s2, uint32_t n);
+int		ft_iscmp(const char *s1, const char *s2);
 
 size_t	ft_strlen(const char *str);
 int		ft_tablen(char **str);
