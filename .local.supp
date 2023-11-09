@@ -1,5 +1,5 @@
 # .local.supp
 {
-   Memcheck:Leak,
+   Memcheck:Leak
    readline*,
 }
