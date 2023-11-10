@@ -1,0 +1,4 @@
+export OK="''"
+''
+export OK='""'
+""

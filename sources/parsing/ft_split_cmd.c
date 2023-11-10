@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/08 23:24:49 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/10 17:00:46 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,43 +37,6 @@ void	replace_spaces(char *arg)
 		i++;
 	}
 }
-
-// void	replace_quotes(char **arg)
-// {
-// 	int		i;
-// 	int		quoted;
-// 	int		read_env;
-// 	char	*r;
-
-// 	i = 0;
-// 	read_env = 0;
-// 	quoted = 0;
-// 	r = NULL;
-// 	while ((*arg)[i])
-// 	{
-// 		if (!read_env && (*arg)[i] == '\'')
-// 		{
-// 			i++;
-// 			while ((*arg)[i] && (*arg)[i] != '\'')
-// 				r = ft_strjoin_char(r, (*arg)[i++]);
-// 			quoted = !quoted;
-// 			continue ;
-// 		}
-// 		if (!quoted && (*arg)[i] == '\"')
-// 		{
-// 			i++;
-// 			while ((*arg)[i] && (*arg)[i] != '\"')
-// 				r = ft_strjoin_char(r, (*arg)[i++]);
-// 			read_env = !read_env;
-// 			continue ;
-// 		}
-// 		r = ft_strjoin_char(r, (*arg)[i++]);
-// 	}
-// 	free(*arg);
-// 	if (!r)
-// 		r = ft_calloc(1, sizeof(char));
-// 	*arg = r;
-// }
 
 void	replace_quotes(char *str)
 {

@@ -6,14 +6,12 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:24 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 15:27:43 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/10 17:08:13 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-*/
 int	ft_builtin_exit(t_data *ms, t_parsing_cmd *cmd)
 {
 	int	i;

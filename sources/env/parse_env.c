@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:17:19 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 15:21:42 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/10 16:20:51 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,16 @@ int	parse_env_pwd(t_data *ms)
 int	increment_shelllvl(t_data *ms)
 {
 	char	*shlvl;
+	int		lvl;
 
 	shlvl = ft_get_env_variable(ms, "SHLVL");
-	shlvl = ft_itoa(ft_atoi(shlvl) + 1);
+	lvl = ft_atoi(shlvl) + 1;
+	if (lvl >= 1000)
+	{
+		lvl = 1;
+		ft_cmderror(RESET"warning: shell level too high, resetting to 1", "\n");
+	}
+	shlvl = ft_itoa(lvl);
 	ft_push_env_element(ms, ft_new_env_element("SHLVL", shlvl));
 	free(shlvl);
 	return (MS_SUCCESS);
