@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 15:25:12 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/10 21:33:45 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 			ft_strlen(f->here_doc_end)))
 	{
 		pline = ft_parse_expands(ms, line, 0);
+		ft_replace(pline, -2, '\'');
+		ft_replace(pline, -3, '\"');
 		ft_putfd(fd, pline);
 		ft_putfd(fd, "\n");
 		free(pline);
