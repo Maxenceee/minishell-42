@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 17:00:46 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/10 17:39:26 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	**ft_split_cmd(char *arg)
 	{
 		replace_quotes(cmds[i]);
 		ft_replace(cmds[i], -1, ' ');
+		ft_replace(cmds[i], -2, '\'');
+		ft_replace(cmds[i], -3, '\"');
 	}
 	return (cmds);
 }

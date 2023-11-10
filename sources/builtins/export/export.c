@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:07 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 15:21:05 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/10 17:21:26 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,13 @@ char	**export_split(t_data *ms, char *token)
 	int		i;
 	char	**res;
 
-	i = -1;
-	while (token[++i] && (ft_isalnum(token[i]) || token[i] == '_'))
-		;
+	i = 0;
+	if (token[i] && (ft_isalpha(token[i]) || token[i] == '_'))
+		i++;
+	else
+		return (NULL);
+	while (token[i] && (ft_isalnum(token[i]) || token[i] == '_'))
+		i++;
 	if (!(token[i] == '=' || token[i] == '\0') || i == 0)
 		return (NULL);
 	export_split_cpy(ms, &res, token, i);
