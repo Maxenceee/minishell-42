@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 14:42:34 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 17:34:00 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		ft_info(char *str);
 
 int		ft_atoi(const char *str);
 int		ft_ctoi(const char str);
+int64_t	ft_atoll(const char *str);
 char	*ft_itoa(int n);
 
 void	ft_bzero(void *s, size_t n);

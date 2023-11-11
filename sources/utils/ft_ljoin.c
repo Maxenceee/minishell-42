@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:49:53 by mgama             #+#    #+#             */
-/*   Updated: 2023/10/26 15:54:06 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 16:09:38 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	*ft_ljoin(void *s1, void *s2,
 	unsigned int size, unsigned int length)
 {
-	void	*str;
-	int		i;
-	int		j;
+	void			*str;
+	unsigned int	i;
+	unsigned int	j;
 
 	if (!s1)
 		s1 = (void *)ft_calloc(1, sizeof(void *));

@@ -38,7 +38,7 @@ char	*parse_exit_code(char *arg, t_expands_p *p)
 
 int	is_redirect_token(char a, char n)
 {
-	return (a == '>' && n != '>' || a == '<' && n != '<');
+	return ((a == '>' && n != '>') || (a == '<' && n != '<'));
 }
 
 char	*parse_env_var(t_data *ms, char *arg, t_expands_p *p, int t)

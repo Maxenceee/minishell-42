@@ -1,0 +1,4 @@
+$> echo -nnnnnnn -n a
+a
+
+ajouter les fichiers la main dans le makefile

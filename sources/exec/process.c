@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 15:25:20 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 16:21:07 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	fork_processes(t_data *minishell)
 int	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 {
 	int	hd_sts;
-	int	status;
 
 	if (cmd->builtin && is_builtin_no_out(cmd))
 	{

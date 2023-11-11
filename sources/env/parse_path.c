@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:40:49 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 16:23:45 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 16:10:04 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	is_local_path(char *command)
 char	*local_path(t_data *ms, char *command)
 {
 	char	*joins[3];
-	char	*path;
 
 	if (*command == '/')
 		return (ft_strdup(command));

@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:03:04 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 14:01:50 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 17:14:47 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,11 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	new_cmd->cmd = ft_split_cmd(line);
 	if (!new_cmd->cmd)
 		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
-	new_cmd->builtin = get_builtin(new_cmd->cmd[0]);
 	i = -1;
 	while (new_cmd->cmd[++i])
 	{
+		if (!new_cmd->cmd[i])
+			return (MS_SUCCESS);
 		code = parse_redirection(new_cmd, &i, &tmp);
 		if (code)
 			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
@@ -92,6 +93,7 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 		free_tab(new_cmd->cmd);
 		new_cmd->cmd = tmp;
 	}
+	new_cmd->builtin = get_builtin(new_cmd->cmd[0]);
 	return (MS_SUCCESS);
 }
 

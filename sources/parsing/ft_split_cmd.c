@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 17:39:26 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 17:17:28 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char	**ft_split_cmd(char *arg)
 
 	replace_spaces(arg);
 	cmds = ft_split(arg, " ");
+	if (!cmds)
+		return (NULL);
 	i = -1;
 	while (cmds[++i])
 	{

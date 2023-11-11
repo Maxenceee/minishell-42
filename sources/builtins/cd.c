@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:40 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 16:41:38 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 16:09:53 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	change_dir(t_data *ms, char *path, char *env_v)
 {
 	int	res;
 
+	(void)ms;
 	if (env_v && !path)
 	{
 		ft_cmderror_ex("cd: ", env_v, " not set\n");

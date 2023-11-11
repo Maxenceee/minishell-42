@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 17:18:46 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 17:38:19 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	run_cmd(t_data *minishell, char *line)
 	int		i;
 	int		code;
 	char	**pipline;
+	char	*tmp;
 
 	i = -1;
 	pipline = ft_pipe_split(ft_parse_expands(minishell, line, 1));
@@ -54,6 +55,16 @@ int	run_cmd(t_data *minishell, char *line)
 		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	while (pipline[++i])
 	{
+		tmp = ft_strtrim(pipline[i], " ");
+		if (ft_strlen(tmp) == 0 && !pipline[i + 1] && i == 0)
+			return (free(tmp), MS_SUCCESS);
+		else if (ft_strlen(tmp) == 0)
+		{
+			set_g_signal_val(EXIT_CODE, 2);
+			return (ft_cmderror("syntax error near unexpected token `|", "\n"),
+				free(tmp), MS_ERROR);
+		}
+		free(tmp);
 		code = ft_push_new_command(minishell, pipline[i]);
 		if (code)
 			break ;
