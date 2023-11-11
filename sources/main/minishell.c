@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/11 17:38:19 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/11 18:07:36 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	run_cmd(t_data *minishell, char *line)
 		else if (ft_strlen(tmp) == 0)
 		{
 			set_g_signal_val(EXIT_CODE, 2);
-			return (ft_cmderror("syntax error near unexpected token `|", "\n"),
+			return (ft_cmderror("syntax error near unexpected token `|\'", "\n"),
 				free(tmp), MS_ERROR);
 		}
 		free(tmp);
