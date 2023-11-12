@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:57:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 16:50:59 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/12 16:23:34 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,21 @@ int	ft_builtin_echo(t_data *minishell, t_parsing_cmd *cmd)
 {
 	int	i;
 	int	has_newline;
+	int	t;
 
 	(void)minishell;
 	i = 0;
+	t = 0;
 	has_newline = 1;
 	while (cmd->cmd[++i])
 	{
-		if (i == 1 && ft_strncmp("-n", cmd->cmd[i], 2) == 0)
+		if (!t && ft_strncmp("-n", cmd->cmd[i], 2) == 0)
 		{
 			if (!handle_new_line(cmd, i, &has_newline))
 				continue ;
 		}
+		else
+			t = 1;
 		printf("%s", cmd->cmd[i]);
 		if (cmd->cmd[i + 1])
 			printf(" ");

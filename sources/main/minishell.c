@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:49:58 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/11 18:07:36 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/12 18:16:23 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,82 +24,6 @@ void	print_name(void)
 	printf("| |  | || || | | || |\\__ \\| | | ||  __/| || |\n");
 	printf("\\_|  |_/|_||_| |_||_||___/|_| |_| \\___||_||_|\n\n");
 	printf("\n\n"RESET);
-}
-
-char	*prompt(t_data *ms)
-{
-	char	*user;
-	char	*tmp;
-
-	user = NULL;
-	user = ft_strjoin(user, B_GREEN);
-	tmp = ft_get_env_variable(ms, "USER");
-	if (tmp)
-		user = ft_strjoin(user, tmp);
-	user = ft_strjoin(user, "@"RESET": "\
-HEADER"minishell$ "RESET);
-	return (user);
-}
-
-int	run_cmd(t_data *minishell, char *line)
-{
-	int		i;
-	int		code;
-	char	**pipline;
-	char	*tmp;
-
-	i = -1;
-	pipline = ft_pipe_split(ft_parse_expands(minishell, line, 1));
-	free(line);
-	if (!pipline)
-		exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
-	while (pipline[++i])
-	{
-		tmp = ft_strtrim(pipline[i], " ");
-		if (ft_strlen(tmp) == 0 && !pipline[i + 1] && i == 0)
-			return (free(tmp), MS_SUCCESS);
-		else if (ft_strlen(tmp) == 0)
-		{
-			set_g_signal_val(EXIT_CODE, 2);
-			return (ft_cmderror("syntax error near unexpected token `|\'", "\n"),
-				free(tmp), MS_ERROR);
-		}
-		free(tmp);
-		code = ft_push_new_command(minishell, pipline[i]);
-		if (code)
-			break ;
-	}
-	free_tab(pipline);
-	if (!code && mini_exec(minishell))
-		return (MS_ERROR);
-	ft_destroy_parsing_cmd(minishell);
-	return (MS_SUCCESS);
-}
-
-int	ft_mainloop(t_data *minishell)
-{
-	char	*line;
-
-	minishell->prompt = prompt(minishell);
-	if (!minishell->prompt)
-		return (MS_ERROR);
-	while (!minishell->exit)
-	{
-		setup_signals();
-		line = readline(minishell->prompt);
-		if (!line)
-			exit_with_code(minishell, MS_SUCCESS, "exit\n");
-		if (*line == '\0')
-			continue ;
-		add_history(line);
-		if (check_quotes(line))
-		{
-			ft_cmderror("invalid pattern", "\n");
-			continue ;
-		}
-		run_cmd(minishell, line);
-	}
-	return (MS_SUCCESS);
 }
 
 int	main(int argc, char *argv[], char *envp[])

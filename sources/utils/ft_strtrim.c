@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 00:09:10 by mgama             #+#    #+#             */
-/*   Updated: 2023/07/12 00:34:31 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/12 19:53:23 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	start;
 	size_t	end;
 
+	if (!s1)
+		return (0);
 	start = 0;
 	while (s1[start] && ft_char_in_set(s1[start], set))
 		start++;

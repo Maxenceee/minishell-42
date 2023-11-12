@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:01:09 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/11 16:22:49 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/12 19:48:51 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	replace_pipes(char *arg)
 	}
 }
 
-char	**ft_pipe_split(char *arg)
+char	**ft_pipe_split(char *arg, int *c)
 {
 	int		i;
 	char	**cmds;
@@ -46,6 +46,8 @@ char	**ft_pipe_split(char *arg)
 	if (!arg)
 		return (NULL);
 	replace_pipes(arg);
+	if (c)
+		*c = ft_contains(arg, '|');
 	cmds = ft_split(arg, "|");
 	i = -1;
 	while (cmds[++i])

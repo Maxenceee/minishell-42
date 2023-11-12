@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 14:47:45 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/12 18:15:56 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ typedef enum e_signal
  * main
  * 
  */
+
+/* main loop */
+
+int		ft_mainloop(t_data *minishell);
 
 /* signals */
 
