@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 02:00:27 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 13:11:46 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 15:28:58 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execcmd(char **command, t_data *ms)
 
 	envp = ms->envp;
 	if (is_empty(command[0]))
-		return (MS_SUCCESS);
+		return (MS_ERROR);
 	if (is_dir(command[0]))
 		(ft_cmderror(command[0], ": "MS_IS_DIR), exit(126));
 	cmd = parse_env(ms, command[0]);

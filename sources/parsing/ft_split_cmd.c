@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:05:16 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/11 17:17:28 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 16:08:07 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	replace_spaces_in_quotes(char *arg, char cmp, int *i)
 	{
 		if (arg[*i] == ' ')
 			arg[*i] = -1;
+		if (arg[*i] == '>')
+			arg[*i] = -5;
+		if (arg[*i] == '<')
+			arg[*i] = -6;
 		(*i)++;
 	}
 }

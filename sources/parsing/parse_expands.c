@@ -53,7 +53,7 @@ char	*parse_env_var(t_data *ms, char *arg, t_expands_p *p, int t)
 			&& arg[p->i] == '$' && arg[p->i + 1])
 		{
 			p->i++;
-			get_env_var_token(ms, arg + p->i, p);
+			get_env_var_token(ms, arg + p->i, p, p->read_env || p->quoted);
 			continue ;
 		}
 		p->res = ft_strjoin_char(p->res, arg[p->i]);

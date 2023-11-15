@@ -38,6 +38,15 @@ void	ft_cmderror(char *cmd, char *msg)
 	write(STDERR_FILENO, msg, ft_strlen(msg));
 }
 
+void	ft_sntxerror(char *cmd, char *token)
+{
+	write(STDERR_FILENO, MS_ERROR_PREFIX, ft_strlen(MS_ERROR_PREFIX));
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, " `", 2);
+	write(STDERR_FILENO, token, ft_strlen(token));
+	write(STDERR_FILENO, "'\n", 2);
+}
+
 void	ft_cmderror_ex(char *head, char *cmd, char *msg)
 {
 	write(STDERR_FILENO, MS_ERROR_PREFIX, ft_strlen(MS_ERROR_PREFIX));

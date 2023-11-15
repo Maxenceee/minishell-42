@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/12 18:15:56 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 17:25:44 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@
 # define MS_OPEN_ERROR			"could not open file\n"
 # define MS_FORK_ERROR			"could not fork\n"
 # define MS_WAIT_ERROR			"could not wait\n"
-# define MS_SYNTAX_ERROR		"syntax error near unexpected token `newline'\n"
+# define MS_SYNTAX_ERROR		"syntax error near unexpected token"
+# define MS_AMBIGUOUS_ERROR		"ambiguous redirect\n"
 # define MS_COMMAND_NOT_FOUND	"command not found\n"
+# define MS_IVD_ID				"': not a valid identifier\n"
+# define MS_IVD_OP				"': invalid option\n"
 # define MS_IS_DIR				"is a directory\n"
 # define MS_NO_FILE_DIR			"No such file or directory\n"
 # define MS_PERM_DENIED			"Permission denied\n"
@@ -109,6 +112,7 @@ int		exit_with_error(t_data *ms, int error_code, char *message);
 void	free_minishell(t_data *minishell);
 
 void	ft_cmderror(char *cmd, char *msg);
+void	ft_sntxerror(char *cmd, char *token);
 void	ft_cmderror_ex(char *head, char *cmd, char *msg);
 
 /* freeing */

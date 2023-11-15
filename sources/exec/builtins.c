@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 02:01:21 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 13:21:05 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 15:26:51 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	is_builtin_no_out(t_parsing_cmd *cmd)
 
 void	*get_builtin(char *cmd)
 {
+	if (!cmd)
+		return (NULL);
 	if (ft_iscmp("cd", cmd))
 		return (&ft_builtin_cd);
 	else if (ft_iscmp("echo", cmd))

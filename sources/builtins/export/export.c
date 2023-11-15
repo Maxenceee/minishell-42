@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:07 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 17:21:26 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 17:01:19 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,14 @@ int	ft_builtin_export(t_data *minishell, t_parsing_cmd *cmd)
 
 	i = 0;
 	code = MS_SUCCESS;
+	if (cmd->cmd[1] && cmd->cmd[1][0] == '-')
+		return (ft_cmderror_ex("unset: `", cmd->cmd[1], MS_IVD_OP), 2);
 	while (cmd->cmd[++i])
 	{
 		env_e = export_split(minishell, cmd->cmd[i]);
 		if (!env_e)
 		{
-			ft_cmderror_ex("export: `", cmd->cmd[i],
-				"': not a valid identifier\n");
+			ft_cmderror_ex("export: `", cmd->cmd[i], MS_IVD_ID);
 			code = MS_ERROR;
 			continue ;
 		}

@@ -6,50 +6,40 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:03:04 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/11 17:14:47 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 17:21:22 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_joinf_tab(char **tab, char *str)
+int	is_redir_token(char *cmd)
 {
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	tmp = (char **)ft_calloc(i + 2, sizeof(char *));
-	if (!tmp)
-		return (NULL);
-	i = -1;
-	while (tab && tab[++i])
-	{
-		tmp[i] = ft_strdup(tab[i]);
-		if (!tmp[i])
-			return (free_tab(tab),
-				free_tab(tmp), NULL);
-	}
-	if (!tab)
-		i = 0;
-	if (tab)
-		free_tab(tab);
-	tmp[i] = ft_strdup(str);
-	if (!tmp[i])
-		return (free_tab(tmp), NULL);
-	return (tmp);
+	return (ft_iscmp(">>", cmd)
+		|| ft_iscmp(">", cmd)
+		|| ft_iscmp("<", cmd)
+		|| ft_iscmp("<<", cmd));
 }
 
-int	parse_redirection(t_parsing_cmd *cmd, int *i, char ***tmp)
+int	verif_redir(t_parsing_cmd *cmd, int *i)
+{
+	const int	a = is_redir_token(cmd->cmd[*i]);
+
+	if (a && !cmd->cmd[*i + 1])
+		return (ft_sntxerror(MS_SYNTAX_ERROR, '\n'), MS_ERROR);
+	else if (a && is_redir_token(cmd->cmd[*i + 1]))
+		return (ft_sntxerror(MS_SYNTAX_ERROR, cmd->cmd[*i + 1][0]), MS_ERROR);
+	if (a && ft_strlen(cmd->cmd[*i + 1]) == 0)
+		return (ft_cmderror(MS_AMBIGUOUS_ERROR, ""), MS_ERROR);
+	return (MS_SUCCESS);
+}
+
+int	parse_redirection(t_data *ms, t_parsing_cmd *cmd, int *i, char ***tmp)
 {
 	int	code;
 
 	code = MS_SUCCESS;
-	if ((ft_iscmp(">>", cmd->cmd[*i]) || ft_iscmp(">", cmd->cmd[*i])
-			|| ft_iscmp("<", cmd->cmd[*i]) || ft_iscmp("<<", cmd->cmd[*i]))
-		&& !cmd->cmd[*i + 1])
-		return (ft_cmderror(MS_SYNTAX_ERROR, ""), MS_ERROR);
+	if (verif_redir(cmd, i))
+		return (MS_ERROR);
 	if (ft_iscmp(">>", cmd->cmd[*i]))
 		code = ft_push_new_file(cmd, ft_strdup(cmd->cmd[*i + 1]), C_OUT, 0);
 	else if (ft_iscmp(">", cmd->cmd[*i]))
@@ -60,9 +50,11 @@ int	parse_redirection(t_parsing_cmd *cmd, int *i, char ***tmp)
 		code = ft_push_new_file(cmd, 0, C_IN, ft_strdup(cmd->cmd[*i + 1]));
 	else
 	{
+		ft_replace(cmd->cmd[*i], -5, '>');
+		ft_replace(cmd->cmd[*i], -6, '<');
 		*tmp = ft_joinf_tab(*tmp, cmd->cmd[*i]);
 		if (!*tmp)
-			return (MS_ERROR);
+			exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
 		return (code);
 	}
 	(*i)++;
@@ -84,9 +76,9 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 	{
 		if (!new_cmd->cmd[i])
 			return (MS_SUCCESS);
-		code = parse_redirection(new_cmd, &i, &tmp);
+		code = parse_redirection(minishell, new_cmd, &i, &tmp);
 		if (code)
-			exit_with_error(minishell, MS_ERROR, MS_ALLOC_ERROR_MSG);
+			return (set_g_signal_val(EXIT_CODE, 1), code);
 	}
 	if (tmp)
 	{
