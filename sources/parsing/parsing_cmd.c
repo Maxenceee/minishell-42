@@ -6,19 +6,11 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:03:04 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/15 17:35:53 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 17:41:46 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_redir_token(char *cmd)
-{
-	return (ft_iscmp(">>", cmd)
-		|| ft_iscmp(">", cmd)
-		|| ft_iscmp("<", cmd)
-		|| ft_iscmp("<<", cmd));
-}
 
 int	verif_redir(t_parsing_cmd *cmd, int *i)
 {

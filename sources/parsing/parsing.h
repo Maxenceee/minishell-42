@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:12:04 by ffreze            #+#    #+#             */
-/*   Updated: 2023/11/15 16:37:30 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 17:42:22 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void	ft_destroy_parsing_cmd(t_data *minishell);
 int		get_env_var_token(t_data *ms, char *line,
 			t_expands_p *p, int q);
 char	**ft_joinf_tab(char **tab, char *str);
+int		is_redir_token(char *cmd);
 
 #endif /* PARSING_H */	

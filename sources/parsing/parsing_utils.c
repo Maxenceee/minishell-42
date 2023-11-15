@@ -6,11 +6,24 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:52:15 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/15 16:42:09 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 17:42:09 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_quote(char c)
+{
+	return (c == '\'' || c == '\"');
+}
+
+int	is_redir_token(char *cmd)
+{
+	return (ft_iscmp(">>", cmd)
+		|| ft_iscmp(">", cmd)
+		|| ft_iscmp("<", cmd)
+		|| ft_iscmp("<<", cmd));
+}
 
 char	**ft_joinf_tab(char **tab, char *str)
 {
@@ -62,11 +75,6 @@ int	join_env_var(t_data *ms, char *token, t_expands_p *p)
 			exit_with_error(ms, MS_ERROR, MS_ALLOC_ERROR_MSG);
 	}
 	return (MS_SUCCESS);
-}
-
-int	is_quote(char c)
-{
-	return (c == '\'' || c == '\"');
 }
 
 int	get_env_var_token(t_data *ms, char *line, t_expands_p *p, int q)

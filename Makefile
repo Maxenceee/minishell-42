@@ -83,7 +83,7 @@ READLINE_LIB	=	-lreadline -lhistory -L $(READLINE_DIR)/lib
 
 CC				=	cc
 RM				=	rm -f
-CFLAGS			=	-I$(HEADERS_DIR) -I$(READLINE_DIR)/include -g -Wall -Wextra -Werror
+CFLAGS			=	-I$(HEADERS_DIR) -I$(READLINE_DIR)/include -Wall -Wextra -Werror
 
 NAME			=	minishell
 
