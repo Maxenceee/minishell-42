@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:03:04 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/15 17:21:22 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 17:35:53 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	verif_redir(t_parsing_cmd *cmd, int *i)
 	const int	a = is_redir_token(cmd->cmd[*i]);
 
 	if (a && !cmd->cmd[*i + 1])
-		return (ft_sntxerror(MS_SYNTAX_ERROR, '\n'), MS_ERROR);
+		return (ft_sntxerror(MS_SYNTAX_ERROR, "newline"), MS_ERROR);
 	else if (a && is_redir_token(cmd->cmd[*i + 1]))
-		return (ft_sntxerror(MS_SYNTAX_ERROR, cmd->cmd[*i + 1][0]), MS_ERROR);
-	if (a && ft_strlen(cmd->cmd[*i + 1]) == 0)
+		return (ft_sntxerror(MS_SYNTAX_ERROR, cmd->cmd[*i + 1]), MS_ERROR);
+	else if (a && ft_strlen(cmd->cmd[*i + 1]) == 0)
 		return (ft_cmderror(MS_AMBIGUOUS_ERROR, ""), MS_ERROR);
 	return (MS_SUCCESS);
 }
@@ -39,7 +39,7 @@ int	parse_redirection(t_data *ms, t_parsing_cmd *cmd, int *i, char ***tmp)
 
 	code = MS_SUCCESS;
 	if (verif_redir(cmd, i))
-		return (MS_ERROR);
+		return (2);
 	if (ft_iscmp(">>", cmd->cmd[*i]))
 		code = ft_push_new_file(cmd, ft_strdup(cmd->cmd[*i + 1]), C_OUT, 0);
 	else if (ft_iscmp(">", cmd->cmd[*i]))
@@ -78,7 +78,7 @@ int	ft_compose(t_data *minishell, char *line, t_parsing_cmd *new_cmd)
 			return (MS_SUCCESS);
 		code = parse_redirection(minishell, new_cmd, &i, &tmp);
 		if (code)
-			return (set_g_signal_val(EXIT_CODE, 1), code);
+			return (set_g_signal_val(EXIT_CODE, code), code);
 	}
 	if (tmp)
 	{

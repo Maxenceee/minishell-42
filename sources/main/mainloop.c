@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:15:10 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/15 17:22:44 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/15 17:29:07 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_syntax(char **pipline, int i, int j)
 	else if (ft_strlen(tmp) == 0 || (!pipline[i + 1] && j > i))
 	{
 		set_g_signal_val(EXIT_CODE, 2);
-		return (ft_sntxerror(MS_SYNTAX_ERROR, '|'),
+		return (ft_sntxerror(MS_SYNTAX_ERROR, "|"),
 			free(tmp), MS_ERROR);
 	}
 	free(tmp);
