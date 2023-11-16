@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/10 21:33:45 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/16 18:14:44 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,21 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 		return (ft_cmderror("heredoc open: ", ""),
 			perror(""), MS_ERROR);
 	line = readline(hd_pt);
-	while (line && ft_strncmp(f->here_doc_end, line,
-			ft_strlen(f->here_doc_end)))
+	printf("%s %zu while is good %d\n", line, ft_strlen(line), (line && ft_strncmp(f->here_doc_end, line, ft_strlen(f->here_doc_end))) || ft_strlen(line) == 0);
+	while ((line && ft_strncmp(f->here_doc_end, line,
+			ft_strlen(f->here_doc_end))) || ft_strlen(line) == 0)
 	{
+		dprintf(2, "ff %s\n", pline);
 		pline = ft_parse_expands(ms, line, 0);
 		ft_replace(pline, -2, '\'');
 		ft_replace(pline, -3, '\"');
+		dprintf(2, "free %s\n", pline);
 		ft_putfd(fd, pline);
 		ft_putfd(fd, "\n");
 		free(pline);
 		free(line);
 		line = readline(hd_pt);
+		dprintf(2, "after line %s\n", line);
 	}
 	free(line);
 	close(fd);

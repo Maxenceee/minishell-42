@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:58:24 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/12 20:51:59 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/16 18:35:46 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	safe_atoll(const char *str, int64_t *result)
 	return (MS_SUCCESS);
 }
 
+#ifdef __APPLE__
+
 int64_t	get_exit_code(int i, char *cmd)
 {
 	int64_t	code;
@@ -55,6 +57,28 @@ int64_t	get_exit_code(int i, char *cmd)
 	code = code % 256;
 	return (code);
 }
+
+#else
+
+int64_t	get_exit_code(int i, char *cmd)
+{
+	int64_t	code;
+	int		valid;
+
+	code = 0;
+	valid = 1;
+	if (i == 2)
+		valid = !safe_atoll(cmd, &code);
+	if (!valid)
+	{
+		code = 2;
+		ft_cmderror_ex("exit: ", cmd, ": numeric argument required\n");
+	}
+	code = code % 256;
+	return (code);
+}
+
+#endif /* __APPLE__ */
 
 #ifdef __APPLE__
 

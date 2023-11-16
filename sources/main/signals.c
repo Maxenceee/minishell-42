@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:11:39 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/09 13:59:14 by mgama            ###   ########.fr       */
+/*   Updated: 2023/11/16 17:40:14 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	set_g_signal_val(EXIT_CODE, 130);
 }
 
 void	setup_signals(void)
