@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/16 18:14:44 by mgama            ###   ########.fr       */
+/*   Updated: 2023/12/19 13:09:35 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ char	*new_here_doc_fname(void)
 	return (file_name);
 }
 
+int	str_equal(const char *str1, const char *str2)
+{
+	size_t	size;
+
+	if (!str1 || !str2)
+		return (0);
+	size = ft_strlen(str1);
+	if (size != ft_strlen(str2))
+		return (0);
+	return (ft_strncmp(str1, str2, size) == 0);
+}
+
 int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 {
 	int			fd;
@@ -37,24 +49,27 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 		return (ft_cmderror("heredoc open: ", ""),
 			perror(""), MS_ERROR);
 	line = readline(hd_pt);
-	printf("%s %zu while is good %d\n", line, ft_strlen(line), (line && ft_strncmp(f->here_doc_end, line, ft_strlen(f->here_doc_end))) || ft_strlen(line) == 0);
-	while ((line && ft_strncmp(f->here_doc_end, line,
-			ft_strlen(f->here_doc_end))) || ft_strlen(line) == 0)
+	dprintf(2, "%s while is good %d\n", line, line && ft_strcmp(f->here_doc_end, line));
+	fflush(stderr);
+	while (line && !str_equal(line, f->here_doc_end))
 	{
-		dprintf(2, "ff %s\n", pline);
+		dprintf(2, "ff %s\n", line);
 		pline = ft_parse_expands(ms, line, 0);
-		ft_replace(pline, -2, '\'');
-		ft_replace(pline, -3, '\"');
-		dprintf(2, "free %s\n", pline);
-		ft_putfd(fd, pline);
-		ft_putfd(fd, "\n");
-		free(pline);
+		dprintf(2, "pline: %s\n", pline);
 		free(line);
+		// ft_replace(pline, -2, '\'');
+		// ft_replace(pline, -3, '\"');
+		// ft_putfd(fd, pline);
+		// ft_putfd(fd, "\n");
+		free(pline);
 		line = readline(hd_pt);
-		dprintf(2, "after line %s\n", line);
+		dprintf(2, "after line (%s)\n", line);
+		fflush(stderr);
 	}
 	free(line);
 	close(fd);
+	free_env(ms);
+	clear_history();
 	exit(MS_SUCCESS);
 }
 
@@ -75,6 +90,8 @@ int	handle_here_doc(t_data *ms, t_parsing_cmd *cmd, t_parsing_file *f)
 	{
 		status = wait_process(pid, 1);
 		setup_signals();
+		dprintf(2, "after waiting for hd\n");
+		fflush(stderr);
 		if (status != EXIT_SUCCESS)
 			return (MS_NO_ERROR);
 	}

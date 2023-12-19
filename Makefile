@@ -98,13 +98,13 @@ CUT				=	"\033[K"
 $(OBJ_DIR)/%.o: $(MANDATORY_DIR)/%.c $(HEADERS) $(HEADERS_SOURCES) Makefile
 	@mkdir -p $(@D)
 	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ -g3
 	@printf ${UP}${CUT}
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) -lm -g $(READLINE_LIB)
+	@$(CC) $(OBJS) -o $(NAME) -lm $(READLINE_LIB) -g3
 	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 clean:
