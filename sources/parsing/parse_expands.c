@@ -71,8 +71,8 @@ char	*ft_parse_expands(t_data *minishell, char *arg, int t)
 	t_expands_p	p;
 	char		*str;
 
-	if (t && !ft_strlen(arg))
-		return (arg);
+	if (!t && !ft_strlen(arg))
+		return (ft_calloc(1, sizeof(char)));
 	ft_bzero(&p, sizeof(p));
 	str = parse_exit_code(arg, &p);
 	ft_bzero(&p, sizeof(p));

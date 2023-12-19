@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:53:11 by mgama             #+#    #+#             */
-/*   Updated: 2023/12/19 12:49:35 by mgama            ###   ########.fr       */
+/*   Updated: 2023/12/19 13:57:47 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ int	fork_single(t_data *minishell, t_parsing_cmd *cmd)
 	hd_sts = open_heredoc(minishell, cmd);
 	if (hd_sts)
 		return (MS_ERROR);
-	dprintf(2, "after here doc\n");
-	fflush(stderr);
 	cmd->pid = fork();
 	setup_exec_signals(cmd->pid);
 	if (cmd->pid == -1)
