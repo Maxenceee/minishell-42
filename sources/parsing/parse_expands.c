@@ -12,6 +12,30 @@
 
 #include "minishell.h"
 
+char	*parse_params_variables(t_data *minishell, char *arg, t_expands_p *p)
+{
+	while (arg[p->i])
+	{
+		if (!p->read_env && arg[p->i] == '\'')
+			p->quoted = !p->quoted;
+		if (!p->quoted && arg[p->i] == '\"')
+			p->read_env = !p->read_env;
+		if ((p->read_env || (!p->read_env && !p->quoted))
+			&& arg[p->i] == '$' && arg[p->i + 1] == '0')
+		{
+			p->res = ft_strjoin(p->res, minishell->caller_name);
+			if (!p->res)
+				return (NULL);
+			p->i += 2;
+			continue ;
+		}
+		p->res = ft_strjoin_char(p->res, arg[p->i++]);
+		if (!p->res)
+			return (NULL);
+	}
+	return (p->res);
+}
+
 char	*parse_exit_code(char *arg, t_expands_p *p)
 {
 	while (arg[p->i])
@@ -75,6 +99,8 @@ char	*ft_parse_expands(t_data *minishell, char *arg, int t)
 		return (ft_calloc(1, sizeof(char)));
 	ft_bzero(&p, sizeof(p));
 	str = parse_exit_code(arg, &p);
+	ft_bzero(&p, sizeof(p));
+	str = parse_params_variables(minishell, arg, &p);
 	ft_bzero(&p, sizeof(p));
 	str = parse_env_var(minishell, str, &p, t);
 	return (str);

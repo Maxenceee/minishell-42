@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:26:12 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/15 17:25:44 by mgama            ###   ########.fr       */
+/*   Updated: 2024/01/02 20:03:47 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ struct s_data {
 	char			*pwd;
 	t_parsing_cmd	*parsing_cmd;
 	char			*prompt;
+	char			*caller_name;
 };
 
 typedef enum e_signal
