@@ -100,7 +100,7 @@ char	*ft_parse_expands(t_data *minishell, char *arg, int t)
 	ft_bzero(&p, sizeof(p));
 	str = parse_exit_code(arg, &p);
 	ft_bzero(&p, sizeof(p));
-	str = parse_params_variables(minishell, arg, &p);
+	str = parse_params_variables(minishell, str, &p);
 	ft_bzero(&p, sizeof(p));
 	str = parse_env_var(minishell, str, &p, t);
 	return (str);
