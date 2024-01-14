@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:02:43 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/12 18:26:44 by mgama            ###   ########.fr       */
+/*   Updated: 2024/01/14 13:50:38 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, uint32_t n);
 int		ft_strnrcmp(const char *s1, const char *s2, uint32_t n);
 int		ft_iscmp(const char *s1, const char *s2);
+int		str_equal(const char *str1, const char *str2);
 
 size_t	ft_strlen(const char *str);
 int		ft_tablen(char **str);

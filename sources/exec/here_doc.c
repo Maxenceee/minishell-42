@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:34:34 by mgama             #+#    #+#             */
-/*   Updated: 2023/12/19 13:57:43 by mgama            ###   ########.fr       */
+/*   Updated: 2024/01/14 13:53:29 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,6 @@ char	*new_here_doc_fname(void)
 	file_name = ft_strjoin(file_name, num);
 	free(num);
 	return (file_name);
-}
-
-int	str_equal(const char *str1, const char *str2)
-{
-	size_t	size;
-
-	if (!str1 || !str2)
-		return (0);
-	size = ft_strlen(str1);
-	if (size != ft_strlen(str2))
-		return (0);
-	return (ft_strncmp(str1, str2, size) == 0);
 }
 
 int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
@@ -60,11 +48,8 @@ int	create_heredoc(t_data *ms, t_parsing_file *f, char *path)
 		free(pline);
 		line = readline(hd_pt);
 	}
-	free(line);
-	close(fd);
-	free_env(ms);
-	clear_history();
-	exit(MS_SUCCESS);
+	return (free(line), close(fd), free_env(ms),
+		clear_history(), exit(MS_SUCCESS), MS_SUCCESS);
 }
 
 int	handle_here_doc(t_data *ms, t_parsing_cmd *cmd, t_parsing_file *f)

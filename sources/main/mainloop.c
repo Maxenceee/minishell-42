@@ -6,7 +6,7 @@
 /*   By: mgama <mgama@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:15:10 by mgama             #+#    #+#             */
-/*   Updated: 2023/11/15 17:29:07 by mgama            ###   ########.fr       */
+/*   Updated: 2024/01/14 13:43:01 by mgama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,25 @@
 
 char	*prompt(t_data *ms)
 {
-	char	*user;
-	char	*tmp;
+	static char	*user = NULL;
+	char		*tmp;
 
-	user = NULL;
-	user = ft_strjoin(user, B_GREEN);
-	tmp = ft_get_env_variable(ms, "USER");
-	if (tmp)
-		user = ft_strjoin(user, tmp);
-	user = ft_strjoin(user, "@"RESET": "\
+	if (!user)
+	{
+		user = ft_strjoin(user, B_GREEN);
+		tmp = ft_get_env_variable(ms, "USER");
+		if (tmp)
+			user = ft_strjoin(user, tmp);
+		user = ft_strjoin(user, "@"RESET": "\
 HEADER"minishell$ "RESET);
+	}
+	else
+	{
+		if (get_g_signal_val(EXIT_CODE) == 0)
+			ft_strlcpy(user, B_GREEN, 7);
+		else
+			ft_strlcpy(user, B_RED, 7);
+	}
 	return (user);
 }
 
@@ -77,12 +86,12 @@ int	ft_mainloop(t_data *minishell)
 {
 	char	*line;
 
-	minishell->prompt = prompt(minishell);
-	if (!minishell->prompt)
-		return (MS_ERROR);
 	while (!minishell->exit)
 	{
 		setup_signals();
+		minishell->prompt = prompt(minishell);
+		if (!minishell->prompt)
+			return (MS_ERROR);
 		line = readline(minishell->prompt);
 		if (!line)
 			exit_with_code(minishell, MS_SUCCESS, "exit\n");
